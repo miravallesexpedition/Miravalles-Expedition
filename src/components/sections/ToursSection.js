@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 
 export default function ToursSection({ tours, onSelectTour, filters, onFilterChange }) {
   const [filteredTours, setFilteredTours] = useState(tours)
@@ -65,9 +66,11 @@ export default function ToursSection({ tours, onSelectTour, filters, onFilterCha
       <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
         {filteredTours.map((tour, i) => (
           <div key={i} className="border p-6 rounded-2xl shadow hover:shadow-lg transition">
-            <img 
+            <Image 
               src={tour.image} 
               alt={tour.name}
+              width={400}
+              height={192}
               className="w-full h-48 object-cover rounded-lg mb-4"
             />
             <h3 className="text-xl font-bold mb-2">{tour.name}</h3>

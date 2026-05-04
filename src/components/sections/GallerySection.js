@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+
 export default function GallerySection() {
   const images = [
     { url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300', alt: 'Volcán Miravalles' },
@@ -16,10 +18,11 @@ export default function GallerySection() {
       <div className="grid md:grid-cols-3 gap-4 max-w-6xl mx-auto">
         {images.map((img, i) => (
           <div key={i} className="overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition h-64">
-            <img 
+            <Image 
               src={img.url} 
               alt={img.alt}
-              className="w-full h-full object-cover hover:scale-110 transition"
+              fill
+              className="object-cover hover:scale-110 transition"
             />
           </div>
         ))}

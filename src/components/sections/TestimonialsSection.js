@@ -39,7 +39,7 @@ export default function TestimonialsSection() {
                 {Array(testimonial.rating).fill('⭐')}
               </div>
             </div>
-            <p className="text-gray-700 mb-3 italic">"{testimonial.text}"</p>
+            <p className="text-gray-700 mb-3 italic">&ldquo;{testimonial.text}&rdquo;</p>
             <div className="border-t pt-3">
               <p className="font-semibold">{testimonial.name}</p>
               <p className="text-sm text-gray-500">{testimonial.tour}</p>
