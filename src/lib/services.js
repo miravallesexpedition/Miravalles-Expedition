@@ -13,7 +13,30 @@ export const tourService = {
       return data || []
     } catch (error) {
       console.error('Error fetching tours:', error.message)
-      throw error
+      // Fallback to static data
+      return [
+        {
+          name: 'Volcán Miravalles',
+          price: '$65',
+          level: 'Fácil',
+          image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300',
+          description: 'Explora el majestuoso volcán con vistas panorámicas'
+        },
+        {
+          name: 'Cataratas Escondidas',
+          price: '$75',
+          level: 'Moderado',
+          image: 'https://images.unsplash.com/photo-1511316695145-4992006ffddb?w=400&h=300',
+          description: 'Camina entre cascadas de agua cristalina'
+        },
+        {
+          name: 'Aguas Termales',
+          price: '$55',
+          level: 'Relajado',
+          image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=300',
+          description: 'Relájate en piscinas naturales de agua caliente'
+        }
+      ]
     }
   },
 
