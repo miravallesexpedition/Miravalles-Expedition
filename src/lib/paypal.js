@@ -1,11 +1,25 @@
 import crypto from 'crypto'
 
+const isPayPalConfigured = Boolean(
+  process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID && process.env.PAYPAL_SECRET_KEY
+)
+
+function ensurePayPalEnabled() {
+  if (!isPayPalConfigured) {
+    throw new Error(
+      'PayPal deshabilitado: faltan variables de entorno NEXT_PUBLIC_PAYPAL_CLIENT_ID o PAYPAL_SECRET_KEY.'
+    )
+  }
+}
+
 export const paymentService = {
   // Crear orden de pago en PayPal
   async createPaymentOrder(booking) {
     try {
+      ensurePayPalEnabled()
+
       const accessToken = await this.getAccessToken()
-      
+
       const response = await fetch('https://api.sandbox.paypal.com/v2/checkout/orders', {
         method: 'POST',
         headers: {
@@ -46,8 +60,8 @@ export const paymentService = {
             brand_name: 'Miravalles Expedition',
             user_action: 'PAY_NOW',
             shipping_preference: 'NO_SHIPPING',
-            return_url: `${process.env.NEXT_PUBLIC_APP_URL}/pago-exitoso`,
-            cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/pago-cancelado`
+            return_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/pago-exitoso`,
+            cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/pago-cancelado`
           }
         })
       })
@@ -69,8 +83,10 @@ export const paymentService = {
   // Capturar orden de pago
   async capturePayment(orderId) {
     try {
+      ensurePayPalEnabled()
+
       const accessToken = await this.getAccessToken()
-      
+
       const response = await fetch(
         `https://api.sandbox.paypal.com/v2/checkout/orders/${orderId}/capture`,
         {
@@ -99,6 +115,8 @@ export const paymentService = {
   // Obtener token de acceso
   async getAccessToken() {
     try {
+      ensurePayPalEnabled()
+
       const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID
       const secretKey = process.env.PAYPAL_SECRET_KEY
 

@@ -1,12 +1,26 @@
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const isResendConfigured = Boolean(process.env.RESEND_API_KEY)
+const resend = isResendConfigured ? new Resend(process.env.RESEND_API_KEY) : null
+
+function emailNotConfigured() {
+  console.warn('Resend no está configurado. No se enviará el email.')
+}
+
+async function sendEmail(payload) {
+  if (!resend) {
+    emailNotConfigured()
+    return null
+  }
+
+  return resend.emails.send(payload)
+}
 
 export const emailService = {
   // Email de confirmación
   async sendConfirmationEmail(email, booking, confirmationUrl) {
     try {
-      const result = await resend.emails.send({
+      const result = await sendEmail({
         from: `noreply@miravallles.cr`,
         to: email,
         subject: `Confirma tu reserva - Miravalles Expedition`,
@@ -59,7 +73,7 @@ export const emailService = {
   // Email de confirmación completada
   async sendBookingConfirmedEmail(email, booking, paymentUrl) {
     try {
-      const result = await resend.emails.send({
+      const result = await sendEmail({
         from: `noreply@miravallles.cr`,
         to: email,
         subject: `Tu reserva está confirmada - Miravalles Expedition`,
@@ -120,7 +134,7 @@ export const emailService = {
   // Email de recordatorio 24 horas antes
   async sendReminderEmail(email, booking) {
     try {
-      const result = await resend.emails.send({
+      const result = await sendEmail({
         from: `noreply@miravallles.cr`,
         to: email,
         subject: `Recordatorio: Tu tour es mañana - Miravalles Expedition`,
