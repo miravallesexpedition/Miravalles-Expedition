@@ -1,5 +1,7 @@
 import { tourService } from '@/lib/services'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(request) {
   try {
     const tours = await tourService.getAllTours()

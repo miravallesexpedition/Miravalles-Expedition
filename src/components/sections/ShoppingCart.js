@@ -1,12 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-
 export default function ShoppingCart({ cart, onRemove, onCheckout }) {
-  const total = cart.reduce((sum, item) => {
-    const price = parseInt(item.price.replace('$', ''))
-    return sum + price
-  }, 0)
+  const total = cart.reduce((sum, item) => sum + getTourPrice(item), 0)
 
   if (!cart.length) return null
 
@@ -15,16 +10,17 @@ export default function ShoppingCart({ cart, onRemove, onCheckout }) {
       <h3 className="font-bold mb-3">Carrito ({cart.length})</h3>
       <div className="max-h-48 overflow-y-auto space-y-2 mb-3">
         {cart.map((item, i) => (
-          <div key={i} className="flex justify-between items-center p-2 bg-gray-100 rounded">
+          <div key={`${item.id || item.name}-${i}`} className="flex justify-between items-center p-2 bg-gray-100 rounded">
             <div>
               <p className="font-semibold text-sm">{item.name}</p>
-              <p className="text-gray-600 text-xs">{item.price}</p>
+              <p className="text-gray-600 text-xs">{item.priceLabel || `$${getTourPrice(item)}`}</p>
             </div>
             <button
               onClick={() => onRemove(i)}
               className="text-red-600 hover:text-red-800 text-xl"
+              aria-label={`Quitar ${item.name}`}
             >
-              ✕
+              ×
             </button>
           </div>
         ))}
@@ -40,4 +36,9 @@ export default function ShoppingCart({ cart, onRemove, onCheckout }) {
       </button>
     </div>
   )
+}
+
+function getTourPrice(tour) {
+  if (typeof tour.price === 'number') return tour.price
+  return Number(String(tour.price).replace('$', ''))
 }

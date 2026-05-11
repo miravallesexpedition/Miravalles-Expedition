@@ -1,5 +1,3 @@
-import crypto from 'crypto'
-
 const isPayPalConfigured = Boolean(
   process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID && process.env.PAYPAL_SECRET_KEY
 )
@@ -14,7 +12,7 @@ function ensurePayPalEnabled() {
 
 export const paymentService = {
   // Crear orden de pago en PayPal
-  async createPaymentOrder(booking) {
+  async createPaymentOrder(booking, options = {}) {
     try {
       ensurePayPalEnabled()
 
@@ -32,11 +30,11 @@ export const paymentService = {
             {
               amount: {
                 currency_code: 'USD',
-                value: booking.total_price.toString(),
+                value: Number(booking.total_price).toFixed(2),
                 breakdown: {
                   item_total: {
                     currency_code: 'USD',
-                    value: booking.total_price.toString()
+                    value: Number(booking.total_price).toFixed(2)
                   }
                 }
               },
@@ -46,7 +44,7 @@ export const paymentService = {
                   quantity: booking.participants_count.toString(),
                   unit_amount: {
                     currency_code: 'USD',
-                    value: (booking.total_price / booking.participants_count).toString()
+                    value: (Number(booking.total_price) / Number(booking.participants_count)).toFixed(2)
                   },
                   description: `Tour date: ${booking.tour_date}`
                 }
@@ -60,8 +58,8 @@ export const paymentService = {
             brand_name: 'Miravalles Expedition',
             user_action: 'PAY_NOW',
             shipping_preference: 'NO_SHIPPING',
-            return_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/pago-exitoso`,
-            cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/pago-cancelado`
+            return_url: options.returnUrl || `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/pago-exitoso`,
+            cancel_url: options.cancelUrl || `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/pago-cancelado`
           }
         })
       })

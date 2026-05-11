@@ -2,20 +2,28 @@ import { bookingService, tourService } from '@/lib/services'
 import { emailService } from '@/lib/emails'
 import crypto from 'crypto'
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(request) {
   try {
     const body = await request.json()
-    const { tourId, email, firstName, lastName, phone, participantsCount, tourDate, specialRequests } = body
+    const { tourId, email, firstName, lastName, phone, tourDate, specialRequests } = body
+    const participantsCount = Number(body.participantsCount)
 
-    // Validaciones
-    if (!tourId || !email || !firstName || !lastName || !participantsCount || !tourDate) {
+    if (!tourId || !email || !firstName || !lastName || !tourDate) {
       return Response.json(
         { error: 'Faltan datos requeridos' },
         { status: 400 }
       )
     }
 
-    // Validar email
+    if (!Number.isInteger(participantsCount) || participantsCount < 1 || participantsCount > 20) {
+      return Response.json(
+        { error: 'La cantidad de participantes debe estar entre 1 y 20' },
+        { status: 400 }
+      )
+    }
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(email)) {
       return Response.json(
@@ -24,7 +32,6 @@ export async function POST(request) {
       )
     }
 
-    // Obtener información del tour
     const tour = await tourService.getTourById(tourId)
     if (!tour) {
       return Response.json(
@@ -33,13 +40,9 @@ export async function POST(request) {
       )
     }
 
-    // Generar token de confirmación
     const confirmationToken = crypto.randomBytes(32).toString('hex')
-    
-    // Calcular precio total
-    const totalPrice = tour.price * participantsCount
+    const totalPrice = Number(tour.price) * participantsCount
 
-    // Crear reserva en la base de datos
     const booking = await bookingService.createBooking({
       tour_id: tourId,
       email,
@@ -54,11 +57,9 @@ export async function POST(request) {
       special_requests: specialRequests
     })
 
-    // URL de confirmación
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
     const confirmationUrl = `${appUrl}/confirmar-reserva/${confirmationToken}`
 
-    // Enviar email de confirmación
     try {
       await emailService.sendConfirmationEmail(email, {
         first_name: firstName,
@@ -69,14 +70,13 @@ export async function POST(request) {
       }, confirmationUrl)
     } catch (emailError) {
       console.error('Error sending email:', emailError)
-      // No fallar la reserva si el email falla
     }
 
     return Response.json({
       success: true,
       bookingId: booking.id,
       message: 'Reserva creada. Por favor, verifica tu email para confirmar.',
-      confirmationUrl: confirmationUrl
+      confirmationUrl
     })
   } catch (error) {
     console.error('Error creating booking:', error)
