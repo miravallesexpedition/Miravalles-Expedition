@@ -30,6 +30,14 @@ export default function MapSection() {
           <p className="text-gray-700">{business.location}</p>
           <p className="text-gray-500">{contact.phoneDisplay}</p>
           <p className="text-gray-500">{contact.email}</p>
+          <a
+            href={business.mapsUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-4 inline-flex rounded bg-green-700 px-5 py-2 font-semibold text-white hover:bg-green-800"
+          >
+            Abrir dirección en Google Maps
+          </a>
         </div>
       </div>
     </section>

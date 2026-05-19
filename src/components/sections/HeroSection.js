@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { track } from '@vercel/analytics'
 import { business, tourImages } from '@/lib/siteConfig'
 
@@ -22,6 +23,14 @@ export default function HeroSection({ onViewTours, onReserve }) {
       <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/20" />
       <div className="relative mx-auto w-full max-w-6xl text-white">
         <div className="max-w-3xl">
+          <Image
+            src={tourImages.logo}
+            alt="Miravalles Expedition"
+            width={220}
+            height={220}
+            priority
+            className="mb-6 h-32 w-32 rounded bg-white object-contain p-2 shadow-lg sm:h-40 sm:w-40"
+          />
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-amber-200">
             {business.location}
           </p>

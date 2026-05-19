@@ -21,10 +21,10 @@ export const metadata = {
     type: 'website',
     images: [
       {
-        url: tourImages.hero,
-        width: 1600,
-        height: 1200,
-        alt: 'Catarata natural en Miravalles, Guanacaste'
+        url: tourImages.logo,
+        width: 1254,
+        height: 1254,
+        alt: 'Logo de Miravalles Expedition'
       }
     ]
   },

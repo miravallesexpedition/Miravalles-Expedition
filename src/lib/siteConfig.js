@@ -2,6 +2,7 @@ export const business = {
   name: 'Miravalles Expedition',
   location: 'Fortuna, Guanacaste, Costa Rica',
   meetingPoint: 'Fortuna, cerca del Volcán Miravalles',
+  mapsUrl: 'https://maps.app.goo.gl/9jzTzmpLHVMG65Wg8',
   positioning:
     'Experiencias locales de caminata, cataratas, aves y naturaleza en la zona del Volcán Miravalles.',
   noTransportNotice:
@@ -15,6 +16,7 @@ export const contact = {
 }
 
 export const tourImages = {
+  logo: '/images/miravalles-expedition-logo.jpg',
   hero: '/images/hero-waterfall.jpg',
   catarataPool: '/images/hero-waterfall.jpg',
   catarataRiver: '/images/waterfall-river.jpg',
@@ -25,8 +27,7 @@ export const tourImages = {
   butterfly: '/images/butterfly.jpg',
   bird: '/images/bird.jpg',
   duck: '/images/duck.jpg',
-  orchids: '/images/orchids.jpg',
-  rioCuipilapa: '/images/rio-cuipilapa-sign.jpg'
+  orchids: '/images/orchids.jpg'
 }
 
 export const commonIncludes = [
@@ -54,6 +55,7 @@ export const commonBring = [
 ]
 
 export const galleryImages = [
+  { url: tourImages.logo, alt: 'Logo de Miravalles Expedition' },
   { url: tourImages.hero, alt: 'Catarata y poza natural en Miravalles' },
   { url: tourImages.tallWaterfall, alt: 'Catarata alta en la zona de Miravalles' },
   { url: tourImages.redRockWaterfall, alt: 'Cascada sobre roca volcánica rojiza' },
@@ -63,8 +65,7 @@ export const galleryImages = [
   { url: tourImages.butterfly, alt: 'Mariposa en una flor tropical' },
   { url: tourImages.orchids, alt: 'Orquídeas naranjas de Costa Rica' },
   { url: tourImages.bird, alt: 'Ave local observada en Guanacaste' },
-  { url: tourImages.duck, alt: 'Ave acuática entre vegetación tropical' },
-  { url: tourImages.rioCuipilapa, alt: 'Rótulo del Río Cuipilapa' }
+  { url: tourImages.duck, alt: 'Ave acuática entre vegetación tropical' }
 ]
 
 export const pricingGuidelines = [
@@ -230,32 +231,6 @@ export const tours = [
       group: '$68 p.p. desde 3 personas',
       private: '$175 para 1-2 personas',
       promo: '$68 p.p. temporada baja'
-    }
-  },
-  {
-    id: 'rio-cuipilapa-local',
-    name: 'Experiencia Río Cuipilapa',
-    shortName: 'Río Cuipilapa',
-    price: 50,
-    priceLabel: '$50',
-    level: 'Media',
-    duration: '3 a 4 horas',
-    image: tourImages.rioCuipilapa,
-    location: 'Zona de Fortuna',
-    description:
-      'Experiencia local cerca del río, con caminata, paisaje natural y espacios para conectar con la vida rural de Guanacaste.',
-    highlights: ['Río local', 'Paisaje rural', 'Naturaleza', 'Tour corto'],
-    includes: commonIncludes,
-    notIncluded: commonNotIncluded,
-    bring: commonBring,
-    pricing: {
-      foreignAdult: '$50',
-      foreignChild: '$32',
-      nationalAdult: '₡23.000',
-      nationalChild: '₡15.000',
-      group: '$45 p.p. desde 4 personas',
-      private: '$140 para 1-2 personas',
-      promo: '$45 p.p. temporada baja'
     }
   }
 ]
