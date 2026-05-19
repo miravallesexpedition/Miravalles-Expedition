@@ -44,7 +44,7 @@ export async function POST(request) {
     const confirmationToken = crypto.randomBytes(32).toString('hex')
     const totalPrice = Number(tour.price) * participantsCount
 
-    const booking = await bookingService.createBooking({
+    const bookingPayload = {
       tour_id: tourId,
       email,
       first_name: firstName,
@@ -56,7 +56,9 @@ export async function POST(request) {
       confirmation_token: confirmationToken,
       total_price: totalPrice,
       special_requests: specialRequests
-    })
+    }
+
+    const booking = await bookingService.createBooking(bookingPayload)
 
     const summary = [
       'Nueva solicitud de reserva',
@@ -67,7 +69,8 @@ export async function POST(request) {
       `Nombre: ${firstName} ${lastName}`,
       `Email: ${email}`,
       `Teléfono: ${phone || 'No indicado'}`,
-      `Notas: ${specialRequests || 'Ninguna'}`
+      `Notas: ${specialRequests || 'Ninguna'}`,
+      'Transporte: no incluido'
     ].join('\n')
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
@@ -75,14 +78,32 @@ export async function POST(request) {
     const whatsappUrl = buildWhatsAppUrl(summary)
     const mailtoUrl = buildMailtoUrl('Nueva solicitud de reserva', summary)
 
+    const emailBooking = {
+      ...bookingPayload,
+      id: booking.id,
+      tour_name: tour.name
+    }
+
     try {
-      await emailService.sendConfirmationEmail(email, {
-        first_name: firstName,
-        tour_name: tour.name,
-        tour_date: tourDate,
-        participants_count: participantsCount,
-        total_price: totalPrice
-      }, confirmationUrl)
+      await Promise.all([
+        emailService.sendConfirmationEmail(email, {
+          ...emailBooking,
+          first_name: firstName,
+          tour_name: tour.name,
+          tour_date: tourDate,
+          participants_count: participantsCount,
+          total_price: totalPrice
+        }, confirmationUrl),
+        emailService.sendBookingRequestEmail({
+          ...emailBooking,
+          first_name: firstName,
+          last_name: lastName,
+          tour_name: tour.name,
+          tour_date: tourDate,
+          participants_count: participantsCount,
+          total_price: totalPrice
+        }, whatsappUrl)
+      ])
     } catch (emailError) {
       console.error('Error sending email:', emailError)
     }

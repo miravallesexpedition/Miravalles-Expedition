@@ -6,18 +6,18 @@ export default function ShoppingCart({ cart, onRemove, onCheckout }) {
   if (!cart.length) return null
 
   return (
-    <div className="fixed bottom-6 right-6 bg-white rounded-lg shadow-lg p-4 max-w-xs z-40">
-      <h3 className="font-bold mb-3">Carrito ({cart.length})</h3>
-      <div className="max-h-48 overflow-y-auto space-y-2 mb-3">
+    <div className="fixed bottom-6 right-6 z-40 max-w-xs rounded-lg bg-white p-4 shadow-lg">
+      <h3 className="mb-3 font-bold text-gray-950">Solicitud ({cart.length})</h3>
+      <div className="mb-3 max-h-48 space-y-2 overflow-y-auto">
         {cart.map((item, i) => (
-          <div key={`${item.id || item.name}-${i}`} className="flex justify-between items-center p-2 bg-gray-100 rounded">
+          <div key={`${item.id || item.name}-${i}`} className="flex items-center justify-between gap-3 rounded bg-gray-100 p-2">
             <div>
-              <p className="font-semibold text-sm">{item.name}</p>
-              <p className="text-gray-600 text-xs">{item.priceLabel || `$${getTourPrice(item)}`}</p>
+              <p className="text-sm font-semibold">{item.name}</p>
+              <p className="text-xs text-gray-600">{item.priceLabel || `$${getTourPrice(item)}`} p.p.</p>
             </div>
             <button
               onClick={() => onRemove(i)}
-              className="text-red-600 hover:text-red-800 text-xl"
+              className="text-xl text-red-600 hover:text-red-800"
               aria-label={`Quitar ${item.name}`}
             >
               ×
@@ -25,14 +25,15 @@ export default function ShoppingCart({ cart, onRemove, onCheckout }) {
           </div>
         ))}
       </div>
-      <div className="border-t pt-2 mb-3">
-        <p className="font-bold text-lg">Total: ${total}</p>
+      <div className="mb-3 border-t pt-2">
+        <p className="text-lg font-bold">Base por persona: ${total}</p>
+        <p className="text-xs text-gray-500">No incluye transporte.</p>
       </div>
       <button
         onClick={onCheckout}
-        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+        className="w-full rounded bg-green-700 py-2 font-semibold text-white hover:bg-green-800"
       >
-        Proceder a Pago
+        Enviar solicitud
       </button>
     </div>
   )

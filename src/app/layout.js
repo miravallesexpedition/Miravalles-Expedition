@@ -1,9 +1,36 @@
 import { Analytics } from '@vercel/analytics/next'
+import { business, seoKeywords, tourImages } from '@/lib/siteConfig'
 import './globals.css'
 
 export const metadata = {
-  title: 'Miravalles Expedition - Tours y Aventuras',
-  description: 'Tours en el Volcán Miravalles - Cataratas, aguas termales y aventura guiada',
+  metadataBase: new URL('https://miravallesexpedition.com'),
+  title: {
+    default: 'Miravalles Expedition | Tours en Guanacaste y Cataratas en Costa Rica',
+    template: '%s | Miravalles Expedition'
+  },
+  description:
+    'Tours en Guanacaste cerca del Volcán Miravalles: hiking Costa Rica, cataratas escondidas, aguas termales, aves, eco tourism y adventure tours con guía local.',
+  keywords: seoKeywords,
+  openGraph: {
+    title: 'Miravalles Expedition',
+    description:
+      'Caminatas, cataratas escondidas, aves y experiencias locales cerca del Volcán Miravalles en Guanacaste, Costa Rica.',
+    url: 'https://miravallesexpedition.com',
+    siteName: business.name,
+    locale: 'es_CR',
+    type: 'website',
+    images: [
+      {
+        url: tourImages.hero,
+        width: 1600,
+        height: 1200,
+        alt: 'Catarata natural en Miravalles, Guanacaste'
+      }
+    ]
+  },
+  alternates: {
+    canonical: '/'
+  }
 }
 
 export default function RootLayout({ children }) {

@@ -1,51 +1,42 @@
-'use client'
-
 export default function TestimonialsSection() {
-  const testimonials = [
+  const trustItems = [
     {
-      name: 'María González',
-      rating: 5,
-      text: 'Experiencia increíble! Los guías fueron profesionales y muy amables. Volvería mil veces.',
-      tour: 'Volcán Miravalles'
+      title: 'Guía local',
+      text: 'Acompañamiento de gente de la zona que conoce los senderos, el clima y los mejores puntos para disfrutar con seguridad.'
     },
     {
-      name: 'Carlos López',
-      rating: 5,
-      text: 'Las aguas termales fueron la mejor parte del viaje. Muy relajante y bien organizado.',
-      tour: 'Aguas Termales'
+      title: 'Grupos pequeños',
+      text: 'La experiencia se siente más personal, con tiempo para fotos, descansos y conexión real con la naturaleza.'
     },
     {
-      name: 'Ana Martínez',
-      rating: 4,
-      text: 'Excelente grupo y guías conocedores. Recomendado para todos los niveles.',
-      tour: 'Cataratas Escondidas'
+      title: 'Precios claros',
+      text: 'El visitante sabe qué incluye, qué no incluye y cuánto cuesta antes de reservar.'
     },
     {
-      name: 'Diego Rodríguez',
-      rating: 5,
-      text: 'Seguridad y diversión garantizadas. Impecable la organización de todo.',
-      tour: 'Volcán Miravalles'
-    },
+      title: 'Naturaleza auténtica',
+      text: 'Cataratas, aves, flores, ríos y paisaje volcánico fuera de las rutas turísticas más masivas.'
+    }
   ]
 
   return (
-    <section className="p-10 bg-white">
-      <h2 className="text-3xl font-bold mb-8 text-center">Reseñas de Clientes</h2>
-      <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-        {testimonials.map((testimonial, i) => (
-          <div key={i} className="p-6 border rounded-lg shadow hover:shadow-lg transition">
-            <div className="flex items-center mb-3">
-              <div className="flex text-yellow-400">
-                {Array(testimonial.rating).fill('⭐')}
-              </div>
+    <section className="bg-white px-4 py-14 sm:px-6 lg:px-10">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-8 max-w-3xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-green-700">
+            Confianza
+          </p>
+          <h2 className="mt-2 text-3xl font-bold text-gray-950 sm:text-4xl">
+            Una experiencia seria, local y auténtica
+          </h2>
+        </div>
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          {trustItems.map((item) => (
+            <div key={item.title} className="rounded-lg border border-gray-200 p-5 shadow-sm">
+              <h3 className="mb-2 text-lg font-bold text-gray-950">{item.title}</h3>
+              <p className="text-sm leading-6 text-gray-600">{item.text}</p>
             </div>
-            <p className="text-gray-700 mb-3 italic">&ldquo;{testimonial.text}&rdquo;</p>
-            <div className="border-t pt-3">
-              <p className="font-semibold">{testimonial.name}</p>
-              <p className="text-sm text-gray-500">{testimonial.tour}</p>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   )

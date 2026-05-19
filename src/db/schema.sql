@@ -1,4 +1,4 @@
--- Crear tabla de tours
+-- Tabla de tours
 CREATE TABLE tours (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE tours (
   is_active BOOLEAN DEFAULT TRUE
 );
 
--- Crear tabla de reservas
+-- Tabla de reservas
 CREATE TABLE bookings (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   tour_id UUID NOT NULL REFERENCES tours(id) ON DELETE CASCADE,
@@ -43,7 +43,7 @@ CREATE TABLE bookings (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- Crear tabla de usuarios administradores
+-- Tabla de usuarios administradores
 CREATE TABLE admin_users (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   email TEXT UNIQUE NOT NULL,
@@ -55,19 +55,18 @@ CREATE TABLE admin_users (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- Crear tabla de emails enviados (para auditoría)
+-- Tabla de emails enviados
 CREATE TABLE email_logs (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   booking_id UUID REFERENCES bookings(id) ON DELETE CASCADE,
   recipient_email TEXT NOT NULL,
   subject TEXT,
-  email_type TEXT CHECK (email_type IN ('confirmation', 'reminder', 'receipt')),
+  email_type TEXT CHECK (email_type IN ('confirmation', 'reminder', 'receipt', 'admin_notification')),
   status TEXT CHECK (status IN ('sent', 'failed')) DEFAULT 'sent',
   error_message TEXT,
   sent_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- Crear índices para optimizar búsquedas
 CREATE INDEX idx_bookings_tour_id ON bookings(tour_id);
 CREATE INDEX idx_bookings_email ON bookings(email);
 CREATE INDEX idx_bookings_status ON bookings(status);
@@ -76,11 +75,79 @@ CREATE INDEX idx_bookings_confirmation_token ON bookings(confirmation_token);
 CREATE INDEX idx_email_logs_booking_id ON email_logs(booking_id);
 CREATE INDEX idx_tours_is_active ON tours(is_active);
 
--- Insertar tours de ejemplo
-INSERT INTO tours (name, description, price, difficulty_level, duration_hours, max_participants, location, language, best_season) VALUES
-('Catarata Cabro Mucho', 'Caminata hacia la hermosa catarata Cabro Mucho en las montañas de Fortuna', 55.00, 'moderate', 4, 12, 'Fortuna de Bagaces', ARRAY['es', 'en'], 'May-November'),
-('Morfo Celestes', 'Tour observación de las famosas mariposas Morfo en su hábitat natural', 60.00, 'easy', 3, 10, 'Fortuna de Bagaces', ARRAY['es', 'en'], 'May-November'),
-('Hot Springs', 'Disfruta de las aguas termales naturales del volcán Arenal', 50.00, 'easy', 3, 15, 'Hot Springs Area', ARRAY['es', 'en'], 'Year-round'),
-('El Yoko', 'Aventura completa en el río y selva tropical con rappel', 75.00, 'hard', 6, 8, 'Fortuna Area', ARRAY['es', 'en'], 'May-November'),
-('Cráter del Volcán Miravalles', 'Caminata al cráter del volcán Miravalles con vistas espectaculares', 65.00, 'hard', 5, 10, 'Miravalles', ARRAY['es', 'en'], 'December-April'),
-('Tour de Aves en Palo Verde', 'Observación de aves en la reserva de Palo Verde, paraíso ornitológico', 70.00, 'easy', 4, 12, 'Palo Verde', ARRAY['es', 'en'], 'December-April');
+-- Tours base de Miravalles Expedition
+INSERT INTO tours (
+  name,
+  description,
+  price,
+  difficulty_level,
+  duration_hours,
+  max_participants,
+  image_url,
+  location,
+  language,
+  included_items,
+  not_included_items,
+  what_to_bring,
+  best_season
+) VALUES
+(
+  'Catarata Cabro Muco + Morpho Blanca',
+  'Caminata guiada de 10 km ida y vuelta hacia dos cataratas escondidas en la zona del Volcán Miravalles.',
+  55.00,
+  'moderate',
+  4,
+  12,
+  '/images/hero-waterfall.jpg',
+  'Fortuna, Guanacaste',
+  ARRAY['es', 'en'],
+  ARRAY['Guía local', 'Agua', 'Refrigerio o snacks', 'Binoculares cuando aplica'],
+  ARRAY['Transporte', 'Almuerzo', 'Gastos personales', 'Entradas externas cuando apliquen'],
+  ARRAY['Ropa cómoda', 'Zapatos cerrados para caminar', 'Bloqueador solar', 'Repelente contra insectos'],
+  'Todo el año'
+),
+(
+  'Aguas Termales Miravalles',
+  'Experiencia relajada para disfrutar aguas termales y ambiente volcánico cerca de Miravalles.',
+  35.00,
+  'easy',
+  3,
+  15,
+  '/images/red-rock-waterfall.jpg',
+  'Zona Miravalles',
+  ARRAY['es', 'en'],
+  ARRAY['Coordinación local', 'Agua', 'Refrigerio o snacks'],
+  ARRAY['Transporte', 'Almuerzo', 'Gastos personales', 'Entradas externas cuando apliquen'],
+  ARRAY['Traje de baño', 'Toalla', 'Sandalias', 'Cambio de ropa', 'Repelente'],
+  'Todo el año'
+),
+(
+  'Camino al Cráter del Volcán Miravalles',
+  'Caminata exigente para viajeros con buena condición física, vistas amplias y terreno volcánico.',
+  65.00,
+  'hard',
+  6,
+  10,
+  '/images/volcano.jpg',
+  'Volcán Miravalles',
+  ARRAY['es', 'en'],
+  ARRAY['Guía local', 'Agua', 'Refrigerio o snacks', 'Binoculares cuando aplica'],
+  ARRAY['Transporte', 'Almuerzo', 'Gastos personales', 'Entradas externas cuando apliquen'],
+  ARRAY['Ropa cómoda', 'Zapatos cerrados para caminar', 'Bloqueador solar', 'Repelente contra insectos', 'Abrigo liviano'],
+  'Diciembre a abril'
+),
+(
+  'Tour de Aves y Vida Silvestre',
+  'Salida tranquila de observación de aves y vida silvestre, ideal temprano en la mañana.',
+  45.00,
+  'easy',
+  3,
+  10,
+  '/images/bird.jpg',
+  'Fortuna y alrededores de Miravalles',
+  ARRAY['es', 'en'],
+  ARRAY['Guía local', 'Agua', 'Refrigerio o snacks', 'Binoculares'],
+  ARRAY['Transporte', 'Almuerzo', 'Gastos personales'],
+  ARRAY['Ropa cómoda', 'Zapatos cerrados', 'Repelente', 'Cámara', 'Sombrero o gorra'],
+  'Todo el año'
+);

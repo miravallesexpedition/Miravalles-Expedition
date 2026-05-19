@@ -33,7 +33,7 @@ export default async function ConfirmBookingPage({ params }) {
         </div>
         <Link
           href={result.paymentUrl}
-          className="inline-flex w-full justify-center rounded bg-green-600 px-5 py-3 font-semibold text-white hover:bg-green-700"
+          className="inline-flex w-full justify-center rounded bg-green-700 px-5 py-3 font-semibold text-white hover:bg-green-800"
         >
           Proceder al pago
         </Link>

@@ -1,15 +1,19 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { track } from '@vercel/analytics'
 import ContactForm from '@/components/sections/ContactForm'
 import DatePicker from '@/components/sections/DatePicker'
 import FAQSection from '@/components/sections/FAQSection'
+import FloatingWhatsApp from '@/components/sections/FloatingWhatsApp'
 import GallerySection from '@/components/sections/GallerySection'
 import HeroSection from '@/components/sections/HeroSection'
 import MapSection from '@/components/sections/MapSection'
 import PaymentSection from '@/components/sections/PaymentSection'
+import PricingSection from '@/components/sections/PricingSection'
 import ShoppingCart from '@/components/sections/ShoppingCart'
 import TestimonialsSection from '@/components/sections/TestimonialsSection'
+import TourInfoSection from '@/components/sections/TourInfoSection'
 import ToursSection from '@/components/sections/ToursSection'
 import { buildMailtoUrl, buildWhatsAppUrl, contact, tours as fallbackTours } from '@/lib/siteConfig'
 
@@ -20,7 +24,7 @@ export default function Home() {
   const [showPayment, setShowPayment] = useState(false)
   const [tours, setTours] = useState(fallbackTours)
   const [cart, setCart] = useState([])
-  const [filters, setFilters] = useState({ level: '', maxPrice: 100 })
+  const [filters, setFilters] = useState({ level: '', maxPrice: 200 })
 
   useEffect(() => {
     let ignore = false
@@ -53,7 +57,8 @@ export default function Home() {
     if (selectedTour) {
       setCart([...cart, { ...selectedTour, selectedDate: date }])
       setShowDatePicker(false)
-      alert(`${selectedTour.name} agregado al carrito para el ${date.toLocaleDateString()}`)
+      track('tour_date_selected', { tour: selectedTour.name })
+      alert(`${selectedTour.name} agregado a la solicitud para el ${date.toLocaleDateString()}`)
     }
   }
 
@@ -66,6 +71,7 @@ export default function Home() {
       `Mensaje: ${formData.message || 'Sin mensaje adicional'}`
     ].join('\n')
 
+    track('contact_form_submit')
     window.open(buildWhatsAppUrl(message), '_blank', 'noopener,noreferrer')
     window.location.href = buildMailtoUrl('Consulta desde miravallesexpedition.com', message)
     setShowContactForm(false)
@@ -93,23 +99,26 @@ export default function Home() {
         />
       </section>
 
-      <section className="bg-gray-100 p-10 text-center">
-        <h2 className="text-2xl font-bold mb-6">¿Cómo funciona?</h2>
-        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+      <PricingSection />
+      <TourInfoSection />
+
+      <section className="bg-gray-100 px-4 py-14 text-center sm:px-6 lg:px-10">
+        <h2 className="mb-6 text-3xl font-bold text-gray-950">Cómo reservar</h2>
+        <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-3">
           <div className="p-4">
-            <div className="text-4xl mb-2">1</div>
+            <div className="mb-2 text-4xl font-bold text-green-700">1</div>
             <p className="font-semibold">Elegís tu tour</p>
-            <p className="text-gray-600 text-sm">Explora todas nuestras opciones</p>
+            <p className="text-sm text-gray-600">Revisá precio, dificultad, duración y lo que incluye.</p>
           </div>
           <div className="p-4">
-            <div className="text-4xl mb-2">2</div>
+            <div className="mb-2 text-4xl font-bold text-green-700">2</div>
             <p className="font-semibold">Seleccionás fecha</p>
-            <p className="text-gray-600 text-sm">Elige el día que mejor te convenga</p>
+            <p className="text-sm text-gray-600">Enviás una solicitud con cantidad de personas y notas.</p>
           </div>
           <div className="p-4">
-            <div className="text-4xl mb-2">3</div>
-            <p className="font-semibold">Confirmás la reserva</p>
-            <p className="text-gray-600 text-sm">Te contactamos por WhatsApp o correo para finalizar detalles</p>
+            <div className="mb-2 text-4xl font-bold text-green-700">3</div>
+            <p className="font-semibold">Confirmamos detalles</p>
+            <p className="text-sm text-gray-600">Te contactamos por WhatsApp o correo para coordinar punto de encuentro.</p>
           </div>
         </div>
       </section>
@@ -119,22 +128,25 @@ export default function Home() {
       <MapSection />
       <FAQSection />
 
-      <section className="p-10 text-center bg-white">
-        <h2 className="text-3xl font-bold mb-4">
-          ¿Listo para vivir la aventura?
-        </h2>
+      <section className="bg-gray-950 px-4 py-14 text-center text-white sm:px-6 lg:px-10">
+        <h2 className="mb-4 text-3xl font-bold">¿Listo para vivir Miravalles?</h2>
+        <p className="mx-auto mb-6 max-w-2xl text-white/75">
+          Reservá una caminata, un tour de aves o una experiencia privada con guía local.
+        </p>
         <button
           onClick={() => setShowContactForm(true)}
-          className="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 text-lg"
+          className="rounded bg-white px-8 py-3 text-lg font-bold text-gray-950 hover:bg-amber-100"
         >
-          Reservar Ahora
+          Consultar disponibilidad
         </button>
       </section>
 
-      <footer className="text-center p-8 text-sm bg-gray-900 text-white">
+      <footer className="bg-gray-900 p-8 text-center text-sm text-white">
         <p>© 2026 Miravalles Expedition - Aventura segura y profesional</p>
         <p className="mt-2">{contact.phoneDisplay} | {contact.email}</p>
       </footer>
+
+      <FloatingWhatsApp />
 
       {showDatePicker && (
         <DatePicker

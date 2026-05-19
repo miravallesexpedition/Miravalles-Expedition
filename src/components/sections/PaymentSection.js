@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
-import { contact } from '@/lib/siteConfig'
+import { useMemo, useState } from 'react'
+import { track } from '@vercel/analytics'
+import { business, contact } from '@/lib/siteConfig'
 
 export default function PaymentSection({ cart, total, onClose }) {
   const [formData, setFormData] = useState({
@@ -14,6 +15,10 @@ export default function PaymentSection({ cart, total, onClose }) {
   })
   const [status, setStatus] = useState({ type: 'idle', message: '', links: null })
 
+  const estimatedTotal = useMemo(() => {
+    return Number(total) * Number(formData.participantsCount || 1)
+  }, [total, formData.participantsCount])
+
   const handleChange = (event) => {
     const { name, value } = event.target
     setFormData((prev) => ({ ...prev, [name]: value }))
@@ -22,6 +27,7 @@ export default function PaymentSection({ cart, total, onClose }) {
   const handleSubmit = async (event) => {
     event.preventDefault()
     setStatus({ type: 'loading', message: 'Creando solicitud de reserva...', links: null })
+    track('booking_submit_attempt', { tours: cart.length, total: estimatedTotal })
 
     try {
       const responses = await Promise.all(cart.map(async (item) => {
@@ -48,6 +54,11 @@ export default function PaymentSection({ cart, total, onClose }) {
       }))
 
       const firstResponse = responses[0]
+      track('booking_submit_success', {
+        tours: cart.length,
+        persisted: Boolean(firstResponse.persisted),
+        total: estimatedTotal
+      })
       setStatus({
         type: 'success',
         message: firstResponse.message || `Solicitud creada. Te contactaremos al ${contact.phoneDisplay}.`,
@@ -57,60 +68,77 @@ export default function PaymentSection({ cart, total, onClose }) {
         }
       })
     } catch (error) {
+      track('booking_submit_error', { message: error.message })
       setStatus({ type: 'error', message: error.message, links: null })
     }
   }
 
+  const handleWhatsAppClick = () => {
+    track('booking_whatsapp_click', { total: estimatedTotal })
+  }
+
+  const handleEmailClick = () => {
+    track('booking_email_click', { total: estimatedTotal })
+  }
+
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-bold">Completar Reserva</h3>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">×</button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+      <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg bg-white p-6">
+        <div className="mb-4 flex items-center justify-between">
+          <div>
+            <h3 className="text-xl font-bold text-gray-950">Completar solicitud</h3>
+            <p className="text-sm text-gray-600">Confirmamos disponibilidad por WhatsApp o correo.</p>
+          </div>
+          <button onClick={onClose} className="text-2xl text-gray-500 hover:text-gray-700" aria-label="Cerrar">
+            ×
+          </button>
         </div>
 
-        <div className="space-y-3 mb-6 pb-4 border-b">
+        <div className="mb-6 space-y-3 border-b pb-4">
           {cart.map((item, i) => (
             <div key={`${item.id || item.name}-${i}`} className="flex justify-between gap-4">
               <div>
                 <p className="font-semibold">{item.name}</p>
                 <p className="text-sm text-gray-600">{formatDate(item.selectedDate)}</p>
               </div>
-              <p className="font-semibold">{item.priceLabel || `$${item.price}`}</p>
+              <p className="font-semibold">{item.priceLabel || `$${item.price}`} p.p.</p>
             </div>
           ))}
         </div>
 
-        <div className="mb-6 p-4 bg-gray-100 rounded">
-          <p className="text-gray-600">Total estimado por participante</p>
-          <p className="text-3xl font-bold text-green-600">${total}</p>
+        <div className="mb-6 rounded bg-gray-100 p-4">
+          <p className="text-gray-600">Total estimado</p>
+          <p className="text-3xl font-bold text-green-700">${estimatedTotal}</p>
+          <p className="mt-1 text-xs text-gray-500">
+            Calculado con tarifa base por persona. {business.noTransportNotice}
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid sm:grid-cols-2 gap-3">
+          <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label className="block font-semibold mb-1">Nombre</label>
-              <input name="firstName" value={formData.firstName} onChange={handleChange} required className="w-full p-2 border rounded" />
+              <label className="mb-1 block font-semibold">Nombre</label>
+              <input name="firstName" value={formData.firstName} onChange={handleChange} required className="w-full rounded border p-2" />
             </div>
             <div>
-              <label className="block font-semibold mb-1">Apellido</label>
-              <input name="lastName" value={formData.lastName} onChange={handleChange} required className="w-full p-2 border rounded" />
+              <label className="mb-1 block font-semibold">Apellido</label>
+              <input name="lastName" value={formData.lastName} onChange={handleChange} required className="w-full rounded border p-2" />
             </div>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-3">
+          <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label className="block font-semibold mb-1">Email</label>
-              <input type="email" name="email" value={formData.email} onChange={handleChange} required className="w-full p-2 border rounded" />
+              <label className="mb-1 block font-semibold">Email</label>
+              <input type="email" name="email" value={formData.email} onChange={handleChange} required className="w-full rounded border p-2" />
             </div>
             <div>
-              <label className="block font-semibold mb-1">Teléfono</label>
-              <input type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder="+506 6295 7301" className="w-full p-2 border rounded" />
+              <label className="mb-1 block font-semibold">Teléfono</label>
+              <input type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder={contact.phoneDisplay} className="w-full rounded border p-2" />
             </div>
           </div>
 
           <div>
-            <label className="block font-semibold mb-1">Participantes por tour</label>
+            <label className="mb-1 block font-semibold">Participantes</label>
             <input
               type="number"
               name="participantsCount"
@@ -119,13 +147,20 @@ export default function PaymentSection({ cart, total, onClose }) {
               value={formData.participantsCount}
               onChange={handleChange}
               required
-              className="w-full p-2 border rounded"
+              className="w-full rounded border p-2"
             />
           </div>
 
           <div>
-            <label className="block font-semibold mb-1">Solicitudes especiales</label>
-            <textarea name="specialRequests" value={formData.specialRequests} onChange={handleChange} rows="3" className="w-full p-2 border rounded" />
+            <label className="mb-1 block font-semibold">Solicitudes especiales</label>
+            <textarea
+              name="specialRequests"
+              value={formData.specialRequests}
+              onChange={handleChange}
+              rows="3"
+              className="w-full rounded border p-2"
+              placeholder="Edad de niños, condición física, horario preferido o dudas."
+            />
           </div>
 
           {status.message && (
@@ -137,10 +172,20 @@ export default function PaymentSection({ cart, total, onClose }) {
               <p>{status.message}</p>
               {status.links && (
                 <div className="mt-3 flex flex-wrap gap-2">
-                  <a href={status.links.whatsappUrl} target="_blank" rel="noreferrer" className="rounded bg-green-600 px-3 py-2 text-white">
+                  <a
+                    href={status.links.whatsappUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={handleWhatsAppClick}
+                    className="rounded bg-green-700 px-3 py-2 text-white"
+                  >
                     Enviar por WhatsApp
                   </a>
-                  <a href={status.links.mailtoUrl} className="rounded bg-blue-600 px-3 py-2 text-white">
+                  <a
+                    href={status.links.mailtoUrl}
+                    onClick={handleEmailClick}
+                    className="rounded bg-gray-950 px-3 py-2 text-white"
+                  >
                     Enviar por correo
                   </a>
                 </div>
@@ -151,7 +196,7 @@ export default function PaymentSection({ cart, total, onClose }) {
           <button
             type="submit"
             disabled={status.type === 'loading'}
-            className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 disabled:cursor-not-allowed disabled:bg-gray-400"
+            className="w-full rounded bg-green-700 py-2 font-semibold text-white hover:bg-green-800 disabled:cursor-not-allowed disabled:bg-gray-400"
           >
             {status.type === 'loading' ? 'Creando...' : 'Crear solicitud'}
           </button>

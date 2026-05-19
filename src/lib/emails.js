@@ -1,9 +1,10 @@
 import { Resend } from 'resend'
+import { contact } from './siteConfig'
 
 const isResendConfigured = Boolean(process.env.RESEND_API_KEY)
 const resend = isResendConfigured ? new Resend(process.env.RESEND_API_KEY) : null
 const fromEmail = process.env.RESEND_FROM_EMAIL || 'noreply@miravallesexpedition.com'
-const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'reservas.miravallesexpedition@gmail.com'
+const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL || contact.email
 
 function emailNotConfigured() {
   console.warn('Resend no está configurado. No se enviará el email.')
@@ -32,11 +33,38 @@ function bookingRows(booking) {
     <p><strong>Tour:</strong> ${escapeHtml(booking.tour_name)}</p>
     <p><strong>Fecha:</strong> ${escapeHtml(booking.tour_date)}</p>
     <p><strong>Participantes:</strong> ${escapeHtml(booking.participants_count)}</p>
-    <p><strong>Precio Total:</strong> $${escapeHtml(booking.total_price)}</p>
+    <p><strong>Precio total estimado:</strong> $${escapeHtml(booking.total_price)}</p>
   `
 }
 
 export const emailService = {
+  async sendBookingRequestEmail(booking, whatsappUrl) {
+    try {
+      return await sendEmail({
+        from: fromEmail,
+        to: contactEmail,
+        subject: `Nueva reserva: ${booking.tour_name}`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 640px; margin: 0 auto;">
+            <h1 style="color: #166534;">Nueva solicitud de reserva</h1>
+            <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              ${bookingRows(booking)}
+              <p><strong>Cliente:</strong> ${escapeHtml(booking.first_name)} ${escapeHtml(booking.last_name)}</p>
+              <p><strong>Email:</strong> ${escapeHtml(booking.email)}</p>
+              <p><strong>Teléfono:</strong> ${escapeHtml(booking.phone || 'No indicado')}</p>
+              <p><strong>Notas:</strong> ${escapeHtml(booking.special_requests || 'Ninguna')}</p>
+            </div>
+            <p>Recordatorio: el transporte no está incluido. Confirmar punto de encuentro y hora por WhatsApp.</p>
+            <p><a href="${escapeHtml(whatsappUrl)}" style="background: #166534; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px;">Abrir conversación</a></p>
+          </div>
+        `
+      })
+    } catch (error) {
+      console.error('Error sending booking request email:', error)
+      throw error
+    }
+  },
+
   async sendConfirmationEmail(email, booking, confirmationUrl) {
     try {
       return await sendEmail({
@@ -45,20 +73,21 @@ export const emailService = {
         subject: 'Confirma tu reserva - Miravalles Expedition',
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h1 style="color: #16a34a;">¡Hola ${escapeHtml(booking.first_name)}!</h1>
+            <h1 style="color: #166534;">Hola ${escapeHtml(booking.first_name)}</h1>
             <p>Gracias por reservar con Miravalles Expedition.</p>
             <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <h2 style="color: #1f2937; margin-top: 0;">Resumen de tu reserva:</h2>
+              <h2 style="color: #1f2937; margin-top: 0;">Resumen de tu reserva</h2>
               ${bookingRows(booking)}
             </div>
-            <p style="color: #ef4444;"><strong>Importante:</strong> Confirma tu reserva dentro de 24 horas desde este enlace:</p>
+            <p><strong>Importante:</strong> el transporte no está incluido. Coordinaremos el punto de encuentro por WhatsApp.</p>
+            <p style="color: #ef4444;"><strong>Confirmá tu reserva dentro de 24 horas desde este enlace:</strong></p>
             <div style="text-align: center; margin: 30px 0;">
-              <a href="${escapeHtml(confirmationUrl)}" style="background: #16a34a; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">
-                Confirmar Reserva
+              <a href="${escapeHtml(confirmationUrl)}" style="background: #166534; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">
+                Confirmar reserva
               </a>
             </div>
             <p style="word-break: break-all; background: #f3f4f6; padding: 10px; border-radius: 5px;">${escapeHtml(confirmationUrl)}</p>
-            <p style="color: #666; font-size: 12px;">Si tienes preguntas, contáctanos: <strong>${escapeHtml(contactEmail)}</strong></p>
+            <p style="color: #666; font-size: 12px;">Preguntas: <strong>${escapeHtml(contact.phoneDisplay)}</strong> | <strong>${escapeHtml(contactEmail)}</strong></p>
           </div>
         `
       })
@@ -76,22 +105,22 @@ export const emailService = {
         subject: 'Tu reserva está confirmada - Miravalles Expedition',
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h1 style="color: #16a34a;">¡Tu reserva está confirmada!</h1>
-            <div style="background: #dcfce7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #16a34a;">
+            <h1 style="color: #166534;">Tu reserva está confirmada</h1>
+            <div style="background: #dcfce7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #166534;">
               <p style="color: #15803d; margin: 0;">Tu reserva ha sido confirmada exitosamente.</p>
             </div>
             <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <h2 style="color: #1f2937; margin-top: 0;">Detalles de tu reserva:</h2>
-              <p><strong>ID de Reserva:</strong> ${escapeHtml(booking.id)}</p>
+              <h2 style="color: #1f2937; margin-top: 0;">Detalles</h2>
+              <p><strong>ID de reserva:</strong> ${escapeHtml(booking.id)}</p>
               ${bookingRows(booking)}
             </div>
-            <p style="color: #ef4444;"><strong>Próximo paso:</strong> Completa el pago para finalizar tu reserva.</p>
+            <p><strong>Próximo paso:</strong> completá el pago para finalizar tu reserva.</p>
             <div style="text-align: center; margin: 30px 0;">
-              <a href="${escapeHtml(paymentUrl)}" style="background: #007bff; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">
-                Proceder al Pago
+              <a href="${escapeHtml(paymentUrl)}" style="background: #166534; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">
+                Proceder al pago
               </a>
             </div>
-            <p style="color: #666; font-size: 12px;">Si tienes preguntas: <strong>${escapeHtml(contactEmail)}</strong></p>
+            <p style="color: #666; font-size: 12px;">Preguntas: <strong>${escapeHtml(contactEmail)}</strong></p>
           </div>
         `
       })
@@ -106,18 +135,18 @@ export const emailService = {
       return await sendEmail({
         from: fromEmail,
         to: email,
-        subject: 'Recordatorio: Tu tour es mañana - Miravalles Expedition',
+        subject: 'Recordatorio: tu tour es mañana - Miravalles Expedition',
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h1 style="color: #16a34a;">¡Tu tour es mañana!</h1>
+            <h1 style="color: #166534;">Tu tour es mañana</h1>
             <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <h2 style="color: #1f2937; margin-top: 0;">Detalles:</h2>
+              <h2 style="color: #1f2937; margin-top: 0;">Detalles</h2>
               <p><strong>Tour:</strong> ${escapeHtml(booking.tour_name)}</p>
               <p><strong>Fecha:</strong> ${escapeHtml(booking.tour_date)}</p>
-              <p><strong>Hora de salida:</strong> 8:00 AM</p>
-              <p><strong>Lugar de encuentro:</strong> Fortuna, Bagaces</p>
+              <p><strong>Lugar de encuentro:</strong> Fortuna, Guanacaste</p>
             </div>
-            <p style="color: #666; font-size: 14px;">¿Preguntas de último minuto? Contáctanos: <strong>${escapeHtml(contactEmail)}</strong></p>
+            <p>Recordá llevar ropa cómoda, zapatos para caminar, bloqueador solar y repelente contra insectos.</p>
+            <p style="color: #666; font-size: 14px;">Preguntas de último minuto: <strong>${escapeHtml(contact.phoneDisplay)}</strong></p>
           </div>
         `
       })
