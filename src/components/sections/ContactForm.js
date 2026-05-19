@@ -10,13 +10,13 @@ export default function ContactForm({ onSubmit, onClose }) {
     message: ''
   })
 
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const handleSubmit = (event) => {
+    event.preventDefault()
     onSubmit(formData)
     setFormData({ name: '', email: '', phone: '', message: '' })
   }
@@ -26,7 +26,7 @@ export default function ContactForm({ onSubmit, onClose }) {
       <div className="bg-white rounded-lg p-6 max-w-md w-full">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-xl font-bold">Formulario de Contacto</h3>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">✕</button>
+          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">×</button>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -65,7 +65,7 @@ export default function ContactForm({ onSubmit, onClose }) {
               onChange={handleChange}
               required
               className="w-full p-2 border rounded"
-              placeholder="+506 XXXX XXXX"
+              placeholder="+506 6295 7301"
             />
           </div>
 
@@ -85,7 +85,7 @@ export default function ContactForm({ onSubmit, onClose }) {
             type="submit"
             className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700"
           >
-            Enviar
+            Enviar por WhatsApp y correo
           </button>
         </form>
       </div>

@@ -1,46 +1,17 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import HeroSection from '@/components/sections/HeroSection'
-import ToursSection from '@/components/sections/ToursSection'
-import DatePicker from '@/components/sections/DatePicker'
 import ContactForm from '@/components/sections/ContactForm'
-import GallerySection from '@/components/sections/GallerySection'
-import TestimonialsSection from '@/components/sections/TestimonialsSection'
-import MapSection from '@/components/sections/MapSection'
-import ShoppingCart from '@/components/sections/ShoppingCart'
+import DatePicker from '@/components/sections/DatePicker'
 import FAQSection from '@/components/sections/FAQSection'
+import GallerySection from '@/components/sections/GallerySection'
+import HeroSection from '@/components/sections/HeroSection'
+import MapSection from '@/components/sections/MapSection'
 import PaymentSection from '@/components/sections/PaymentSection'
-
-const fallbackTours = [
-  {
-    id: '1',
-    name: 'Volcán Miravalles',
-    price: 65,
-    priceLabel: '$65',
-    level: 'Fácil',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300',
-    description: 'Explora el majestuoso volcán con vistas panorámicas'
-  },
-  {
-    id: '2',
-    name: 'Cataratas Escondidas',
-    price: 75,
-    priceLabel: '$75',
-    level: 'Moderado',
-    image: 'https://images.unsplash.com/photo-1511316695145-4992006ffddb?w=400&h=300',
-    description: 'Camina entre cascadas de agua cristalina'
-  },
-  {
-    id: '3',
-    name: 'Aguas Termales',
-    price: 55,
-    priceLabel: '$55',
-    level: 'Relajado',
-    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=300',
-    description: 'Relájate en piscinas naturales de agua caliente'
-  }
-]
+import ShoppingCart from '@/components/sections/ShoppingCart'
+import TestimonialsSection from '@/components/sections/TestimonialsSection'
+import ToursSection from '@/components/sections/ToursSection'
+import { buildMailtoUrl, buildWhatsAppUrl, contact, tours as fallbackTours } from '@/lib/siteConfig'
 
 export default function Home() {
   const [selectedTour, setSelectedTour] = useState(null)
@@ -87,8 +58,16 @@ export default function Home() {
   }
 
   const handleContactSubmit = (formData) => {
-    console.log('Formulario enviado:', formData)
-    alert('¡Gracias! Te contactaremos pronto.')
+    const message = [
+      'Hola, quiero más información sobre Miravalles Expedition.',
+      `Nombre: ${formData.name}`,
+      `Email: ${formData.email}`,
+      `Teléfono: ${formData.phone}`,
+      `Mensaje: ${formData.message || 'Sin mensaje adicional'}`
+    ].join('\n')
+
+    window.open(buildWhatsAppUrl(message), '_blank', 'noopener,noreferrer')
+    window.location.href = buildMailtoUrl('Consulta desde miravallesexpedition.com', message)
     setShowContactForm(false)
   }
 
@@ -129,8 +108,8 @@ export default function Home() {
           </div>
           <div className="p-4">
             <div className="text-4xl mb-2">3</div>
-            <p className="font-semibold">Confirmás y pagás</p>
-            <p className="text-gray-600 text-sm">Recibirás el enlace de confirmación por email</p>
+            <p className="font-semibold">Confirmás la reserva</p>
+            <p className="text-gray-600 text-sm">Te contactamos por WhatsApp o correo para finalizar detalles</p>
           </div>
         </div>
       </section>
@@ -152,9 +131,9 @@ export default function Home() {
         </button>
       </section>
 
-      <footer className="text-center p-8 text-sm text-gray-500 bg-gray-900 text-white">
-        <p>© 2026 Miravalles Expedition - Aventura Segura y Profesional</p>
-        <p className="mt-2">+506 XXXX XXXX | info@miravalesexpedition.com</p>
+      <footer className="text-center p-8 text-sm bg-gray-900 text-white">
+        <p>© 2026 Miravalles Expedition - Aventura segura y profesional</p>
+        <p className="mt-2">{contact.phoneDisplay} | {contact.email}</p>
       </footer>
 
       {showDatePicker && (

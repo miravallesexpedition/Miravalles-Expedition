@@ -1,6 +1,7 @@
-import { bookingService, tourService } from '@/lib/services'
-import { emailService } from '@/lib/emails'
 import crypto from 'crypto'
+import { bookingService, tourService } from '@/lib/services'
+import { buildMailtoUrl, buildWhatsAppUrl, contact } from '@/lib/siteConfig'
+import { emailService } from '@/lib/emails'
 
 export const dynamic = 'force-dynamic'
 
@@ -57,8 +58,22 @@ export async function POST(request) {
       special_requests: specialRequests
     })
 
+    const summary = [
+      'Nueva solicitud de reserva',
+      `Tour: ${tour.name}`,
+      `Fecha: ${tourDate}`,
+      `Participantes: ${participantsCount}`,
+      `Total estimado: $${totalPrice}`,
+      `Nombre: ${firstName} ${lastName}`,
+      `Email: ${email}`,
+      `Teléfono: ${phone || 'No indicado'}`,
+      `Notas: ${specialRequests || 'Ninguna'}`
+    ].join('\n')
+
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
     const confirmationUrl = `${appUrl}/confirmar-reserva/${confirmationToken}`
+    const whatsappUrl = buildWhatsAppUrl(summary)
+    const mailtoUrl = buildMailtoUrl('Nueva solicitud de reserva', summary)
 
     try {
       await emailService.sendConfirmationEmail(email, {
@@ -75,8 +90,13 @@ export async function POST(request) {
     return Response.json({
       success: true,
       bookingId: booking.id,
-      message: 'Reserva creada. Por favor, verifica tu email para confirmar.',
-      confirmationUrl
+      persisted: Boolean(booking.persisted),
+      message: booking.persisted
+        ? 'Reserva creada. Por favor, verifica tu email para confirmar.'
+        : `Solicitud preparada. Envíala por WhatsApp o correo para confirmar con ${contact.phoneDisplay}.`,
+      confirmationUrl: booking.persisted ? confirmationUrl : null,
+      whatsappUrl,
+      mailtoUrl
     })
   } catch (error) {
     console.error('Error creating booking:', error)

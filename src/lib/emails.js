@@ -3,7 +3,7 @@ import { Resend } from 'resend'
 const isResendConfigured = Boolean(process.env.RESEND_API_KEY)
 const resend = isResendConfigured ? new Resend(process.env.RESEND_API_KEY) : null
 const fromEmail = process.env.RESEND_FROM_EMAIL || 'noreply@miravallesexpedition.com'
-const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'reserva.miravallesexpedition@gmail.com'
+const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'reservas.miravallesexpedition@gmail.com'
 
 function emailNotConfigured() {
   console.warn('Resend no está configurado. No se enviará el email.')

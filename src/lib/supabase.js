@@ -3,5 +3,9 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseKey)
+export const isSupabaseConfigured = Boolean(
+  supabaseUrl?.startsWith('https://') &&
+  supabaseKey &&
+  supabaseKey.length > 80
+)
 export const supabase = isSupabaseConfigured ? createClient(supabaseUrl, supabaseKey) : null

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { contact } from '@/lib/siteConfig'
 
 export default function PaymentSection({ cart, total, onClose }) {
   const [formData, setFormData] = useState({
@@ -11,7 +12,7 @@ export default function PaymentSection({ cart, total, onClose }) {
     participantsCount: 1,
     specialRequests: ''
   })
-  const [status, setStatus] = useState({ type: 'idle', message: '' })
+  const [status, setStatus] = useState({ type: 'idle', message: '', links: null })
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -20,7 +21,7 @@ export default function PaymentSection({ cart, total, onClose }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    setStatus({ type: 'loading', message: 'Creando reserva...' })
+    setStatus({ type: 'loading', message: 'Creando solicitud de reserva...', links: null })
 
     try {
       const responses = await Promise.all(cart.map(async (item) => {
@@ -46,12 +47,17 @@ export default function PaymentSection({ cart, total, onClose }) {
         return payload
       }))
 
+      const firstResponse = responses[0]
       setStatus({
         type: 'success',
-        message: `Reserva creada. Revisa tu correo para confirmar y continuar al pago. (${responses.length})`
+        message: firstResponse.message || `Solicitud creada. Te contactaremos al ${contact.phoneDisplay}.`,
+        links: {
+          whatsappUrl: firstResponse.whatsappUrl,
+          mailtoUrl: firstResponse.mailtoUrl
+        }
       })
     } catch (error) {
-      setStatus({ type: 'error', message: error.message })
+      setStatus({ type: 'error', message: error.message, links: null })
     }
   }
 
@@ -76,7 +82,7 @@ export default function PaymentSection({ cart, total, onClose }) {
         </div>
 
         <div className="mb-6 p-4 bg-gray-100 rounded">
-          <p className="text-gray-600">Total estimado</p>
+          <p className="text-gray-600">Total estimado por participante</p>
           <p className="text-3xl font-bold text-green-600">${total}</p>
         </div>
 
@@ -99,7 +105,7 @@ export default function PaymentSection({ cart, total, onClose }) {
             </div>
             <div>
               <label className="block font-semibold mb-1">Teléfono</label>
-              <input type="tel" name="phone" value={formData.phone} onChange={handleChange} className="w-full p-2 border rounded" />
+              <input type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder="+506 6295 7301" className="w-full p-2 border rounded" />
             </div>
           </div>
 
@@ -123,13 +129,23 @@ export default function PaymentSection({ cart, total, onClose }) {
           </div>
 
           {status.message && (
-            <p className={`rounded p-3 text-sm ${
+            <div className={`rounded p-3 text-sm ${
               status.type === 'error' ? 'bg-red-50 text-red-700' :
                 status.type === 'success' ? 'bg-green-50 text-green-700' :
                   'bg-blue-50 text-blue-700'
             }`}>
-              {status.message}
-            </p>
+              <p>{status.message}</p>
+              {status.links && (
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <a href={status.links.whatsappUrl} target="_blank" rel="noreferrer" className="rounded bg-green-600 px-3 py-2 text-white">
+                    Enviar por WhatsApp
+                  </a>
+                  <a href={status.links.mailtoUrl} className="rounded bg-blue-600 px-3 py-2 text-white">
+                    Enviar por correo
+                  </a>
+                </div>
+              )}
+            </div>
           )}
 
           <button
@@ -137,7 +153,7 @@ export default function PaymentSection({ cart, total, onClose }) {
             disabled={status.type === 'loading'}
             className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 disabled:cursor-not-allowed disabled:bg-gray-400"
           >
-            {status.type === 'loading' ? 'Creando...' : 'Crear reserva'}
+            {status.type === 'loading' ? 'Creando...' : 'Crear solicitud'}
           </button>
         </form>
       </div>
