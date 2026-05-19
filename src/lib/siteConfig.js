@@ -5,14 +5,33 @@ export const contact = {
 }
 
 export const tourImages = {
-  hero: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1600&h=1000',
-  volcan: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600',
-  cataratas: 'https://images.unsplash.com/photo-1511316695145-4992006ffddb?w=800&h=600',
-  termales: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=600',
-  naturaleza: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&h=600',
-  aventura: 'https://images.unsplash.com/photo-1491904014055-e4835cdcd4c6?w=800&h=600',
-  grupo: 'https://images.unsplash.com/photo-1520763185298-1b434c919eba?w=800&h=600'
+  hero: '/images/hero-waterfall.jpg',
+  catarataPool: '/images/hero-waterfall.jpg',
+  catarataRiver: '/images/waterfall-river.jpg',
+  tallWaterfall: '/images/tall-waterfall.jpeg',
+  redRockWaterfall: '/images/red-rock-waterfall.jpg',
+  volcano: '/images/volcano.jpg',
+  bromelia: '/images/bromelia.jpg',
+  butterfly: '/images/butterfly.jpg',
+  bird: '/images/bird.jpg',
+  duck: '/images/duck.jpg',
+  orchids: '/images/orchids.jpg',
+  rioCuipilapa: '/images/rio-cuipilapa-sign.jpg'
 }
+
+export const galleryImages = [
+  { url: tourImages.hero, alt: 'Catarata y poza natural' },
+  { url: tourImages.tallWaterfall, alt: 'Catarata alta en Miravalles' },
+  { url: tourImages.redRockWaterfall, alt: 'Cascada sobre roca rojiza' },
+  { url: tourImages.catarataRiver, alt: 'Río y cascadas de montaña' },
+  { url: tourImages.volcano, alt: 'Volcán Miravalles' },
+  { url: tourImages.bromelia, alt: 'Bromelia del bosque' },
+  { url: tourImages.butterfly, alt: 'Mariposa en flor' },
+  { url: tourImages.orchids, alt: 'Orquídeas naranjas' },
+  { url: tourImages.bird, alt: 'Ave local' },
+  { url: tourImages.duck, alt: 'Ave acuática' },
+  { url: tourImages.rioCuipilapa, alt: 'Rótulo Río Cuipilapa' }
+]
 
 export const tours = [
   {
@@ -21,7 +40,7 @@ export const tours = [
     price: 55,
     priceLabel: '$55',
     level: 'Moderado',
-    image: tourImages.cataratas,
+    image: tourImages.hero,
     description: 'Caminata hacia una hermosa catarata en las montañas de Fortuna.'
   },
   {
@@ -30,8 +49,8 @@ export const tours = [
     price: 60,
     priceLabel: '$60',
     level: 'Fácil',
-    image: tourImages.naturaleza,
-    description: 'Observación de mariposas Morfo en su hábitat natural.'
+    image: tourImages.butterfly,
+    description: 'Observación de mariposas, flores y vida silvestre en su hábitat natural.'
   },
   {
     id: 'hot-springs',
@@ -39,8 +58,8 @@ export const tours = [
     price: 50,
     priceLabel: '$50',
     level: 'Relajado',
-    image: tourImages.termales,
-    description: 'Disfruta de aguas termales naturales y un ambiente relajante.'
+    image: tourImages.redRockWaterfall,
+    description: 'Disfruta de aguas naturales, paisajes volcánicos y un ambiente relajante.'
   },
   {
     id: 'el-yoko',
@@ -48,8 +67,8 @@ export const tours = [
     price: 75,
     priceLabel: '$75',
     level: 'Difícil',
-    image: tourImages.aventura,
-    description: 'Aventura completa en río y selva tropical.'
+    image: tourImages.catarataRiver,
+    description: 'Aventura completa entre río, roca y bosque tropical.'
   },
   {
     id: 'crater-volcan-miravalles',
@@ -57,7 +76,7 @@ export const tours = [
     price: 65,
     priceLabel: '$65',
     level: 'Difícil',
-    image: tourImages.volcan,
+    image: tourImages.volcano,
     description: 'Caminata al cráter del Volcán Miravalles con vistas espectaculares.'
   },
   {
@@ -66,7 +85,7 @@ export const tours = [
     price: 70,
     priceLabel: '$70',
     level: 'Fácil',
-    image: tourImages.grupo,
+    image: tourImages.bird,
     description: 'Observación de aves en una de las zonas naturales más especiales de Guanacaste.'
   }
 ]

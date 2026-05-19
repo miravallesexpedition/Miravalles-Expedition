@@ -55,8 +55,9 @@ export default function ToursSection({ tours, onSelectTour, filters, onFilterCha
             <Image
               src={tour.image}
               alt={tour.name}
-              width={400}
-              height={192}
+              width={800}
+              height={520}
+              sizes="(min-width: 768px) 33vw, 100vw"
               className="w-full h-48 object-cover rounded-lg mb-4"
             />
             <h3 className="text-xl font-bold mb-2">{tour.name}</h3>
