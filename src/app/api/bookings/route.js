@@ -1,7 +1,7 @@
 import crypto from 'crypto'
 import { bookingService, tourService } from '@/lib/services'
 import { buildMailtoUrl, buildWhatsAppUrl, contact } from '@/lib/siteConfig'
-import { emailService, isResendConfigured } from '@/lib/emails'
+import { emailService } from '@/lib/emails'
 import { formatMoney, getTourQuote, normalizeCustomerType } from '@/lib/pricing'
 
 export const dynamic = 'force-dynamic'
@@ -123,37 +123,40 @@ export async function POST(request) {
       tour_name: tour.name
     }
 
+    let customerConfirmationEmailSent = false
+
     try {
-      const emailTasks = [
-        emailService.sendBookingRequestEmail({
-          ...emailBooking,
-          first_name: cleanFirstName,
-          last_name: cleanLastName,
-          tour_name: tour.name,
-          tour_date: cleanTourDate,
-          participants_count: participantsCount,
-          total_price: totalPrice,
-          currency: quote.currency,
-          customer_type: customerType
-        }, whatsappUrl)
-      ]
-
-      if (booking.persisted) {
-        emailTasks.push(emailService.sendConfirmationEmail(cleanEmail, {
-          ...emailBooking,
-          first_name: cleanFirstName,
-          tour_name: tour.name,
-          tour_date: cleanTourDate,
-          participants_count: participantsCount,
-          total_price: totalPrice,
-          currency: quote.currency,
-          customer_type: customerType
-        }, confirmationUrl))
-      }
-
-      await Promise.all(emailTasks)
+      await emailService.sendBookingRequestEmail({
+        ...emailBooking,
+        first_name: cleanFirstName,
+        last_name: cleanLastName,
+        tour_name: tour.name,
+        tour_date: cleanTourDate,
+        participants_count: participantsCount,
+        total_price: totalPrice,
+        currency: quote.currency,
+        customer_type: customerType
+      }, whatsappUrl)
     } catch (emailError) {
-      console.error('Error sending email:', emailError)
+      console.error('Error sending admin booking email:', emailError)
+    }
+
+    if (booking.persisted) {
+      try {
+        await emailService.sendConfirmationEmail(cleanEmail, {
+          ...emailBooking,
+          first_name: cleanFirstName,
+          tour_name: tour.name,
+          tour_date: cleanTourDate,
+          participants_count: participantsCount,
+          total_price: totalPrice,
+          currency: quote.currency,
+          customer_type: customerType
+        }, confirmationUrl)
+        customerConfirmationEmailSent = true
+      } catch (emailError) {
+        console.error('Error sending customer confirmation email:', emailError)
+      }
     }
 
     return Response.json({
@@ -164,10 +167,11 @@ export async function POST(request) {
       currency: quote.currency,
       total: totalPrice,
       totalLabel,
+      emailSent: customerConfirmationEmailSent,
       message: booking.persisted
-        ? (isResendConfigured
+        ? (customerConfirmationEmailSent
           ? 'Reserva creada. Por favor, verifica tu email para confirmar.'
-          : `Reserva registrada. Te contactaremos para confirmar disponibilidad con ${contact.phoneDisplay}.`)
+          : `Reserva registrada. Usa el botón de confirmación o contáctanos por WhatsApp para terminar el proceso con ${contact.phoneDisplay}.`)
         : `Solicitud preparada. Envíala por WhatsApp o correo para confirmar con ${contact.phoneDisplay}.`,
       confirmationUrl: booking.persisted ? confirmationUrl : null,
       whatsappUrl,
