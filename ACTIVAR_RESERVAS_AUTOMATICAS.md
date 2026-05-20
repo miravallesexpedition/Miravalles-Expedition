@@ -1,68 +1,76 @@
-# Activar reservas, correos y pagos automáticos
+# Activar reservas automaticas
 
-La web ya tiene el flujo preparado. Para que deje de funcionar en modo manual y pase a modo automático real, faltan estas credenciales:
+La web ya tiene el flujo preparado. Para que deje de funcionar en modo manual y pase a modo automatico real, faltan estos puntos.
 
 ## 1. Supabase
 
-Necesario para guardar reservas en base de datos.
+Necesario para guardar reservas, confirmar enlaces y permitir pago PayPal despues de confirmar.
 
-Variables:
+Variables en Vercel:
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
+SUPABASE_SECRET_KEY=
+```
+
+Tambien se puede usar la llave legacy:
+
+```env
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
 ```
 
 Pasos:
 
-1. Crear un proyecto en Supabase.
-2. Ejecutar `src/db/schema.sql` en el SQL editor.
-3. Copiar la URL del proyecto y la anon key.
-4. Agregarlas en Vercel como variables de entorno.
+1. Crear o abrir el proyecto en Supabase.
+2. Ir a SQL Editor.
+3. Ejecutar el contenido de `src/db/schema.sql`.
+4. Ir a Project Settings > API Keys.
+5. Copiar:
+   - Project URL.
+   - Publishable key o legacy anon key.
+   - Secret key o legacy service_role key.
+6. Agregar las variables en Vercel.
+7. Redeploy.
+8. Probar `/api/bookings`; debe devolver `persisted: true`.
 
-Cuando Supabase esté bien configurado, la API `/api/bookings` guardará reservas persistentes y generará enlace de confirmación.
+Nota de seguridad: `SUPABASE_SECRET_KEY` o `SUPABASE_SERVICE_ROLE_KEY` solo deben estar en Vercel, nunca en archivos ni en el navegador.
 
 ## 2. Resend
 
-Necesario para enviar correos automáticos al cliente y al correo de reservas.
+Ya existe la API key en Vercel. El dominio esta creado en Resend y esta pendiente de DNS.
 
-Variables:
+Registros a agregar:
 
-```env
-RESEND_API_KEY=
-RESEND_FROM_EMAIL=noreply@miravallesexpedition.com
-NEXT_PUBLIC_CONTACT_EMAIL=reservas.miravallesexpedition@gmail.com
-```
+- Ver `RESEND_DNS_RECORDS.md`.
 
-Recomendación:
+Cuando el DNS este guardado:
 
-- Verificar el dominio `miravallesexpedition.com` en Resend.
-- Usar un remitente como `reservas@miravallesexpedition.com` o `noreply@miravallesexpedition.com`.
+1. Esperar propagacion.
+2. Verificar dominio en Resend.
+3. Confirmar que `miravallesexpedition.com` aparece como `verified`.
+4. La web podra enviar correos automaticos de reserva.
 
 ## 3. PayPal
 
-Opcional para pagos en línea.
-
-Variables:
+Ya esta configurado en Vercel como produccion:
 
 ```env
-NEXT_PUBLIC_PAYPAL_CLIENT_ID=
-PAYPAL_SECRET_KEY=
-PAYPAL_ENV=sandbox
-```
-
-Para producción real:
-
-```env
+NEXT_PUBLIC_PAYPAL_CLIENT_ID=...
+PAYPAL_SECRET_KEY=...
 PAYPAL_ENV=live
 ```
 
-Mientras PayPal no tenga credenciales reales, la página de pago muestra opción de coordinar pago por WhatsApp o correo.
+La web permite PayPal solo para reservas en USD. Las reservas nacionales en CRC se coordinan por WhatsApp, deposito o efectivo.
 
-## 4. Después de cambiar variables
+## 4. Prueba final
 
-Redeploy en Vercel:
+Despues de Supabase y Resend:
 
-```bash
-npx vercel --prod --yes
-```
+1. Crear reserva extranjera.
+2. Confirmar enlace.
+3. Abrir pagina de pago.
+4. Crear orden PayPal.
+5. Crear reserva nacional.
+6. Confirmar que se guarda en Supabase y no intenta cobrar CRC por PayPal.
