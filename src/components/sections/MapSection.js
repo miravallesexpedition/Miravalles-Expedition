@@ -33,13 +33,13 @@ export default function MapSection() {
 
         <div className="min-h-[440px] overflow-hidden rounded-[2rem] bg-white/10 shadow-2xl">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.4896814155557!2d-85.39168342345813!3d10.747800859055846!2m3!1f0!2f0!3f0!2m3!1m2!1sVolc%C3%A1n%20Miravalles!5e0!3m2!1ses!2scr"
+            src={business.mapsEmbedUrl}
             width="100%"
             height="100%"
             style={{ border: 0, minHeight: 440 }}
             allowFullScreen=""
             loading="lazy"
-            title="Ubicación Volcán Miravalles"
+            title="Ubicación Miravalles Expedition"
           />
         </div>
       </div>

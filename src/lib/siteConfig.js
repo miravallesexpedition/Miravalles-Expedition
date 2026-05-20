@@ -3,6 +3,7 @@ export const business = {
   location: 'Fortuna, Guanacaste, Costa Rica',
   meetingPoint: 'Fortuna, cerca del Volcán Miravalles',
   mapsUrl: 'https://maps.app.goo.gl/9jzTzmpLHVMG65Wg8',
+  mapsEmbedUrl: 'https://www.google.com/maps?q=Miravalles%20Expedition%4010.6752514,-85.1986184&z=15&hl=es&output=embed',
   tagline: 'Discover hidden waterfalls, volcanic landscapes and local nature experiences in Guanacaste.',
   positioning:
     'Experiencias locales de caminata, cataratas, aves y naturaleza en la zona del Volcán Miravalles.',
