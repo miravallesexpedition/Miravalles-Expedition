@@ -20,7 +20,7 @@ const imageJobs = [
 ]
 
 const videoJobs = [
-  [`${sourceRoot}/CATARATA MORPHO BLANCA/GO PTO/GX012025.MP4`, 'public/videos/miravalles-hero.mp4']
+  [`${sourceRoot}/0519.mp4`, 'public/videos/miravalles-hero.mp4']
 ]
 
 await fs.mkdir('public/images', { recursive: true })

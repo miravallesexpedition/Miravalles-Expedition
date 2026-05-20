@@ -124,7 +124,7 @@ INSERT INTO tours (
 (
   'Camino al Cráter del Volcán Miravalles',
   'Caminata exigente para viajeros con buena condición física, vistas amplias y terreno volcánico.',
-  65.00,
+  85.00,
   'hard',
   6,
   10,

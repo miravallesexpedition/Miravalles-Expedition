@@ -40,7 +40,8 @@ export default async function TourDetailPage({ params }) {
     `Hola, quiero reservar el tour ${tour.name}.`,
     `Fecha deseada:`,
     `Cantidad de personas:`,
-    `Precio base: ${tour.priceLabel}`,
+    `Tarifa extranjera base: ${tour.priceLabel}`,
+    `Tarifa nacional/residente: ${tour.pricing?.nationalAdult || 'Consultar'}`,
     'Quiero confirmar disponibilidad y punto de encuentro.'
   ].join('\n')
 
@@ -93,11 +94,12 @@ export default async function TourDetailPage({ params }) {
       </section>
 
       <section className="bg-[#061b13] px-4 pb-20 text-white sm:px-6 lg:px-10">
-        <div className="mx-auto grid max-w-6xl gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="mx-auto grid max-w-6xl gap-3 sm:grid-cols-2 lg:grid-cols-6">
           <Metric label="Duration" value={tour.duration} />
           <Metric label="Distance" value={tour.distance || 'Ask'} />
           <Metric label="Difficulty" value={tour.level} />
           <Metric label="From" value={tour.priceLabel} />
+          <Metric label="National" value={tour.pricing?.nationalAdult || 'Ask'} />
           <Metric label="Transport" value="Not included" />
         </div>
       </section>
@@ -162,6 +164,7 @@ function InfoGrid({ tour }) {
   const sections = [
     { title: 'What to Expect', items: tour.whatToExpect },
     { title: 'Highlights', items: tour.highlights },
+    { title: 'Price', items: buildPricingItems(tour) },
     { title: "What's Included", items: tour.includes },
     { title: "What's Not Included", items: tour.notIncluded },
     { title: 'What to Bring', items: tour.bring },
@@ -193,6 +196,18 @@ function InfoGrid({ tour }) {
       </div>
     </section>
   )
+}
+
+function buildPricingItems(tour) {
+  return [
+    tour.pricing?.foreignAdult && `Foreign adult: ${tour.pricing.foreignAdult}`,
+    tour.pricing?.foreignChild && `Foreign child: ${tour.pricing.foreignChild}`,
+    tour.pricing?.nationalAdult && `National/resident: ${tour.pricing.nationalAdult}`,
+    tour.pricing?.nationalChild && `National child: ${tour.pricing.nationalChild}`,
+    tour.pricing?.group && `Group: ${tour.pricing.group}`,
+    tour.pricing?.private && `Private: ${tour.pricing.private}`,
+    tour.pricing?.promo && `Promotion: ${tour.pricing.promo}`
+  ].filter(Boolean)
 }
 
 function Itinerary({ tour }) {

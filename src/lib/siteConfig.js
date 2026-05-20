@@ -150,8 +150,8 @@ export const pricingGuidelines = [
   },
   {
     label: 'Nacional o residente',
-    value: '₡25.000',
-    detail: 'Precio local para mantener el tour accesible en Costa Rica.'
+    value: '₡12.500',
+    detail: 'Tarifa local base por persona; el tour al cráter tiene precio superior por dificultad.'
   },
   {
     label: 'Grupo 4+',
@@ -231,8 +231,8 @@ export const tours = [
     pricing: {
       foreignAdult: '$55',
       foreignChild: '$35',
-      nationalAdult: '₡25.000',
-      nationalChild: '₡16.000',
+      nationalAdult: '₡12.500',
+      nationalChild: '₡12.500',
       group: '$49 p.p. desde 4 personas',
       private: '$160 para 1-2 personas',
       promo: '$49 p.p. en temporada baja'
@@ -279,8 +279,8 @@ export const tours = [
     pricing: {
       foreignAdult: '$35',
       foreignChild: '$25',
-      nationalAdult: '₡18.000',
-      nationalChild: '₡12.000',
+      nationalAdult: '₡12.500',
+      nationalChild: '₡12.500',
       group: '$32 p.p. desde 4 personas',
       private: '$95 para 1-2 personas',
       promo: '$30 p.p. entre semana'
@@ -290,8 +290,8 @@ export const tours = [
     id: 'crater-volcan-miravalles',
     name: 'Camino al Cráter del Volcán Miravalles',
     shortName: 'Cráter Miravalles',
-    price: 65,
-    priceLabel: '$65',
+    price: 85,
+    priceLabel: '$85',
     level: 'Difícil',
     duration: '5 a 6 horas',
     distance: 'Consultar según ruta y clima',
@@ -326,13 +326,13 @@ export const tours = [
       }
     ],
     pricing: {
-      foreignAdult: '$65',
+      foreignAdult: '$85',
       foreignChild: 'No recomendado para niños pequeños',
       nationalAdult: '₡30.000',
       nationalChild: 'Consultar',
-      group: '$59 p.p. desde 4 personas',
-      private: '$190 para 1-2 personas',
-      promo: '$59 p.p. temporada baja'
+      group: '$79 p.p. desde 4 personas',
+      private: '$240 para 1-2 personas',
+      promo: '$79 p.p. temporada baja'
     }
   },
   {
@@ -376,8 +376,8 @@ export const tours = [
     pricing: {
       foreignAdult: '$45',
       foreignChild: '$30',
-      nationalAdult: '₡20.000',
-      nationalChild: '₡14.000',
+      nationalAdult: '₡12.500',
+      nationalChild: '₡12.500',
       group: '$40 p.p. desde 4 personas',
       private: '$120 para 1-2 personas',
       promo: '$39 p.p. temporada baja'
@@ -424,8 +424,8 @@ export const tours = [
     pricing: {
       foreignAdult: '$75',
       foreignChild: '$45',
-      nationalAdult: '₡35.000',
-      nationalChild: '₡22.000',
+      nationalAdult: '₡12.500',
+      nationalChild: '₡12.500',
       group: '$68 p.p. desde 3 personas',
       private: '$175 para 1-2 personas',
       promo: '$68 p.p. temporada baja'

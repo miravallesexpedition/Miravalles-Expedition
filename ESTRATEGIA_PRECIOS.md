@@ -26,7 +26,7 @@ Precios comparables encontrados en tours de Costa Rica y Guanacaste:
 - Birdwatching en Guanacaste: desde $170 por persona cuando incluye transporte, desayuno y guía naturalista.
 - Río Celeste + wildlife desde Guanacaste: $145 a $180 por persona con transporte, entradas, guía, comida y snacks.
 
-Conclusión: para Miravalles Expedition, sin transporte, el rango profesional debe estar entre $35 y $75 por persona según dificultad y duración. El tour principal de 4 horas y 10 km debe quedarse cerca de $55 para turistas extranjeros.
+Conclusión: para Miravalles Expedition, sin transporte, el rango profesional debe estar entre $35 y $85 por persona según dificultad y duración. El tour principal de 4 horas y 10 km debe quedarse cerca de $55 para turistas extranjeros, mientras que el cráter puede cobrar más por exigencia y responsabilidad operativa.
 
 ## Estructura recomendada
 
@@ -36,8 +36,8 @@ Catarata Cabro Muco + Morpho Blanca, 10 km ida y vuelta, 4 horas, dificultad med
 
 - Adulto extranjero: $55
 - Niño extranjero: $35
-- Nacional o residente: ₡25.000
-- Niño nacional: ₡16.000
+- Nacional o residente: ₡12.500
+- Niño nacional: ₡12.500
 - Grupo de 4 o más: $49 por persona
 - Privado 1-2 personas: $160
 - Temporada baja: $49 por persona
@@ -48,7 +48,7 @@ Justificación: queda competitivo frente a cataratas de Guanacaste de $70-$95 co
 
 - Adulto extranjero: $35
 - Niño extranjero: $25
-- Nacional: ₡18.000
+- Nacional o residente: ₡12.500
 - Grupo 4+: $32 por persona
 - Privado 1-2 personas: $95
 
@@ -56,10 +56,10 @@ Justificación: experiencia fácil y flexible. Debe venderse como complemento id
 
 ### Camino al cráter
 
-- Adulto extranjero: $65
+- Adulto extranjero: $85
 - Nacional: ₡30.000
-- Grupo 4+: $59 por persona
-- Privado 1-2 personas: $190
+- Grupo 4+: $79 por persona
+- Privado 1-2 personas: $240
 
 Justificación: mayor dificultad, más duración y más responsabilidad operativa. Debe venderse para viajeros aventureros.
 
@@ -67,7 +67,7 @@ Justificación: mayor dificultad, más duración y más responsabilidad operativ
 
 - Adulto extranjero: $45
 - Niño extranjero: $30
-- Nacional: ₡20.000
+- Nacional o residente: ₡12.500
 - Grupo 4+: $40 por persona
 - Privado 1-2 personas: $120
 
@@ -86,7 +86,7 @@ Justificación: el birdwatching con transporte en Guanacaste se vende mucho más
 
 - Temporada alta: diciembre a abril, Semana Santa, julio y fin de año. Mantener tarifa base.
 - Temporada baja: mayo a noviembre. Usar promociones ligeras, no descuentos agresivos.
-- Recomendación: no bajar el tour principal de $49 para extranjeros ni de ₡22.000 para nacionales.
+- Recomendación: mantener ₡12.500 como tarifa nacional base y no descontar el cráter por debajo de ₡30.000 para nacionales.
 
 ## Mensaje comercial recomendado
 
