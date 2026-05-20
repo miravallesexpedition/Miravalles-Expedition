@@ -4,7 +4,8 @@ export const dynamic = 'force-dynamic'
 
 export async function GET(request, { params }) {
   try {
-    const result = await confirmBookingByToken(params.token)
+    const { token } = await params
+    const result = await confirmBookingByToken(token)
 
     if (result.status === 'not-found') {
       return Response.json(

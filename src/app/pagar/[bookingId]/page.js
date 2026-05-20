@@ -7,7 +7,8 @@ import { formatMoney } from '@/lib/pricing'
 export const dynamic = 'force-dynamic'
 
 export default async function PayBookingPage({ params }) {
-  const booking = await bookingService.getBookingById(params.bookingId)
+  const { bookingId } = await params
+  const booking = await bookingService.getBookingById(bookingId)
 
   if (!booking) {
     return <Message title="Reserva no encontrada" body="No encontramos una reserva con ese identificador." />

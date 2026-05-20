@@ -5,7 +5,8 @@ import { formatMoney } from '@/lib/pricing'
 export const dynamic = 'force-dynamic'
 
 export default async function ConfirmBookingPage({ params }) {
-  const result = await confirmBookingByToken(params.token)
+  const { token } = await params
+  const result = await confirmBookingByToken(token)
 
   if (result.status === 'not-found') {
     return <Message title="Reserva no encontrada" body="El enlace de confirmación no es válido o ya expiró." />

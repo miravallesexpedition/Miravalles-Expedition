@@ -6,7 +6,8 @@ export const dynamic = 'force-dynamic'
 
 export async function GET(request, { params }) {
   try {
-    const booking = await bookingService.getBookingById(params.bookingId)
+    const { bookingId } = await params
+    const booking = await bookingService.getBookingById(bookingId)
 
     if (!booking) {
       return Response.json({ error: 'Reserva no encontrada' }, { status: 404 })
