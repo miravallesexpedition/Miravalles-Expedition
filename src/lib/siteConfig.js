@@ -3,6 +3,7 @@ export const business = {
   location: 'Fortuna, Guanacaste, Costa Rica',
   meetingPoint: 'Fortuna, cerca del Volcán Miravalles',
   mapsUrl: 'https://maps.app.goo.gl/9jzTzmpLHVMG65Wg8',
+  tagline: 'Discover hidden waterfalls, volcanic landscapes and local nature experiences in Guanacaste.',
   positioning:
     'Experiencias locales de caminata, cataratas, aves y naturaleza en la zona del Volcán Miravalles.',
   noTransportNotice:
@@ -18,6 +19,7 @@ export const contact = {
 export const tourImages = {
   logo: '/images/miravalles-expedition-logo.jpg',
   hero: '/images/hero-waterfall.jpg',
+  heroVideo: '/videos/miravalles-hero.mp4',
   catarataPool: '/images/hero-waterfall.jpg',
   catarataRiver: '/images/waterfall-river.jpg',
   tallWaterfall: '/images/tall-waterfall.jpeg',
@@ -57,21 +59,82 @@ export const commonBring = [
   'Cámara o celular protegido contra agua'
 ]
 
+export const heroBadges = [
+  'Local Guides',
+  'Hidden Waterfalls',
+  'Small Groups',
+  'Safe Adventure'
+]
+
 export const galleryImages = [
-  { url: tourImages.logo, alt: 'Logo de Miravalles Expedition' },
-  { url: tourImages.hero, alt: 'Catarata y poza natural en Miravalles' },
-  { url: tourImages.tallWaterfall, alt: 'Catarata alta en la zona de Miravalles' },
-  { url: tourImages.cabroMucoFall, alt: 'Catarata Cabro Muco con poza natural' },
-  { url: tourImages.trailSign, alt: 'Rótulo del sendero Cabro Muco' },
-  { url: tourImages.forestTrail, alt: 'Sendero de bosque hacia las cataratas' },
-  { url: tourImages.redRockWaterfall, alt: 'Cascada sobre roca volcánica rojiza' },
-  { url: tourImages.catarataRiver, alt: 'Río y pequeñas cascadas de montaña' },
-  { url: tourImages.volcano, alt: 'Vista del Volcán Miravalles en Guanacaste' },
-  { url: tourImages.bromelia, alt: 'Bromelia roja del bosque tropical' },
-  { url: tourImages.butterfly, alt: 'Mariposa en una flor tropical' },
-  { url: tourImages.orchids, alt: 'Orquídeas naranjas de Costa Rica' },
-  { url: tourImages.bird, alt: 'Ave local observada en Guanacaste' },
-  { url: tourImages.duck, alt: 'Ave acuática entre vegetación tropical' }
+  {
+    url: tourImages.hero,
+    alt: 'Catarata y poza natural en Miravalles',
+    caption: 'Hidden waterfall pool',
+    featured: true
+  },
+  {
+    url: tourImages.cabroMucoFall,
+    alt: 'Catarata Cabro Muco con poza natural',
+    caption: 'Cabro Muco waterfall'
+  },
+  {
+    url: tourImages.tallWaterfall,
+    alt: 'Catarata alta en la zona de Miravalles',
+    caption: 'Tall volcanic waterfall',
+    featured: true
+  },
+  {
+    url: tourImages.forestTrail,
+    alt: 'Sendero de bosque hacia las cataratas',
+    caption: 'Forest approach'
+  },
+  {
+    url: tourImages.trailSign,
+    alt: 'Rótulo del sendero Cabro Muco',
+    caption: 'Cabro Muco trail'
+  },
+  {
+    url: tourImages.redRockWaterfall,
+    alt: 'Cascada sobre roca volcánica rojiza',
+    caption: 'Volcanic red rock'
+  },
+  {
+    url: tourImages.catarataRiver,
+    alt: 'Río y pequeñas cascadas de montaña',
+    caption: 'Mountain river'
+  },
+  {
+    url: tourImages.volcano,
+    alt: 'Vista del Volcán Miravalles en Guanacaste',
+    caption: 'Miravalles Volcano',
+    featured: true
+  },
+  {
+    url: tourImages.bromelia,
+    alt: 'Bromelia roja del bosque tropical',
+    caption: 'Tropical flora'
+  },
+  {
+    url: tourImages.butterfly,
+    alt: 'Mariposa en una flor tropical',
+    caption: 'Wildlife details'
+  },
+  {
+    url: tourImages.orchids,
+    alt: 'Orquídeas naranjas de Costa Rica',
+    caption: 'Costa Rican orchids'
+  },
+  {
+    url: tourImages.bird,
+    alt: 'Ave local observada en Guanacaste',
+    caption: 'Birdwatching moments'
+  },
+  {
+    url: tourImages.duck,
+    alt: 'Ave acuática entre vegetación tropical',
+    caption: 'Wetland wildlife'
+  }
 ]
 
 export const pricingGuidelines = [
@@ -107,6 +170,18 @@ export const pricingGuidelines = [
   }
 ]
 
+const defaultSafety = [
+  'El guía define el ritmo según clima, nivel del grupo y condiciones del sendero.',
+  'Se recomienda informar lesiones, condición médica o limitaciones antes de iniciar.',
+  'En caso de lluvia fuerte o riesgo en el río, se reprograma o se ajusta la ruta.'
+]
+
+const defaultRecommendations = [
+  'Reservar con anticipación para coordinar punto de encuentro y horario.',
+  'Llegar con ropa ligera y zapatos cerrados con buena tracción.',
+  'Traer efectivo para gastos externos o entradas que se confirmen antes del tour.'
+]
+
 export const tours = [
   {
     id: 'catarata-cabro-muco-morpho-blanca',
@@ -118,13 +193,41 @@ export const tours = [
     duration: '4 horas',
     distance: '10 km ida y vuelta',
     image: tourImages.hero,
+    video: tourImages.heroVideo,
     location: 'Fortuna, Guanacaste',
     description:
       'Caminata guiada hacia dos cataratas escondidas en la zona del Volcán Miravalles, con pozas naturales, bosque y experiencia local auténtica.',
+    overview:
+      'Una caminata de aventura real para viajeros que quieren ver una parte menos masiva de Guanacaste: senderos de bosque, agua cristalina, roca volcánica y dos cataratas con identidad local.',
+    whatToExpect: [
+      'Inicio con briefing de seguridad y revisión del clima.',
+      'Caminata por senderos naturales con pausas para fotos, agua y observación del entorno.',
+      'Llegada a las cataratas Cabro Muco y Morpho Blanca según condiciones del día.',
+      'Tiempo para disfrutar la poza natural, descansar y conectar con el paisaje.'
+    ],
+    itinerary: [
+      { title: 'Encuentro local', text: 'Coordinamos el punto exacto por WhatsApp antes del tour.' },
+      { title: 'Sendero de bosque', text: 'Caminata progresiva con paradas para orientación, agua y fotografía.' },
+      { title: 'Cataratas escondidas', text: 'Visita a Cabro Muco y Morpho Blanca con tiempo para observar y disfrutar.' },
+      { title: 'Regreso seguro', text: 'Vuelta al punto de inicio al ritmo del grupo.' }
+    ],
     highlights: ['Dos cataratas', 'Poza natural', 'Bosque tropical', 'Guía local'],
     includes: commonIncludes,
     notIncluded: commonNotIncluded,
     bring: commonBring,
+    recommendations: defaultRecommendations,
+    safety: defaultSafety,
+    gallery: [tourImages.hero, tourImages.cabroMucoFall, tourImages.forestTrail, tourImages.trailSign],
+    faqs: [
+      {
+        question: '¿Necesito experiencia previa?',
+        answer: 'No es necesario ser experto, pero sí tener condición física normal para caminar 10 km en terreno natural.'
+      },
+      {
+        question: '¿Se puede nadar?',
+        answer: 'Depende del clima, nivel del agua y criterio del guía el día del tour.'
+      }
+    ],
     pricing: {
       foreignAdult: '$55',
       foreignChild: '$35',
@@ -143,14 +246,36 @@ export const tours = [
     priceLabel: '$35',
     level: 'Fácil',
     duration: 'Flexible, cierran a las 9:00 p.m.',
+    distance: 'Ruta corta / baja exigencia',
     image: tourImages.redRockWaterfall,
     location: 'Zona Miravalles',
     description:
       'Experiencia relajada para disfrutar aguas termales y ambiente volcánico después de un día de aventura o como plan tranquilo de tarde.',
+    overview:
+      'Una experiencia suave para bajar el ritmo, sentir la energía volcánica de Miravalles y cerrar el día en un ambiente natural.',
+    whatToExpect: [
+      'Coordinación previa del acceso y horario recomendado.',
+      'Orientación local para llegar al punto correcto.',
+      'Tiempo flexible para relajarse en aguas termales.'
+    ],
+    itinerary: [
+      { title: 'Coordinación', text: 'Confirmamos hora, punto y recomendaciones por WhatsApp.' },
+      { title: 'Llegada al sitio', text: 'Ingreso al área termal según disponibilidad y condiciones del día.' },
+      { title: 'Relajación', text: 'Tiempo libre para disfrutar el agua caliente natural.' }
+    ],
     highlights: ['Aguas termales', 'Ambiente volcánico', 'Plan relajado', 'Horario flexible'],
     includes: ['Coordinación local', 'Agua', 'Refrigerio o snacks', 'Orientación en la zona'],
     notIncluded: commonNotIncluded,
     bring: ['Traje de baño', 'Toalla', 'Sandalias', 'Cambio de ropa', 'Repelente'],
+    recommendations: defaultRecommendations,
+    safety: defaultSafety,
+    gallery: [tourImages.redRockWaterfall, tourImages.volcano, tourImages.bromelia],
+    faqs: [
+      {
+        question: '¿Hasta qué hora están abiertas?',
+        answer: 'Las aguas termales cierran a las 9:00 p.m.; el horario exacto se coordina según disponibilidad.'
+      }
+    ],
     pricing: {
       foreignAdult: '$35',
       foreignChild: '$25',
@@ -169,14 +294,37 @@ export const tours = [
     priceLabel: '$65',
     level: 'Difícil',
     duration: '5 a 6 horas',
+    distance: 'Consultar según ruta y clima',
     image: tourImages.volcano,
     location: 'Volcán Miravalles',
     description:
       'Caminata exigente para viajeros con buena condición física que quieren una experiencia de montaña, vistas amplias y terreno volcánico.',
+    overview:
+      'Una ruta más física para quienes buscan montaña, paisaje abierto y una sensación real de expedición cerca del Volcán Miravalles.',
+    whatToExpect: [
+      'Briefing de seguridad y evaluación del clima.',
+      'Ascenso por terreno natural con pausas controladas.',
+      'Vistas del paisaje volcánico cuando las condiciones lo permiten.'
+    ],
+    itinerary: [
+      { title: 'Preparación', text: 'Revisión de equipo, agua, clima y condición del grupo.' },
+      { title: 'Ascenso', text: 'Caminata exigente con ritmo constante y descansos.' },
+      { title: 'Puntos de vista', text: 'Paradas para paisaje, fotos y lectura del entorno volcánico.' },
+      { title: 'Descenso', text: 'Regreso controlado priorizando seguridad.' }
+    ],
     highlights: ['Vista volcánica', 'Ruta exigente', 'Naturaleza abierta', 'Experiencia privada disponible'],
     includes: commonIncludes,
     notIncluded: commonNotIncluded,
     bring: [...commonBring, 'Abrigo liviano', 'Bastones si los usás'],
+    recommendations: defaultRecommendations,
+    safety: defaultSafety,
+    gallery: [tourImages.volcano, tourImages.forestTrail, tourImages.bromelia],
+    faqs: [
+      {
+        question: '¿Es recomendado para niños?',
+        answer: 'No se recomienda para niños pequeños. Se revisa caso por caso según experiencia y condición física.'
+      }
+    ],
     pricing: {
       foreignAdult: '$65',
       foreignChild: 'No recomendado para niños pequeños',
@@ -195,14 +343,36 @@ export const tours = [
     priceLabel: '$45',
     level: 'Fácil',
     duration: '3 horas',
+    distance: 'Caminata suave',
     image: tourImages.bird,
     location: 'Fortuna y alrededores de Miravalles',
     description:
       'Salida tranquila de observación de aves, ideal temprano en la mañana para viajeros que disfrutan fotografía, binoculares y naturaleza sin prisa.',
+    overview:
+      'Un recorrido pausado para observar aves, flores, árboles y detalles de vida silvestre con acompañamiento local.',
+    whatToExpect: [
+      'Salida recomendada temprano en la mañana.',
+      'Ritmo suave, silencioso y enfocado en observación.',
+      'Uso de binoculares cuando aplica y guía local para identificar puntos de interés.'
+    ],
+    itinerary: [
+      { title: 'Inicio temprano', text: 'Coordinamos la mejor hora según clima y actividad de aves.' },
+      { title: 'Observación', text: 'Recorrido tranquilo con pausas para escuchar, mirar y fotografiar.' },
+      { title: 'Cierre', text: 'Regreso con recomendaciones de naturaleza y próximos puntos de interés.' }
+    ],
     highlights: ['Aves locales', 'Binoculares', 'Fotografía', 'Ritmo suave'],
     includes: commonIncludes,
     notIncluded: commonNotIncluded,
     bring: ['Ropa cómoda', 'Zapatos cerrados', 'Repelente', 'Cámara', 'Sombrero o gorra'],
+    recommendations: defaultRecommendations,
+    safety: defaultSafety,
+    gallery: [tourImages.bird, tourImages.duck, tourImages.butterfly, tourImages.orchids],
+    faqs: [
+      {
+        question: '¿Cuál es la mejor hora?',
+        answer: 'Generalmente temprano en la mañana, cuando hay más actividad de aves y mejor luz.'
+      }
+    ],
     pricing: {
       foreignAdult: '$45',
       foreignChild: '$30',
@@ -221,14 +391,36 @@ export const tours = [
     priceLabel: '$75',
     level: 'Media',
     duration: '4 horas',
+    distance: 'Ruta ajustable',
     image: tourImages.butterfly,
     location: 'Fortuna, Guanacaste',
     description:
       'Recorrido pausado para capturar cataratas, flores, aves, mariposas y detalles del bosque con acompañamiento local.',
+    overview:
+      'Una experiencia visual diseñada para moverse con calma, esperar la luz correcta y encontrar detalles reales del bosque tropical.',
+    whatToExpect: [
+      'Ruta flexible según luz, clima e intereses del visitante.',
+      'Tiempo adicional para fotos y composición.',
+      'Acompañamiento local para encontrar detalles naturales sin prisa.'
+    ],
+    itinerary: [
+      { title: 'Brief creativo', text: 'Definimos si priorizás cataratas, aves, flores, paisaje o detalles.' },
+      { title: 'Recorrido pausado', text: 'Caminata con paradas largas para fotografía.' },
+      { title: 'Cierre', text: 'Últimas tomas y coordinación de regreso.' }
+    ],
     highlights: ['Ritmo fotográfico', 'Flora y fauna', 'Cataratas', 'Acompañamiento local'],
     includes: commonIncludes,
     notIncluded: commonNotIncluded,
     bring: [...commonBring, 'Batería extra', 'Protección contra lluvia para cámara'],
+    recommendations: defaultRecommendations,
+    safety: defaultSafety,
+    gallery: [tourImages.butterfly, tourImages.orchids, tourImages.bromelia, tourImages.hero],
+    faqs: [
+      {
+        question: '¿Necesito cámara profesional?',
+        answer: 'No. Podés disfrutarlo con celular, cámara básica o equipo profesional.'
+      }
+    ],
     pricing: {
       foreignAdult: '$75',
       foreignChild: '$45',
@@ -257,13 +449,6 @@ export const packages = [
     bestFor: 'Parejas'
   },
   {
-    name: 'Sunset Hike',
-    price: 'Desde $45 p.p.',
-    detail:
-      'Caminata corta de tarde con enfoque en paisaje, luz de atardecer y experiencia tranquila. Sujeto a clima y ruta disponible.',
-    bestFor: 'Fotografía'
-  },
-  {
     name: 'Birdwatching Hike',
     price: 'Desde $45 p.p.',
     detail:
@@ -276,13 +461,6 @@ export const packages = [
     detail:
       'Ruta pausada para fotos de cataratas, flores, aves y mariposas. Buena opción para viajeros que prefieren calidad sobre prisa.',
     bestFor: 'Creadores'
-  },
-  {
-    name: 'Familias y Grupos',
-    price: 'Desde $40 p.p.',
-    detail:
-      'Ruta fácil o media ajustada al grupo, con explicación local, descansos y coordinación previa según edades.',
-    bestFor: 'Familias'
   }
 ]
 
@@ -371,6 +549,10 @@ export const seoKeywords = [
   'cataratas en Guanacaste',
   'Volcán Miravalles'
 ]
+
+export function getTourById(id) {
+  return tours.find((tour) => String(tour.id) === String(id)) || null
+}
 
 export function buildWhatsAppUrl(message) {
   return `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(message)}`

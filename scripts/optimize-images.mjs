@@ -19,6 +19,13 @@ const imageJobs = [
   [`${sourceRoot}/CATARATA MORPHO BLANCA/153NIKON/DSCN1332.JPG`, 'public/images/cabro-muco-waterfall-clean.jpg', 1400, 78]
 ]
 
+const videoJobs = [
+  [`${sourceRoot}/CATARATA MORPHO BLANCA/GO PTO/GX012025.MP4`, 'public/videos/miravalles-hero.mp4']
+]
+
+await fs.mkdir('public/images', { recursive: true })
+await fs.mkdir('public/videos', { recursive: true })
+
 for (const [input, output, width, quality] of imageJobs) {
   const tmp = `${output}.tmp`
   await sharp(input)
@@ -29,4 +36,10 @@ for (const [input, output, width, quality] of imageJobs) {
   await fs.rename(tmp, output)
   const stat = await fs.stat(output)
   console.log(`${output} ${(stat.size / 1024).toFixed(1)} KB`)
+}
+
+for (const [input, output] of videoJobs) {
+  await fs.copyFile(input, output)
+  const stat = await fs.stat(output)
+  console.log(`${output} ${(stat.size / 1024 / 1024).toFixed(2)} MB`)
 }

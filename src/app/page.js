@@ -8,11 +8,13 @@ import DatePicker from '@/components/sections/DatePicker'
 import FAQSection from '@/components/sections/FAQSection'
 import FloatingWhatsApp from '@/components/sections/FloatingWhatsApp'
 import GallerySection from '@/components/sections/GallerySection'
+import GuidesSection from '@/components/sections/GuidesSection'
 import HeroSection from '@/components/sections/HeroSection'
 import MapSection from '@/components/sections/MapSection'
 import PaymentSection from '@/components/sections/PaymentSection'
 import PricingSection from '@/components/sections/PricingSection'
 import ShoppingCart from '@/components/sections/ShoppingCart'
+import SiteHeader from '@/components/sections/SiteHeader'
 import TestimonialsSection from '@/components/sections/TestimonialsSection'
 import TourInfoSection from '@/components/sections/TourInfoSection'
 import ToursSection from '@/components/sections/ToursSection'
@@ -59,7 +61,6 @@ export default function Home() {
       setCart([...cart, { ...selectedTour, selectedDate: date }])
       setShowDatePicker(false)
       track('tour_date_selected', { tour: selectedTour.name })
-      alert(`${selectedTour.name} agregado a la solicitud para el ${date.toLocaleDateString()}`)
     }
   }
 
@@ -85,7 +86,9 @@ export default function Home() {
   const totalPrice = cart.reduce((sum, item) => sum + Number(item.price), 0)
 
   return (
-    <main>
+    <main className="bg-[#f8f4ea]">
+      <SiteHeader onReserve={() => setShowContactForm(true)} />
+
       <HeroSection
         onViewTours={() => document.getElementById('tours')?.scrollIntoView({ behavior: 'smooth' })}
         onReserve={() => setShowContactForm(true)}
@@ -102,50 +105,57 @@ export default function Home() {
         />
       </section>
 
-      <PricingSection />
       <TourInfoSection />
+      <PricingSection />
+      <GuidesSection />
+      <GallerySection />
+      <TestimonialsSection />
 
-      <section className="bg-gray-100 px-4 py-14 text-center sm:px-6 lg:px-10">
-        <h2 className="mb-6 text-3xl font-bold text-gray-950">Cómo reservar</h2>
-        <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-3">
-          <div className="p-4">
-            <div className="mb-2 text-4xl font-bold text-green-700">1</div>
-            <p className="font-semibold">Elegís tu tour</p>
-            <p className="text-sm text-gray-600">Revisá precio, dificultad, duración y lo que incluye.</p>
+      <section id="book" className="bg-[#f8f4ea] px-4 py-20 text-center sm:px-6 lg:px-10">
+        <div className="mx-auto max-w-5xl rounded-[2rem] bg-[#071d14] p-8 text-white shadow-2xl sm:p-12">
+          <p className="text-sm font-black uppercase tracking-[0.22em] text-amber-200">
+            Book Your Adventure
+          </p>
+          <h2 className="mx-auto mt-4 max-w-3xl text-balance text-4xl font-black leading-tight sm:text-5xl">
+            A premium booking flow that still feels personal.
+          </h2>
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
+            <Step number="01" title="Choose your tour" text="Review details, difficulty, duration and price." />
+            <Step number="02" title="Pick a date" text="Send a request with people, time and notes." />
+            <Step number="03" title="Confirm by WhatsApp" text="We coordinate meeting point, weather and final details." />
           </div>
-          <div className="p-4">
-            <div className="mb-2 text-4xl font-bold text-green-700">2</div>
-            <p className="font-semibold">Seleccionás fecha</p>
-            <p className="text-sm text-gray-600">Enviás una solicitud con cantidad de personas y notas.</p>
-          </div>
-          <div className="p-4">
-            <div className="mb-2 text-4xl font-bold text-green-700">3</div>
-            <p className="font-semibold">Confirmamos detalles</p>
-            <p className="text-sm text-gray-600">Te contactamos por WhatsApp o correo para coordinar punto de encuentro.</p>
-          </div>
+          <button
+            onClick={() => setShowContactForm(true)}
+            className="mt-10 rounded-full bg-amber-300 px-8 py-4 font-black text-[#071d14] transition hover:bg-amber-200"
+          >
+            Consult Availability
+          </button>
         </div>
       </section>
 
-      <GallerySection />
-      <TestimonialsSection />
       <MapSection />
       <FAQSection />
 
-      <section className="bg-gray-950 px-4 py-14 text-center text-white sm:px-6 lg:px-10">
-        <h2 className="mb-4 text-3xl font-bold">¿Listo para vivir Miravalles?</h2>
-        <p className="mx-auto mb-6 max-w-2xl text-white/75">
-          Reservá una caminata, un tour de aves o una experiencia privada con guía local.
+      <section className="bg-[#04120d] px-4 py-20 text-center text-white sm:px-6 lg:px-10">
+        <p className="text-sm font-black uppercase tracking-[0.22em] text-amber-200">
+          Miravalles Expedition
+        </p>
+        <h2 className="mx-auto mt-4 max-w-3xl text-balance text-4xl font-black leading-tight sm:text-5xl">
+          Ready to discover the hidden side of Guanacaste?
+        </h2>
+        <p className="mx-auto mt-5 max-w-2xl text-white/70">
+          Reserve a hike, birdwatching route, hot springs plan or private nature photography experience with a local guide.
         </p>
         <button
           onClick={() => setShowContactForm(true)}
-          className="rounded bg-white px-8 py-3 text-lg font-bold text-gray-950 hover:bg-amber-100"
+          className="mt-8 rounded-full bg-white px-8 py-4 text-lg font-black text-[#071d14] hover:bg-amber-100"
         >
-          Consultar disponibilidad
+          Book Adventure
         </button>
       </section>
 
-      <footer className="bg-gray-900 p-8 text-center text-sm text-white">
-        <p>© 2026 Miravalles Expedition - Aventura segura y profesional</p>
+      <footer className="bg-[#020806] p-8 text-center text-sm text-white/70">
+        <p className="font-bold text-white">© 2026 Miravalles Expedition</p>
         <p className="mt-2">{contact.phoneDisplay} | {contact.email}</p>
       </footer>
 
@@ -180,5 +190,15 @@ export default function Home() {
         onCheckout={() => setShowPayment(true)}
       />
     </main>
+  )
+}
+
+function Step({ number, title, text }) {
+  return (
+    <article className="rounded-[1.5rem] border border-white/10 bg-white/10 p-6 text-left">
+      <p className="text-xs font-black uppercase tracking-[0.2em] text-amber-200">{number}</p>
+      <h3 className="mt-4 text-xl font-black">{title}</h3>
+      <p className="mt-3 text-sm leading-7 text-white/70">{text}</p>
+    </article>
   )
 }

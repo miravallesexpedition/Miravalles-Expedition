@@ -6,16 +6,16 @@ import './globals.css'
 export const metadata = {
   metadataBase: new URL('https://miravallesexpedition.com'),
   title: {
-    default: 'Miravalles Expedition | Tours en Guanacaste y Cataratas en Costa Rica',
+    default: 'Miravalles Expedition | Premium Adventure Tours in Guanacaste',
     template: '%s | Miravalles Expedition'
   },
   description:
-    'Tours en Guanacaste cerca del Volcán Miravalles: hiking Costa Rica, cataratas escondidas, aguas termales, aves, eco tourism y adventure tours con guía local.',
+    'Premium adventure tours in Guanacaste near Miravalles Volcano: hidden waterfalls, hiking Costa Rica, hot springs, birdwatching and authentic local guides.',
   keywords: seoKeywords,
   openGraph: {
     title: 'Miravalles Expedition',
     description:
-      'Caminatas, cataratas escondidas, aves y experiencias locales cerca del Volcán Miravalles en Guanacaste, Costa Rica.',
+      'Hidden waterfalls, volcanic trails, birdwatching and authentic local adventure tours near Miravalles Volcano in Guanacaste, Costa Rica.',
     url: 'https://miravallesexpedition.com',
     siteName: business.name,
     locale: 'es_CR',

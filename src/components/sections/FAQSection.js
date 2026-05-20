@@ -4,28 +4,43 @@ import { useState } from 'react'
 import { siteFaqs } from '@/lib/siteConfig'
 
 export default function FAQSection() {
-  const [openFAQ, setOpenFAQ] = useState(null)
+  const [openFAQ, setOpenFAQ] = useState(0)
 
   return (
-    <section className="bg-gray-50 px-4 py-14 sm:px-6 lg:px-10">
-      <div className="mx-auto max-w-3xl">
-        <h2 className="mb-8 text-center text-3xl font-bold text-gray-950">Preguntas frecuentes</h2>
-        {siteFaqs.map((faq, i) => (
-          <div key={faq.question} className="mb-4 overflow-hidden rounded-lg border border-gray-200 bg-white">
-            <button
-              onClick={() => setOpenFAQ(openFAQ === i ? null : i)}
-              className="flex w-full items-center justify-between gap-4 p-4 text-left font-semibold text-gray-950 hover:bg-gray-50"
-            >
-              <span>{faq.question}</span>
-              <span className="text-xl">{openFAQ === i ? '-' : '+'}</span>
-            </button>
-            {openFAQ === i && (
-              <div className="border-t border-gray-100 bg-gray-50 p-4 leading-6 text-gray-700">
-                {faq.answer}
-              </div>
-            )}
-          </div>
-        ))}
+    <section id="faq" className="bg-[#f8f4ea] px-4 py-20 sm:px-6 lg:px-10">
+      <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[420px_1fr]">
+        <div>
+          <p className="text-sm font-black uppercase tracking-[0.22em] text-green-800">
+            FAQ
+          </p>
+          <h2 className="mt-4 text-balance text-4xl font-black leading-tight text-[#11130f]">
+            Questions travelers ask before booking.
+          </h2>
+          <p className="mt-5 leading-8 text-gray-700">
+            Clear answers reduce friction and help visitors feel safe before contacting the team.
+          </p>
+        </div>
+
+        <div className="space-y-3">
+          {siteFaqs.map((faq, i) => (
+            <div key={faq.question} className="overflow-hidden rounded-[1.25rem] border border-black/5 bg-white shadow-sm">
+              <button
+                onClick={() => setOpenFAQ(openFAQ === i ? null : i)}
+                className="flex w-full items-center justify-between gap-4 p-5 text-left font-black text-[#11130f] hover:bg-amber-50"
+              >
+                <span>{faq.question}</span>
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#071d14] text-white">
+                  {openFAQ === i ? '-' : '+'}
+                </span>
+              </button>
+              {openFAQ === i && (
+                <div className="border-t border-gray-100 bg-white p-5 leading-8 text-gray-700">
+                  {faq.answer}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )

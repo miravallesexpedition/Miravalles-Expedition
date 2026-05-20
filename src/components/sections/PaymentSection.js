@@ -28,7 +28,7 @@ export default function PaymentSection({ cart, total, onClose }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    setStatus({ type: 'loading', message: 'Creando solicitud de reserva...', links: null })
+    setStatus({ type: 'loading', message: 'Creating your booking request...', links: null })
     track('booking_submit_attempt', { tours: cart.length, total: estimatedTotal })
 
     try {
@@ -86,157 +86,162 @@ export default function PaymentSection({ cart, total, onClose }) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg bg-white p-6">
-        <div className="mb-4 flex items-center justify-between">
-          <div>
-            <h3 className="text-xl font-bold text-gray-950">Completar solicitud</h3>
-            <p className="text-sm text-gray-600">Confirmamos disponibilidad por WhatsApp o correo.</p>
+    <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+      <div className="max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-[1.75rem] bg-[#f8f4ea] shadow-2xl">
+        <div className="bg-[#071d14] p-6 text-white">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-amber-200">Secure request</p>
+              <h3 className="mt-2 text-2xl font-black">Complete booking request</h3>
+              <p className="mt-2 text-sm text-white/70">Availability is confirmed personally by WhatsApp or email.</p>
+            </div>
+            <button onClick={onClose} className="rounded-full bg-white/10 px-4 py-2 font-black hover:bg-white/20" aria-label="Cerrar">
+              Close
+            </button>
           </div>
-          <button onClick={onClose} className="text-2xl text-gray-500 hover:text-gray-700" aria-label="Cerrar">
-            ×
-          </button>
         </div>
 
-        <div className="mb-6 space-y-3 border-b pb-4">
-          {cart.map((item, i) => (
-            <div key={`${item.id || item.name}-${i}`} className="flex justify-between gap-4">
-              <div>
-                <p className="font-semibold">{item.name}</p>
-                <p className="text-sm text-gray-600">{formatDate(item.selectedDate)}</p>
+        <div className="grid gap-5 p-5 lg:grid-cols-[1fr_240px]">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="grid gap-3 sm:grid-cols-2">
+              <Field label="First name">
+                <input name="firstName" value={formData.firstName} onChange={handleChange} required className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3" />
+              </Field>
+              <Field label="Last name">
+                <input name="lastName" value={formData.lastName} onChange={handleChange} required className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3" />
+              </Field>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              <Field label="Email">
+                <input type="email" name="email" value={formData.email} onChange={handleChange} required className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3" />
+              </Field>
+              <Field label="Phone">
+                <input type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder={contact.phoneDisplay} className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3" />
+              </Field>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-3">
+              <Field label="People">
+                <input
+                  type="number"
+                  name="participantsCount"
+                  min="1"
+                  max="20"
+                  value={formData.participantsCount}
+                  onChange={handleChange}
+                  required
+                  className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3"
+                />
+              </Field>
+              <Field label="Time">
+                <select
+                  name="preferredTime"
+                  value={formData.preferredTime}
+                  onChange={handleChange}
+                  className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3"
+                >
+                  <option>Mañana</option>
+                  <option>Tarde</option>
+                  <option>Flexible</option>
+                </select>
+              </Field>
+              <Field label="Payment">
+                <select
+                  name="paymentPreference"
+                  value={formData.paymentPreference}
+                  onChange={handleChange}
+                  className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3"
+                >
+                  <option>Coordinar por WhatsApp</option>
+                  <option>Depósito</option>
+                  <option>Efectivo</option>
+                  <option>PayPal</option>
+                </select>
+              </Field>
+            </div>
+
+            <Field label="Special requests">
+              <textarea
+                name="specialRequests"
+                value={formData.specialRequests}
+                onChange={handleChange}
+                rows="3"
+                className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3"
+                placeholder="Children ages, physical condition, preferred time or questions."
+              />
+            </Field>
+
+            {status.message && (
+              <div className={`rounded-2xl p-4 text-sm ${
+                status.type === 'error' ? 'bg-red-50 text-red-700' :
+                  status.type === 'success' ? 'bg-green-50 text-green-800' :
+                    'bg-blue-50 text-blue-800'
+              }`}>
+                <p>{status.message}</p>
+                {status.links && (
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <a
+                      href={status.links.whatsappUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={handleWhatsAppClick}
+                      className="rounded-full bg-green-700 px-4 py-2 font-black text-white"
+                    >
+                      Send by WhatsApp
+                    </a>
+                    <a
+                      href={status.links.mailtoUrl}
+                      onClick={handleEmailClick}
+                      className="rounded-full bg-gray-950 px-4 py-2 font-black text-white"
+                    >
+                      Send by email
+                    </a>
+                  </div>
+                )}
               </div>
-              <p className="font-semibold">{item.priceLabel || `$${item.price}`} p.p.</p>
-            </div>
-          ))}
-        </div>
+            )}
 
-        <div className="mb-6 rounded bg-gray-100 p-4">
-          <p className="text-gray-600">Total estimado</p>
-          <p className="text-3xl font-bold text-green-700">${estimatedTotal}</p>
-          <p className="mt-1 text-xs text-gray-500">
-            Calculado con tarifa base por persona. {business.noTransportNotice}
-          </p>
-        </div>
+            <button
+              type="submit"
+              disabled={status.type === 'loading'}
+              className="w-full rounded-full bg-[#071d14] py-4 font-black text-white hover:bg-green-900 disabled:cursor-not-allowed disabled:bg-gray-400"
+            >
+              {status.type === 'loading' ? 'Creating...' : 'Create Request'}
+            </button>
+          </form>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid gap-3 sm:grid-cols-2">
-            <div>
-              <label className="mb-1 block font-semibold">Nombre</label>
-              <input name="firstName" value={formData.firstName} onChange={handleChange} required className="w-full rounded border p-2" />
-            </div>
-            <div>
-              <label className="mb-1 block font-semibold">Apellido</label>
-              <input name="lastName" value={formData.lastName} onChange={handleChange} required className="w-full rounded border p-2" />
-            </div>
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-2">
-            <div>
-              <label className="mb-1 block font-semibold">Email</label>
-              <input type="email" name="email" value={formData.email} onChange={handleChange} required className="w-full rounded border p-2" />
-            </div>
-            <div>
-              <label className="mb-1 block font-semibold">Teléfono</label>
-              <input type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder={contact.phoneDisplay} className="w-full rounded border p-2" />
-            </div>
-          </div>
-
-          <div>
-            <label className="mb-1 block font-semibold">Participantes</label>
-            <input
-              type="number"
-              name="participantsCount"
-              min="1"
-              max="20"
-              value={formData.participantsCount}
-              onChange={handleChange}
-              required
-              className="w-full rounded border p-2"
-            />
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-2">
-            <div>
-              <label className="mb-1 block font-semibold">Horario preferido</label>
-              <select
-                name="preferredTime"
-                value={formData.preferredTime}
-                onChange={handleChange}
-                className="w-full rounded border p-2"
-              >
-                <option>Mañana</option>
-                <option>Tarde</option>
-                <option>Flexible</option>
-              </select>
-            </div>
-            <div>
-              <label className="mb-1 block font-semibold">Pago preferido</label>
-              <select
-                name="paymentPreference"
-                value={formData.paymentPreference}
-                onChange={handleChange}
-                className="w-full rounded border p-2"
-              >
-                <option>Coordinar por WhatsApp</option>
-                <option>Depósito</option>
-                <option>Efectivo</option>
-                <option>PayPal</option>
-              </select>
-            </div>
-          </div>
-
-          <div>
-            <label className="mb-1 block font-semibold">Solicitudes especiales</label>
-            <textarea
-              name="specialRequests"
-              value={formData.specialRequests}
-              onChange={handleChange}
-              rows="3"
-              className="w-full rounded border p-2"
-              placeholder="Edad de niños, condición física, horario preferido o dudas."
-            />
-          </div>
-
-          {status.message && (
-            <div className={`rounded p-3 text-sm ${
-              status.type === 'error' ? 'bg-red-50 text-red-700' :
-                status.type === 'success' ? 'bg-green-50 text-green-700' :
-                  'bg-blue-50 text-blue-700'
-            }`}>
-              <p>{status.message}</p>
-              {status.links && (
-                <div className="mt-3 flex flex-wrap gap-2">
-                  <a
-                    href={status.links.whatsappUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={handleWhatsAppClick}
-                    className="rounded bg-green-700 px-3 py-2 text-white"
-                  >
-                    Enviar por WhatsApp
-                  </a>
-                  <a
-                    href={status.links.mailtoUrl}
-                    onClick={handleEmailClick}
-                    className="rounded bg-gray-950 px-3 py-2 text-white"
-                  >
-                    Enviar por correo
-                  </a>
+          <aside className="rounded-[1.5rem] bg-white p-5">
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-gray-500">Your request</p>
+            <div className="mt-4 space-y-3">
+              {cart.map((item, i) => (
+                <div key={`${item.id || item.name}-${i}`} className="border-b border-gray-100 pb-3">
+                  <p className="font-black text-[#11130f]">{item.name}</p>
+                  <p className="text-sm text-gray-600">{formatDate(item.selectedDate)}</p>
+                  <p className="text-sm font-bold text-green-800">{item.priceLabel || `$${item.price}`} p.p.</p>
                 </div>
-              )}
+              ))}
             </div>
-          )}
-
-          <button
-            type="submit"
-            disabled={status.type === 'loading'}
-            className="w-full rounded bg-green-700 py-2 font-semibold text-white hover:bg-green-800 disabled:cursor-not-allowed disabled:bg-gray-400"
-          >
-            {status.type === 'loading' ? 'Creando...' : 'Crear solicitud'}
-          </button>
-        </form>
+            <div className="mt-5 rounded-2xl bg-[#f4efe3] p-4">
+              <p className="text-xs font-black uppercase tracking-[0.16em] text-gray-500">Estimated total</p>
+              <p className="mt-1 text-4xl font-black text-green-800">${estimatedTotal}</p>
+              <p className="mt-2 text-xs leading-5 text-gray-600">
+                Base per person. {business.noTransportNotice}
+              </p>
+            </div>
+          </aside>
+        </div>
       </div>
     </div>
+  )
+}
+
+function Field({ label, children }) {
+  return (
+    <label className="block">
+      <span className="mb-2 block text-xs font-black uppercase tracking-[0.16em] text-gray-600">{label}</span>
+      {children}
+    </label>
   )
 }
 

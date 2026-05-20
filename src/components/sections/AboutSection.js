@@ -1,57 +1,61 @@
 import Image from 'next/image'
 import { business, tourImages } from '@/lib/siteConfig'
 
-export default function AboutSection() {
-  const facts = [
-    { label: 'Tour principal', value: '10 km' },
-    { label: 'Duración base', value: '4 horas' },
-    { label: 'Grupo ideal', value: '2-8 personas' },
-    { label: 'Estilo', value: 'Local y auténtico' }
-  ]
+const proofPoints = [
+  { label: 'Main trail', value: '10 km' },
+  { label: 'Base duration', value: '4 hours' },
+  { label: 'Group style', value: 'Small groups' },
+  { label: 'Transport', value: 'Not included' }
+]
 
+export default function AboutSection() {
   return (
-    <section className="bg-white px-4 py-14 sm:px-6 lg:px-10">
-      <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1fr_1.05fr] lg:items-center">
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div className="relative h-72 overflow-hidden rounded-lg">
+    <section id="overview" className="bg-[#061b13] px-4 py-20 text-white sm:px-6 lg:px-10">
+      <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[0.95fr_1.05fr]">
+        <div className="relative min-h-[520px]">
+          <div className="absolute left-0 top-8 h-72 w-[62%] overflow-hidden rounded-[1.75rem] shadow-2xl">
             <Image
               src={tourImages.trailSign}
               alt="Sendero Cabro Muco"
               fill
-              sizes="(min-width: 1024px) 25vw, 50vw"
+              sizes="(min-width: 1024px) 35vw, 90vw"
               className="object-cover"
             />
           </div>
-          <div className="relative h-72 overflow-hidden rounded-lg sm:mt-10">
+          <div className="absolute bottom-4 right-0 h-96 w-[70%] overflow-hidden rounded-[1.75rem] border-8 border-[#061b13] shadow-2xl">
             <Image
               src={tourImages.cabroMucoFall}
               alt="Catarata Cabro Muco"
               fill
-              sizes="(min-width: 1024px) 25vw, 50vw"
+              sizes="(min-width: 1024px) 42vw, 90vw"
               className="object-cover"
             />
+          </div>
+          <div className="absolute bottom-0 left-8 rounded-2xl bg-amber-300 px-5 py-4 text-[#071d14] shadow-xl">
+            <p className="text-xs font-black uppercase tracking-[0.22em]">Local access</p>
+            <p className="mt-1 text-2xl font-black">Hidden routes</p>
           </div>
         </div>
 
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-green-700">
-            Sobre Miravalles Expedition
+          <p className="text-sm font-black uppercase tracking-[0.22em] text-amber-200">
+            Experience Overview
           </p>
-          <h2 className="mt-2 text-3xl font-bold text-gray-950 sm:text-4xl">
-            Naturaleza real de Guanacaste, guiada por gente local
+          <h2 className="mt-4 text-balance text-4xl font-black leading-tight sm:text-5xl">
+            Premium adventure, guided by people who know Miravalles from the ground up.
           </h2>
-          <p className="mt-4 leading-7 text-gray-600">
-            {business.positioning} La propuesta es sencilla: grupos pequeños, comunicación directa, rutas con identidad local y una experiencia honesta para viajeros que quieren ver algo más auténtico que los circuitos masivos.
+          <p className="mt-6 text-lg leading-8 text-white/75">
+            {business.positioning} La experiencia se construye con grupos pequeños, comunicación directa y rutas que mantienen la autenticidad local.
           </p>
-          <p className="mt-3 leading-7 text-gray-600">
-            Antes de cada salida coordinamos punto de encuentro, clima, dificultad y recomendaciones para que el visitante sepa exactamente qué esperar.
+          <p className="mt-4 leading-8 text-white/70">
+            Antes de cada salida coordinamos clima, punto de encuentro, dificultad y recomendaciones para que el visitante sepa exactamente qué esperar.
           </p>
 
-          <div className="mt-6 grid gap-3 sm:grid-cols-2">
-            {facts.map((fact) => (
-              <div key={fact.label} className="rounded-lg border border-gray-200 bg-gray-50 p-4">
-                <p className="text-sm text-gray-500">{fact.label}</p>
-                <p className="text-xl font-bold text-gray-950">{fact.value}</p>
+          <div className="mt-8 grid gap-3 sm:grid-cols-2">
+            {proofPoints.map((item) => (
+              <div key={item.label} className="rounded-2xl border border-white/10 bg-white/10 p-5">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/50">{item.label}</p>
+                <p className="mt-2 text-2xl font-black text-white">{item.value}</p>
               </div>
             ))}
           </div>
@@ -60,9 +64,9 @@ export default function AboutSection() {
             href={business.mapsUrl}
             target="_blank"
             rel="noreferrer"
-            className="mt-6 inline-flex rounded bg-gray-950 px-5 py-3 font-semibold text-white hover:bg-gray-800"
+            className="mt-8 inline-flex rounded-full bg-white px-6 py-3 font-black text-[#071d14] transition hover:bg-amber-100"
           >
-            Ver ubicación en Google Maps
+            View location on Google Maps
           </a>
         </div>
       </div>

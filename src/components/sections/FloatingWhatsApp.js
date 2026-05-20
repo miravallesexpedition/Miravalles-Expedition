@@ -13,7 +13,7 @@ export default function FloatingWhatsApp() {
   return (
     <button
       onClick={handleClick}
-      className="fixed bottom-5 left-5 z-40 rounded-full bg-green-700 px-5 py-3 text-sm font-bold text-white shadow-lg hover:bg-green-800"
+      className="fixed bottom-4 right-4 z-50 rounded-full bg-[#128c4a] px-5 py-4 text-sm font-black text-white shadow-2xl shadow-black/25 transition hover:-translate-y-0.5 hover:bg-[#0f7a40] sm:bottom-6 sm:right-6"
       aria-label={`Contactar por WhatsApp ${contact.phoneDisplay}`}
     >
       WhatsApp

@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { track } from '@vercel/analytics'
-import { business, tourImages } from '@/lib/siteConfig'
+import { buildWhatsAppUrl, business, heroBadges, tourImages } from '@/lib/siteConfig'
 
 export default function HeroSection({ onViewTours, onReserve }) {
   const handleViewTours = () => {
@@ -15,69 +15,102 @@ export default function HeroSection({ onViewTours, onReserve }) {
     onReserve()
   }
 
+  const handleWhatsApp = () => {
+    track('hero_whatsapp_click')
+    window.open(
+      buildWhatsAppUrl('Hola, quiero vivir una aventura con Miravalles Expedition.'),
+      '_blank',
+      'noopener,noreferrer'
+    )
+  }
+
   return (
-    <section className="relative flex min-h-[88vh] items-center overflow-hidden bg-[#f6f2e8] px-4 py-20 sm:px-6 lg:px-10">
-      <div className="absolute inset-0 flex items-center justify-center opacity-20">
-        <Image
-          src={tourImages.logo}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-contain p-8 sm:p-12 lg:p-16"
-        />
-      </div>
-      <div className="absolute inset-y-0 right-0 hidden w-1/3 bg-green-950/95 lg:block" />
-      <div className="relative mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-[1fr_420px]">
-        <div className="max-w-3xl text-gray-950">
-          <Image
-            src={tourImages.logo}
-            alt="Miravalles Expedition"
-            width={360}
-            height={360}
-            priority
-            className="mb-7 h-44 w-44 rounded bg-white object-contain p-3 shadow-xl ring-1 ring-black/10 sm:h-56 sm:w-56"
-          />
-          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-green-800">
-            {business.location}
-          </p>
-          <h1 className="text-5xl font-bold leading-tight sm:text-6xl">
-            Miravalles Expedition
-          </h1>
-          <p className="mt-5 max-w-2xl text-xl leading-8 text-gray-700">
-            Caminatas hacia cataratas escondidas, aguas termales, aves y experiencias locales cerca del Volcán Miravalles.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <button
-              onClick={handleViewTours}
-              className="rounded bg-green-800 px-6 py-3 font-bold text-white hover:bg-green-900"
-            >
-              Ver precios y tours
-            </button>
-            <button
-              onClick={handleReserve}
-              className="rounded border border-green-800 px-6 py-3 font-bold text-green-900 hover:bg-green-50"
-            >
-              Reservar ahora
-            </button>
+    <section className="relative min-h-screen overflow-hidden bg-[#061b13] text-white">
+      <video
+        className="hero-video absolute inset-0 h-full w-full object-cover opacity-70"
+        src={tourImages.heroVideo}
+        poster={tourImages.hero}
+        autoPlay
+        muted
+        loop
+        playsInline
+      />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_25%,rgba(11,93,107,0.26),transparent_38%),linear-gradient(90deg,rgba(2,12,8,0.95),rgba(2,12,8,0.72)_42%,rgba(2,12,8,0.2))]" />
+      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#061b13] to-transparent" />
+
+      <div className="section-shell relative flex min-h-screen items-center pt-28">
+        <div className="grid w-full items-center gap-10 lg:grid-cols-[1fr_360px]">
+          <div className="max-w-4xl reveal-soft">
+            <div className="mb-7 inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-amber-100 backdrop-blur">
+              <span className="h-2 w-2 rounded-full bg-amber-300" />
+              {business.location}
+            </div>
+
+            <h1 className="text-balance text-5xl font-black leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl">
+              Hidden waterfalls. Local guides. Real Costa Rica.
+            </h1>
+
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-white/80 sm:text-xl">
+              Explore volcanic trails, crystal pools and wild tropical landscapes around Miravalles with a local team focused on safety, small groups and authentic adventure.
+            </p>
+
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <button
+                onClick={handleReserve}
+                className="rounded-full bg-amber-300 px-8 py-4 text-base font-black text-[#071d14] shadow-2xl shadow-amber-900/20 transition hover:-translate-y-0.5 hover:bg-amber-200"
+              >
+                Book Adventure
+              </button>
+              <button
+                onClick={handleWhatsApp}
+                className="rounded-full border border-white/25 bg-white/10 px-8 py-4 text-base font-black text-white backdrop-blur transition hover:-translate-y-0.5 hover:bg-white/20"
+              >
+                WhatsApp
+              </button>
+              <button
+                onClick={handleViewTours}
+                className="rounded-full px-8 py-4 text-base font-black text-white/90 transition hover:text-amber-200"
+              >
+                View Tours
+              </button>
+            </div>
+
+            <div className="mt-10 grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4">
+              {heroBadges.map((badge) => (
+                <div key={badge} className="cinematic-panel rounded-2xl px-4 py-4">
+                  <p className="text-xs font-black uppercase tracking-[0.16em] text-amber-100">{badge}</p>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="mt-8 grid max-w-2xl gap-3 text-sm text-gray-700 sm:grid-cols-3">
-            <p className="border-l-2 border-amber-500 pl-3">Guía local, agua y refrigerio incluidos</p>
-            <p className="border-l-2 border-amber-500 pl-3">Tour principal de 10 km ida y vuelta</p>
-            <p className="border-l-2 border-amber-500 pl-3">Sin transporte incluido</p>
-          </div>
-        </div>
-        <div className="relative hidden lg:block">
-          <Image
-            src={tourImages.logo}
-            alt="Logo Miravalles Expedition"
-            width={520}
-            height={520}
-            priority
-            className="ml-auto aspect-square w-full rounded bg-white object-contain p-8 shadow-2xl"
-          />
+
+          <aside className="cinematic-panel hidden rounded-[2rem] p-6 lg:block">
+            <Image
+              src={tourImages.logo}
+              alt="Miravalles Expedition"
+              width={420}
+              height={420}
+              priority
+              className="aspect-square w-full rounded-[1.4rem] bg-white object-contain p-7"
+            />
+            <div className="mt-6 grid grid-cols-2 gap-3">
+              <Metric value="10 km" label="Main hike" />
+              <Metric value="4 hrs" label="Base duration" />
+              <Metric value="2-8" label="Ideal group" />
+              <Metric value="Local" label="Guided" />
+            </div>
+          </aside>
         </div>
       </div>
     </section>
+  )
+}
+
+function Metric({ value, label }) {
+  return (
+    <div className="rounded-2xl bg-white/10 p-4">
+      <p className="text-2xl font-black text-amber-200">{value}</p>
+      <p className="mt-1 text-xs uppercase tracking-[0.16em] text-white/60">{label}</p>
+    </div>
   )
 }

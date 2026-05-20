@@ -10,3 +10,6 @@ npm run optimize:images
 ```
 
 El script optimiza tamaño y calidad para web móvil antes de publicar en Vercel.
+
+También copia el video liviano del hero hacia:
+`public/videos/miravalles-hero.mp4`

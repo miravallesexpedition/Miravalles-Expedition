@@ -4,40 +4,43 @@ import { business, contact } from '@/lib/siteConfig'
 
 export default function MapSection() {
   return (
-    <section className="bg-gray-100 px-4 py-14 sm:px-6 lg:px-10">
-      <div className="mx-auto max-w-4xl">
-        <div className="mb-6 text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-green-700">
-            Ubicación
+    <section className="bg-[#071d14] px-4 py-20 text-white sm:px-6 lg:px-10">
+      <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[0.85fr_1.15fr]">
+        <div>
+          <p className="text-sm font-black uppercase tracking-[0.22em] text-amber-200">
+            Location
           </p>
-          <h2 className="mt-2 text-3xl font-bold text-gray-950">Fortuna, Guanacaste</h2>
-          <p className="mt-2 text-gray-600">
-            Cerca del Volcán Miravalles. El punto de encuentro exacto se confirma al reservar.
+          <h2 className="mt-4 text-balance text-4xl font-black leading-tight sm:text-5xl">
+            Fortuna, Guanacaste. Close to Miravalles Volcano.
+          </h2>
+          <p className="mt-6 leading-8 text-white/70">
+            The exact meeting point is confirmed after requesting a reservation. This keeps the experience organized and helps us adjust details based on weather and route conditions.
           </p>
+          <div className="mt-8 rounded-[1.5rem] border border-white/10 bg-white/10 p-6">
+            <p className="font-black">{business.location}</p>
+            <p className="mt-2 text-white/70">{contact.phoneDisplay}</p>
+            <p className="text-white/70">{contact.email}</p>
+            <a
+              href={business.mapsUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-5 inline-flex rounded-full bg-amber-300 px-5 py-3 font-black text-[#071d14] transition hover:bg-amber-200"
+            >
+              Open Google Maps
+            </a>
+          </div>
         </div>
-        <div className="h-96 overflow-hidden rounded-lg bg-gray-300 shadow-lg">
+
+        <div className="min-h-[440px] overflow-hidden rounded-[2rem] bg-white/10 shadow-2xl">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.4896814155557!2d-85.39168342345813!3d10.747800859055846!2m3!1f0!2f0!3f0!2m3!1m2!1sVolc%C3%A1n%20Miravalles!5e0!3m2!1ses!2scr"
             width="100%"
             height="100%"
-            style={{ border: 0 }}
+            style={{ border: 0, minHeight: 440 }}
             allowFullScreen=""
             loading="lazy"
             title="Ubicación Volcán Miravalles"
           />
-        </div>
-        <div className="mt-4 text-center">
-          <p className="text-gray-700">{business.location}</p>
-          <p className="text-gray-500">{contact.phoneDisplay}</p>
-          <p className="text-gray-500">{contact.email}</p>
-          <a
-            href={business.mapsUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-4 inline-flex rounded bg-green-700 px-5 py-2 font-semibold text-white hover:bg-green-800"
-          >
-            Abrir dirección en Google Maps
-          </a>
         </div>
       </div>
     </section>

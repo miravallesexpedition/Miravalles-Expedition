@@ -1,3 +1,101 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --jungle: #062016;
+  --jungle-soft: #0e3425;
+  --sand: #efe4d1;
+  --bone: #f8f4ea;
+  --water: #0b5d6b;
+  --ink: #11130f;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bone);
+  color: var(--ink);
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: #d5a84d;
+  color: #071d14;
+}
+
+.section-shell {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1180px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .section-shell {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-shell {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.cinematic-panel {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+    rgba(6, 32, 22, 0.72);
+  border: 1px solid rgba(239, 228, 209, 0.18);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(18px);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.hero-video {
+  animation: cinematic-zoom 22s ease-in-out infinite alternate;
+}
+
+@keyframes cinematic-zoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+.reveal-soft {
+  animation: reveal-soft 0.75s ease both;
+}
+
+@keyframes reveal-soft {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hero-video,
+  .reveal-soft {
+    animation: none;
+  }
+}

@@ -42,7 +42,7 @@ export default function StructuredData() {
           price: tour.price,
           priceCurrency: 'USD',
           availability: 'https://schema.org/InStock',
-          url: baseUrl
+          url: `${baseUrl}/tours/${tour.id}`
         },
         provider: {
           '@id': `${baseUrl}/#business`

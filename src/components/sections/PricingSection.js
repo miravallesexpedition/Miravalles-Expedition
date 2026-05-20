@@ -15,55 +15,44 @@ export default function PricingSection() {
   }
 
   return (
-    <section className="bg-stone-50 px-4 py-14 sm:px-6 lg:px-10">
+    <section className="bg-[#071d14] px-4 py-20 text-white sm:px-6 lg:px-10">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-8 max-w-3xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-green-700">
-            Precios profesionales
-          </p>
-          <h2 className="mt-2 text-3xl font-bold text-gray-950 sm:text-4xl">
-            Tarifas diseñadas para vender sin perder rentabilidad
-          </h2>
-          <p className="mt-3 text-gray-600">
-            La estrategia combina precios competitivos para turistas internacionales con una tarifa nacional accesible. El precio se comunica como experiencia guiada local, no como simple entrada a una catarata.
+        <div className="mb-10 grid gap-6 lg:grid-cols-[1fr_420px] lg:items-end">
+          <div>
+            <p className="text-sm font-black uppercase tracking-[0.22em] text-amber-200">
+              Price Architecture
+            </p>
+            <h2 className="mt-4 text-balance text-4xl font-black leading-tight sm:text-5xl">
+              Premium value, clear pricing, no surprises.
+            </h2>
+          </div>
+          <p className="text-lg leading-8 text-white/70">
+            The experience is positioned as guided local adventure: small groups, preparation, safety and access to places that are not presented like a mass-market stop.
           </p>
         </div>
 
-        <div className="mb-10 grid gap-4 md:grid-cols-3">
+        <div className="mb-12 grid gap-4 md:grid-cols-3">
           {pricingGuidelines.map((item) => (
-            <div key={item.label} className="rounded-lg border border-gray-200 bg-white p-5 shadow-sm">
-              <p className="text-sm font-semibold text-gray-500">{item.label}</p>
-              <p className="mt-2 text-3xl font-bold text-green-700">{item.value}</p>
-              <p className="mt-2 text-sm leading-6 text-gray-600">{item.detail}</p>
+            <div key={item.label} className="rounded-[1.5rem] border border-white/10 bg-white/10 p-6">
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-white/50">{item.label}</p>
+              <p className="mt-3 text-4xl font-black text-amber-200">{item.value}</p>
+              <p className="mt-3 text-sm leading-6 text-white/70">{item.detail}</p>
             </div>
           ))}
         </div>
 
-        <div className="mb-5 flex items-end justify-between gap-4">
-          <div>
-            <h3 className="text-2xl font-bold text-gray-950">Paquetes recomendados</h3>
-            <p className="mt-1 text-gray-600">
-              Opciones fáciles de entender para parejas, grupos pequeños y viajeros que buscan naturaleza auténtica.
-            </p>
-          </div>
-        </div>
-
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {packages.map((item) => (
-            <article key={item.name} className="rounded-lg border border-gray-200 bg-white p-5 shadow-sm">
-              <div className="mb-3 flex items-start justify-between gap-4">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-amber-700">{item.bestFor}</p>
-                  <h4 className="mt-1 text-xl font-bold text-gray-950">{item.name}</h4>
-                </div>
-                <p className="text-right text-lg font-bold text-green-700">{item.price}</p>
-              </div>
-              <p className="mb-5 text-sm leading-6 text-gray-600">{item.detail}</p>
+            <article key={item.name} className="rounded-[1.5rem] bg-[#f8f4ea] p-6 text-[#11130f] shadow-2xl">
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-amber-700">{item.bestFor}</p>
+              <h4 className="mt-3 text-2xl font-black">{item.name}</h4>
+              <p className="mt-3 text-2xl font-black text-green-800">{item.price}</p>
+              <p className="mt-4 min-h-[120px] text-sm leading-7 text-gray-700">{item.detail}</p>
               <button
                 onClick={() => handlePackageClick(item)}
-                className="w-full rounded bg-gray-950 px-4 py-2 font-semibold text-white hover:bg-gray-800"
+                className="mt-6 w-full rounded-full bg-[#071d14] px-4 py-3 font-black text-white transition hover:bg-green-900"
               >
-                Consultar paquete
+                Consult Package
               </button>
             </article>
           ))}

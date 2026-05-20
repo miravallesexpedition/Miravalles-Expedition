@@ -10,21 +10,26 @@ const difficultyLabels = {
 }
 
 function mapTour(row) {
-  const price = Number(row.price)
+  const fallbackTour = findFallbackTour(row.id) || fallbackTours[0]
+  const price = Number(row.price || fallbackTour.price)
 
   return {
     id: row.id,
-    name: row.name,
-    description: row.description,
+    name: row.name || fallbackTour.name,
+    shortName: fallbackTour.shortName,
+    description: row.description || fallbackTour.description,
     price,
     priceLabel: `$${price}`,
-    level: difficultyLabels[row.difficulty_level] || row.difficulty_level || 'Moderado',
-    duration: row.duration_hours ? `${row.duration_hours} horas` : undefined,
-    image: row.image_url || fallbackTours[0].image,
-    location: row.location,
-    includes: row.included_items,
-    notIncluded: row.not_included_items,
-    bring: row.what_to_bring
+    level: difficultyLabels[row.difficulty_level] || row.difficulty_level || fallbackTour.level || 'Moderado',
+    duration: row.duration_hours ? `${row.duration_hours} horas` : fallbackTour.duration,
+    distance: row.distance || fallbackTour.distance,
+    image: row.image_url || fallbackTour.image,
+    location: row.location || fallbackTour.location,
+    highlights: fallbackTour.highlights,
+    includes: row.included_items || fallbackTour.includes,
+    notIncluded: row.not_included_items || fallbackTour.notIncluded,
+    bring: row.what_to_bring || fallbackTour.bring,
+    pricing: fallbackTour.pricing
   }
 }
 
