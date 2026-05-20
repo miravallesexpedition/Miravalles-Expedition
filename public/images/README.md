@@ -1,11 +1,12 @@
-Coloca tus fotos propias en esta carpeta y dime los nombres de archivo.
+Imágenes públicas de Miravalles Expedition.
 
-Recomendación:
-- hero.jpg
-- volcan.jpg
-- cataratas.jpg
-- termales.jpg
-- aventura.jpg
-- grupo.jpg
+Las imágenes principales se generan desde la carpeta local:
+`C:\Users\Acer\Videos\Videos Miravalles`
 
-Cuando estén aquí, cambio `src/lib/siteConfig.js` para usar rutas como `/images/hero.jpg`.
+Para regenerarlas:
+
+```bash
+npm run optimize:images
+```
+
+El script optimiza tamaño y calidad para web móvil antes de publicar en Vercel.

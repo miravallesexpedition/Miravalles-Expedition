@@ -19,7 +19,12 @@ function mapTour(row) {
     price,
     priceLabel: `$${price}`,
     level: difficultyLabels[row.difficulty_level] || row.difficulty_level || 'Moderado',
-    image: row.image_url || fallbackTours[0].image
+    duration: row.duration_hours ? `${row.duration_hours} horas` : undefined,
+    image: row.image_url || fallbackTours[0].image,
+    location: row.location,
+    includes: row.included_items,
+    notIncluded: row.not_included_items,
+    bring: row.what_to_bring
   }
 }
 

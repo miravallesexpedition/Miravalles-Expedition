@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { track } from '@vercel/analytics'
+import AboutSection from '@/components/sections/AboutSection'
 import ContactForm from '@/components/sections/ContactForm'
 import DatePicker from '@/components/sections/DatePicker'
 import FAQSection from '@/components/sections/FAQSection'
@@ -89,6 +90,8 @@ export default function Home() {
         onViewTours={() => document.getElementById('tours')?.scrollIntoView({ behavior: 'smooth' })}
         onReserve={() => setShowContactForm(true)}
       />
+
+      <AboutSection />
 
       <section id="tours">
         <ToursSection

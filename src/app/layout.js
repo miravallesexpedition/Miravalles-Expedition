@@ -1,4 +1,5 @@
 import { Analytics } from '@vercel/analytics/next'
+import StructuredData from '@/components/StructuredData'
 import { business, seoKeywords, tourImages } from '@/lib/siteConfig'
 import './globals.css'
 
@@ -37,6 +38,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="es">
       <body className="font-sans">
+        <StructuredData />
         {children}
         <Analytics />
       </body>

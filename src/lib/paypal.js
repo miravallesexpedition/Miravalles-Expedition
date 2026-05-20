@@ -1,6 +1,11 @@
-const isPayPalConfigured = Boolean(
+export const isPayPalConfigured = Boolean(
   process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID && process.env.PAYPAL_SECRET_KEY
 )
+
+const paypalEnvironment = process.env.PAYPAL_ENV === 'live' ? 'live' : 'sandbox'
+const paypalBaseUrl = paypalEnvironment === 'live'
+  ? 'https://api-m.paypal.com'
+  : 'https://api-m.sandbox.paypal.com'
 
 function ensurePayPalEnabled() {
   if (!isPayPalConfigured) {
@@ -18,7 +23,7 @@ export const paymentService = {
 
       const accessToken = await this.getAccessToken()
 
-      const response = await fetch('https://api.sandbox.paypal.com/v2/checkout/orders', {
+      const response = await fetch(`${paypalBaseUrl}/v2/checkout/orders`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -86,7 +91,7 @@ export const paymentService = {
       const accessToken = await this.getAccessToken()
 
       const response = await fetch(
-        `https://api.sandbox.paypal.com/v2/checkout/orders/${orderId}/capture`,
+        `${paypalBaseUrl}/v2/checkout/orders/${orderId}/capture`,
         {
           method: 'POST',
           headers: {
@@ -120,7 +125,7 @@ export const paymentService = {
 
       const auth = Buffer.from(`${clientId}:${secretKey}`).toString('base64')
 
-      const response = await fetch('https://api.sandbox.paypal.com/v1/oauth2/token', {
+      const response = await fetch(`${paypalBaseUrl}/v1/oauth2/token`, {
         method: 'POST',
         headers: {
           'Authorization': `Basic ${auth}`,

@@ -27,7 +27,10 @@ export const tourImages = {
   butterfly: '/images/butterfly.jpg',
   bird: '/images/bird.jpg',
   duck: '/images/duck.jpg',
-  orchids: '/images/orchids.jpg'
+  orchids: '/images/orchids.jpg',
+  trailSign: '/images/trail-sign.jpg',
+  forestTrail: '/images/forest-trail.jpg',
+  cabroMucoFall: '/images/cabro-muco-waterfall-clean.jpg'
 }
 
 export const commonIncludes = [
@@ -58,6 +61,9 @@ export const galleryImages = [
   { url: tourImages.logo, alt: 'Logo de Miravalles Expedition' },
   { url: tourImages.hero, alt: 'Catarata y poza natural en Miravalles' },
   { url: tourImages.tallWaterfall, alt: 'Catarata alta en la zona de Miravalles' },
+  { url: tourImages.cabroMucoFall, alt: 'Catarata Cabro Muco con poza natural' },
+  { url: tourImages.trailSign, alt: 'Rótulo del sendero Cabro Muco' },
+  { url: tourImages.forestTrail, alt: 'Sendero de bosque hacia las cataratas' },
   { url: tourImages.redRockWaterfall, alt: 'Cascada sobre roca volcánica rojiza' },
   { url: tourImages.catarataRiver, alt: 'Río y pequeñas cascadas de montaña' },
   { url: tourImages.volcano, alt: 'Vista del Volcán Miravalles en Guanacaste' },

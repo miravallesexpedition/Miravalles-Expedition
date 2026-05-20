@@ -11,6 +11,8 @@ export default function PaymentSection({ cart, total, onClose }) {
     email: '',
     phone: '',
     participantsCount: 1,
+    preferredTime: 'Mañana',
+    paymentPreference: 'Coordinar por WhatsApp',
     specialRequests: ''
   })
   const [status, setStatus] = useState({ type: 'idle', message: '', links: null })
@@ -43,6 +45,8 @@ export default function PaymentSection({ cart, total, onClose }) {
             participantsCount: formData.participantsCount,
             tourDate: formatDate(item.selectedDate),
             specialRequests: formData.specialRequests
+              ? `${formData.specialRequests}\nHorario preferido: ${formData.preferredTime}\nPago preferido: ${formData.paymentPreference}`
+              : `Horario preferido: ${formData.preferredTime}\nPago preferido: ${formData.paymentPreference}`
           })
         })
 
@@ -149,6 +153,36 @@ export default function PaymentSection({ cart, total, onClose }) {
               required
               className="w-full rounded border p-2"
             />
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div>
+              <label className="mb-1 block font-semibold">Horario preferido</label>
+              <select
+                name="preferredTime"
+                value={formData.preferredTime}
+                onChange={handleChange}
+                className="w-full rounded border p-2"
+              >
+                <option>Mañana</option>
+                <option>Tarde</option>
+                <option>Flexible</option>
+              </select>
+            </div>
+            <div>
+              <label className="mb-1 block font-semibold">Pago preferido</label>
+              <select
+                name="paymentPreference"
+                value={formData.paymentPreference}
+                onChange={handleChange}
+                className="w-full rounded border p-2"
+              >
+                <option>Coordinar por WhatsApp</option>
+                <option>Depósito</option>
+                <option>Efectivo</option>
+                <option>PayPal</option>
+              </select>
+            </div>
           </div>
 
           <div>
