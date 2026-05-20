@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { bookingService, tourService } from '@/lib/services'
 import { buildMailtoUrl, buildWhatsAppUrl, contact } from '@/lib/siteConfig'
 import { isPayPalConfigured } from '@/lib/paypal'
+import { formatMoney } from '@/lib/pricing'
 
 export const dynamic = 'force-dynamic'
 
@@ -17,13 +18,16 @@ export default async function PayBookingPage({ params }) {
   }
 
   const tour = await tourService.getTourById(booking.tour_id)
+  const currency = booking.currency || 'USD'
+  const totalLabel = formatMoney(booking.total_price, currency)
+  const canPayWithPayPal = isPayPalConfigured && currency === 'USD'
   const summary = [
     'Hola, quiero coordinar el pago de mi reserva.',
     `Reserva: ${booking.id}`,
     `Tour: ${tour?.name || 'Tour reservado'}`,
     `Fecha: ${booking.tour_date}`,
     `Participantes: ${booking.participants_count}`,
-    `Total: $${booking.total_price}`
+    `Total: ${totalLabel}`
   ].join('\n')
 
   return (
@@ -37,10 +41,11 @@ export default async function PayBookingPage({ params }) {
           <p><strong>Tour:</strong> {tour?.name || 'Tour reservado'}</p>
           <p><strong>Fecha:</strong> {booking.tour_date}</p>
           <p><strong>Participantes:</strong> {booking.participants_count}</p>
-          <p className="text-2xl font-bold text-green-700">${booking.total_price}</p>
+          <p><strong>Moneda:</strong> {currency}</p>
+          <p className="text-2xl font-bold text-green-700">{totalLabel}</p>
         </div>
 
-        {isPayPalConfigured ? (
+        {canPayWithPayPal ? (
           <Link
             href={`/api/payments/paypal/create/${booking.id}`}
             className="inline-flex w-full justify-center rounded bg-blue-600 px-5 py-3 font-semibold text-white hover:bg-blue-700"
@@ -49,9 +54,13 @@ export default async function PayBookingPage({ params }) {
           </Link>
         ) : (
           <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
-            <p className="font-semibold text-amber-900">Pago en línea pendiente de activar</p>
+            <p className="font-semibold text-amber-900">
+              {currency === 'CRC' ? 'Pago nacional por coordinar' : 'Pago en línea pendiente de activar'}
+            </p>
             <p className="mt-2 text-sm leading-6 text-amber-800">
-              PayPal queda disponible cuando se configuren las credenciales reales. Mientras tanto, podés coordinar depósito, efectivo o método preferido por WhatsApp.
+              {currency === 'CRC'
+                ? 'Las reservas nacionales en colones se coordinan por WhatsApp, depósito o efectivo.'
+                : 'PayPal queda disponible cuando se configuren las credenciales reales. Mientras tanto, podés coordinar depósito, efectivo o método preferido por WhatsApp.'}
             </p>
             <div className="mt-4 grid gap-2 sm:grid-cols-2">
               <a

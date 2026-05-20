@@ -29,8 +29,8 @@ export default function ShoppingCart({ cart, onRemove, onCheckout }) {
         ))}
       </div>
       <div className="mb-3 border-t border-gray-100 pt-3">
-        <p className="text-lg font-black">Base per person: ${total}</p>
-        <p className="text-xs text-gray-500">Transport not included. Final details are confirmed by WhatsApp.</p>
+        <p className="text-lg font-black">International base: ${total}</p>
+        <p className="text-xs text-gray-500">National/resident pricing is selected in the request form. Transport not included.</p>
       </div>
       <button
         onClick={onCheckout}

@@ -3,23 +3,25 @@
 import { useMemo, useState } from 'react'
 import { track } from '@vercel/analytics'
 import { business, contact } from '@/lib/siteConfig'
+import { calculateBookingTotal, getTourQuote } from '@/lib/pricing'
 
-export default function PaymentSection({ cart, total, onClose }) {
+export default function PaymentSection({ cart, onClose }) {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
     participantsCount: 1,
+    customerType: 'foreign',
     preferredTime: 'Mañana',
     paymentPreference: 'Coordinar por WhatsApp',
     specialRequests: ''
   })
   const [status, setStatus] = useState({ type: 'idle', message: '', links: null })
 
-  const estimatedTotal = useMemo(() => {
-    return Number(total) * Number(formData.participantsCount || 1)
-  }, [total, formData.participantsCount])
+  const quoteSummary = useMemo(() => (
+    calculateBookingTotal(cart, formData.participantsCount, formData.customerType)
+  ), [cart, formData.participantsCount, formData.customerType])
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -29,7 +31,12 @@ export default function PaymentSection({ cart, total, onClose }) {
   const handleSubmit = async (event) => {
     event.preventDefault()
     setStatus({ type: 'loading', message: 'Creating your booking request...', links: null })
-    track('booking_submit_attempt', { tours: cart.length, total: estimatedTotal })
+    track('booking_submit_attempt', {
+      tours: cart.length,
+      total: quoteSummary.total || 0,
+      currency: quoteSummary.currency,
+      customerType: formData.customerType
+    })
 
     try {
       const responses = await Promise.all(cart.map(async (item) => {
@@ -43,6 +50,7 @@ export default function PaymentSection({ cart, total, onClose }) {
             lastName: formData.lastName,
             phone: formData.phone,
             participantsCount: formData.participantsCount,
+            customerType: formData.customerType,
             tourDate: formatDate(item.selectedDate),
             specialRequests: formData.specialRequests
               ? `${formData.specialRequests}\nHorario preferido: ${formData.preferredTime}\nPago preferido: ${formData.paymentPreference}`
@@ -61,14 +69,17 @@ export default function PaymentSection({ cart, total, onClose }) {
       track('booking_submit_success', {
         tours: cart.length,
         persisted: Boolean(firstResponse.persisted),
-        total: estimatedTotal
+        total: quoteSummary.total || 0,
+        currency: quoteSummary.currency,
+        customerType: formData.customerType
       })
       setStatus({
         type: 'success',
         message: firstResponse.message || `Solicitud creada. Te contactaremos al ${contact.phoneDisplay}.`,
         links: {
           whatsappUrl: firstResponse.whatsappUrl,
-          mailtoUrl: firstResponse.mailtoUrl
+          mailtoUrl: firstResponse.mailtoUrl,
+          confirmationUrl: firstResponse.confirmationUrl
         }
       })
     } catch (error) {
@@ -78,11 +89,11 @@ export default function PaymentSection({ cart, total, onClose }) {
   }
 
   const handleWhatsAppClick = () => {
-    track('booking_whatsapp_click', { total: estimatedTotal })
+    track('booking_whatsapp_click', { total: quoteSummary.total || 0, currency: quoteSummary.currency })
   }
 
   const handleEmailClick = () => {
-    track('booking_email_click', { total: estimatedTotal })
+    track('booking_email_click', { total: quoteSummary.total || 0, currency: quoteSummary.currency })
   }
 
   return (
@@ -121,7 +132,18 @@ export default function PaymentSection({ cart, total, onClose }) {
               </Field>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-3">
+            <div className="grid gap-3 sm:grid-cols-2">
+              <Field label="Visitor">
+                <select
+                  name="customerType"
+                  value={formData.customerType}
+                  onChange={handleChange}
+                  className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3"
+                >
+                  <option value="foreign">International / USD</option>
+                  <option value="national">Nacional o residente / CRC</option>
+                </select>
+              </Field>
               <Field label="People">
                 <input
                   type="number"
@@ -134,6 +156,9 @@ export default function PaymentSection({ cart, total, onClose }) {
                   className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3"
                 />
               </Field>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
               <Field label="Time">
                 <select
                   name="preferredTime"
@@ -197,6 +222,14 @@ export default function PaymentSection({ cart, total, onClose }) {
                     >
                       Send by email
                     </a>
+                    {status.links.confirmationUrl && (
+                      <a
+                        href={status.links.confirmationUrl}
+                        className="rounded-full bg-amber-300 px-4 py-2 font-black text-[#071d14]"
+                      >
+                        Confirm request
+                      </a>
+                    )}
                   </div>
                 )}
               </div>
@@ -218,15 +251,15 @@ export default function PaymentSection({ cart, total, onClose }) {
                 <div key={`${item.id || item.name}-${i}`} className="border-b border-gray-100 pb-3">
                   <p className="font-black text-[#11130f]">{item.name}</p>
                   <p className="text-sm text-gray-600">{formatDate(item.selectedDate)}</p>
-                  <p className="text-sm font-bold text-green-800">{item.priceLabel || `$${item.price}`} p.p.</p>
+                  <p className="text-sm font-bold text-green-800">{getTourQuote(item, formData.customerType).priceLabel} p.p.</p>
                 </div>
               ))}
             </div>
             <div className="mt-5 rounded-2xl bg-[#f4efe3] p-4">
               <p className="text-xs font-black uppercase tracking-[0.16em] text-gray-500">Estimated total</p>
-              <p className="mt-1 text-4xl font-black text-green-800">${estimatedTotal}</p>
+              <p className="mt-1 text-4xl font-black text-green-800">{quoteSummary.label}</p>
               <p className="mt-2 text-xs leading-5 text-gray-600">
-                Base per person. {business.noTransportNotice}
+                {quoteSummary.currency === 'CRC' ? 'Tarifa nacional/residente.' : 'International base rate.'} {business.noTransportNotice}
               </p>
             </div>
           </aside>

@@ -33,7 +33,9 @@ export async function confirmBookingByToken(token) {
       tour_name: tour.name,
       tour_date: booking.tour_date,
       participants_count: booking.participants_count,
-      total_price: booking.total_price
+      total_price: booking.total_price,
+      currency: booking.currency || 'USD',
+      customer_type: booking.customer_type || 'foreign'
     }, paymentUrl)
   } catch (emailError) {
     console.error('Error sending confirmed booking email:', emailError)

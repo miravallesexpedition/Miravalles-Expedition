@@ -16,6 +16,13 @@ export async function GET(request, { params }) {
       return Response.json({ error: 'La reserva debe estar confirmada antes de pagar' }, { status: 400 })
     }
 
+    if ((booking.currency || 'USD') !== 'USD') {
+      return Response.json(
+        { error: 'PayPal solo está disponible para pagos en USD. Las reservas nacionales se coordinan por WhatsApp.' },
+        { status: 400 }
+      )
+    }
+
     const tour = await tourService.getTourById(booking.tour_id)
     if (!tour) {
       return Response.json({ error: 'Tour no encontrado' }, { status: 404 })

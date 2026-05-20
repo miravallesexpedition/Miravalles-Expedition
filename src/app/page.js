@@ -83,8 +83,6 @@ export default function Home() {
     setCart(cart.filter((_, i) => i !== index))
   }
 
-  const totalPrice = cart.reduce((sum, item) => sum + Number(item.price), 0)
-
   return (
     <main className="bg-[#f8f4ea]">
       <SiteHeader onReserve={() => setShowContactForm(true)} />
@@ -179,7 +177,6 @@ export default function Home() {
       {showPayment && (
         <PaymentSection
           cart={cart}
-          total={totalPrice}
           onClose={() => setShowPayment(false)}
         />
       )}

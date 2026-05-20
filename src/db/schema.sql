@@ -1,6 +1,6 @@
 -- Tabla de tours
 CREATE TABLE tours (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  id TEXT PRIMARY KEY,
   name TEXT NOT NULL,
   description TEXT,
   price DECIMAL(10, 2) NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE tours (
 -- Tabla de reservas
 CREATE TABLE bookings (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  tour_id UUID NOT NULL REFERENCES tours(id) ON DELETE CASCADE,
+  tour_id TEXT NOT NULL REFERENCES tours(id) ON DELETE CASCADE,
   email TEXT NOT NULL,
   first_name TEXT NOT NULL,
   last_name TEXT NOT NULL,
@@ -32,6 +32,10 @@ CREATE TABLE bookings (
   tour_date DATE NOT NULL,
   status TEXT CHECK (status IN ('pending', 'confirmed', 'cancelled', 'completed')) DEFAULT 'pending',
   confirmation_token TEXT UNIQUE,
+  customer_type TEXT CHECK (customer_type IN ('foreign', 'national')) DEFAULT 'foreign',
+  currency TEXT CHECK (currency IN ('USD', 'CRC')) DEFAULT 'USD',
+  unit_price DECIMAL(10, 2),
+  price_label TEXT,
   total_price DECIMAL(10, 2),
   payment_status TEXT CHECK (payment_status IN ('pending', 'completed', 'failed')) DEFAULT 'pending',
   payment_method TEXT CHECK (payment_method IN ('paypal')),
@@ -77,6 +81,7 @@ CREATE INDEX idx_tours_is_active ON tours(is_active);
 
 -- Tours base de Miravalles Expedition
 INSERT INTO tours (
+  id,
   name,
   description,
   price,
@@ -92,6 +97,7 @@ INSERT INTO tours (
   best_season
 ) VALUES
 (
+  'catarata-cabro-muco-morpho-blanca',
   'Catarata Cabro Muco + Morpho Blanca',
   'Caminata guiada de 10 km ida y vuelta hacia dos cataratas escondidas en la zona del Volcán Miravalles.',
   55.00,
@@ -107,6 +113,7 @@ INSERT INTO tours (
   'Todo el año'
 ),
 (
+  'aguas-termales-miravalles',
   'Aguas Termales Miravalles',
   'Experiencia relajada para disfrutar aguas termales y ambiente volcánico cerca de Miravalles.',
   35.00,
@@ -122,6 +129,7 @@ INSERT INTO tours (
   'Todo el año'
 ),
 (
+  'crater-volcan-miravalles',
   'Camino al Cráter del Volcán Miravalles',
   'Caminata exigente para viajeros con buena condición física, vistas amplias y terreno volcánico.',
   85.00,
@@ -137,6 +145,7 @@ INSERT INTO tours (
   'Diciembre a abril'
 ),
 (
+  'tour-aves-vida-silvestre',
   'Tour de Aves y Vida Silvestre',
   'Salida tranquila de observación de aves y vida silvestre, ideal temprano en la mañana.',
   45.00,
@@ -149,5 +158,21 @@ INSERT INTO tours (
   ARRAY['Guía local', 'Agua', 'Refrigerio o snacks', 'Binoculares'],
   ARRAY['Transporte', 'Almuerzo', 'Gastos personales'],
   ARRAY['Ropa cómoda', 'Zapatos cerrados', 'Repelente', 'Cámara', 'Sombrero o gorra'],
+  'Todo el año'
+),
+(
+  'fotografia-naturaleza-miravalles',
+  'Fotografía de Naturaleza',
+  'Recorrido pausado para capturar cataratas, flores, aves, mariposas y detalles del bosque con acompañamiento local.',
+  75.00,
+  'moderate',
+  4,
+  8,
+  '/images/butterfly.jpg',
+  'Fortuna, Guanacaste',
+  ARRAY['es', 'en'],
+  ARRAY['Guía local', 'Agua', 'Refrigerio o snacks', 'Binoculares cuando aplica'],
+  ARRAY['Transporte', 'Almuerzo', 'Gastos personales', 'Entradas externas cuando apliquen'],
+  ARRAY['Ropa cómoda', 'Zapatos cerrados para caminar', 'Bloqueador solar', 'Repelente contra insectos', 'Cámara o celular protegido contra agua'],
   'Todo el año'
 );

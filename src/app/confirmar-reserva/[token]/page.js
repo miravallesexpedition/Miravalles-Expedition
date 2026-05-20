@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { confirmBookingByToken } from '@/lib/bookingFlow'
+import { formatMoney } from '@/lib/pricing'
 
 export const dynamic = 'force-dynamic'
 
@@ -15,6 +16,8 @@ export default async function ConfirmBookingPage({ params }) {
   }
 
   const alreadyConfirmed = result.status === 'already-confirmed'
+  const currency = result.booking.currency || 'USD'
+  const totalLabel = formatMoney(result.booking.total_price, currency)
 
   return (
     <main className="min-h-screen bg-gray-50 px-4 py-16">
@@ -29,7 +32,7 @@ export default async function ConfirmBookingPage({ params }) {
           <p><strong>Tour:</strong> {result.tour.name}</p>
           <p><strong>Fecha:</strong> {result.booking.tour_date}</p>
           <p><strong>Participantes:</strong> {result.booking.participants_count}</p>
-          <p><strong>Total:</strong> ${result.booking.total_price}</p>
+          <p><strong>Total:</strong> {totalLabel}</p>
         </div>
         <Link
           href={result.paymentUrl}

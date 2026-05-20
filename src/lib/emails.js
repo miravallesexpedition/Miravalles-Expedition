@@ -1,7 +1,8 @@
 import { Resend } from 'resend'
 import { contact } from './siteConfig'
+import { formatMoney } from './pricing'
 
-const isResendConfigured = Boolean(process.env.RESEND_API_KEY)
+export const isResendConfigured = Boolean(process.env.RESEND_API_KEY)
 const resend = isResendConfigured ? new Resend(process.env.RESEND_API_KEY) : null
 const fromEmail = process.env.RESEND_FROM_EMAIL || 'noreply@miravallesexpedition.com'
 const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL || contact.email
@@ -29,11 +30,14 @@ function escapeHtml(value) {
 }
 
 function bookingRows(booking) {
+  const customerType = booking.customer_type === 'national' ? 'Nacional o residente' : 'Extranjero'
+
   return `
     <p><strong>Tour:</strong> ${escapeHtml(booking.tour_name)}</p>
     <p><strong>Fecha:</strong> ${escapeHtml(booking.tour_date)}</p>
     <p><strong>Participantes:</strong> ${escapeHtml(booking.participants_count)}</p>
-    <p><strong>Precio total estimado:</strong> $${escapeHtml(booking.total_price)}</p>
+    <p><strong>Tipo de cliente:</strong> ${escapeHtml(customerType)}</p>
+    <p><strong>Precio total estimado:</strong> ${escapeHtml(formatMoney(booking.total_price, booking.currency || 'USD'))}</p>
   `
 }
 
