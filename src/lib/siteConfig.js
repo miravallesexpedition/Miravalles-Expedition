@@ -172,23 +172,28 @@ export const galleryImages = [
 export const pricingGuidelines = [
   {
     label: 'Adulto extranjero',
-    value: '$55',
+    value: '$45',
     detail: 'Tarifa base del tour principal de 4 horas.'
   },
   {
-    label: 'Niño',
+    label: 'Niño extranjero',
     value: '$35',
     detail: 'Recomendado de 8 a 12 años, acompañado por adulto.'
   },
   {
     label: 'Nacional o residente',
-    value: '₡12.500',
-    detail: 'Tarifa local base por persona; el tour al cráter tiene precio superior por dificultad.'
+    value: '₡10.000',
+    detail: 'Tarifa local para Piedras Rojas + Morpho Blanca + Cabro Muco.'
   },
   {
-    label: 'Grupo 4+',
-    value: '$49 p.p.',
-    detail: 'Descuento por volumen sin bajar la percepción de valor.'
+    label: 'Niño nacional',
+    value: '₡8.000',
+    detail: 'Tarifa infantil nacional para el tour de cataratas.'
+  },
+  {
+    label: 'Aguas termales',
+    value: '$15',
+    detail: 'Precio general para nacionales y extranjeros.'
   },
   {
     label: 'Privado',
@@ -197,8 +202,8 @@ export const pricingGuidelines = [
   },
   {
     label: 'Temporada baja',
-    value: '$49',
-    detail: 'Promoción sugerida de mayo a noviembre, según disponibilidad.'
+    value: 'Consultar',
+    detail: 'Promociones y grupos grandes se coordinan por WhatsApp.'
   }
 ]
 
@@ -219,8 +224,8 @@ export const tours = [
     id: 'catarata-cabro-muco-morpho-blanca',
     name: 'Catarata Piedras Rojas + Morpho Blanca + Cabro Muco',
     shortName: 'Piedras Rojas + Morpho + Cabro',
-    price: 55,
-    priceLabel: '$55',
+    price: 45,
+    priceLabel: '$45',
     level: 'Media',
     duration: '4 horas',
     distance: '10 km ida y vuelta',
@@ -274,21 +279,19 @@ export const tours = [
       }
     ],
     pricing: {
-      foreignAdult: '$55',
+      foreignAdult: '$45',
       foreignChild: '$35',
-      nationalAdult: '₡12.500',
-      nationalChild: '₡12.500',
-      group: '$49 p.p. desde 4 personas',
-      private: '$160 para 1-2 personas',
-      promo: '$49 p.p. en temporada baja'
+      nationalAdult: '₡10.000',
+      nationalChild: '₡8.000',
+      private: '$160 para 1-2 personas'
     }
   },
   {
     id: 'aguas-termales-miravalles',
     name: 'Aguas Termales Miravalles',
     shortName: 'Aguas Termales',
-    price: 35,
-    priceLabel: '$35',
+    price: 15,
+    priceLabel: '$15',
     level: 'Fácil',
     duration: 'Flexible, cierran a las 9:00 p.m.',
     distance: 'Ruta corta / baja exigencia',
@@ -322,13 +325,8 @@ export const tours = [
       }
     ],
     pricing: {
-      foreignAdult: '$35',
-      foreignChild: '$25',
-      nationalAdult: '₡12.500',
-      nationalChild: '₡12.500',
-      group: '$32 p.p. desde 4 personas',
-      private: '$95 para 1-2 personas',
-      promo: '$30 p.p. entre semana'
+      general: '$15',
+      private: '$95 para 1-2 personas'
     }
   },
   {
@@ -375,9 +373,7 @@ export const tours = [
       foreignChild: 'No recomendado para niños pequeños',
       nationalAdult: '₡30.000',
       nationalChild: 'Consultar',
-      group: '$79 p.p. desde 4 personas',
-      private: '$240 para 1-2 personas',
-      promo: '$79 p.p. temporada baja'
+      private: '$240 para 1-2 personas'
     }
   },
   {
@@ -419,13 +415,7 @@ export const tours = [
       }
     ],
     pricing: {
-      foreignAdult: '$45',
-      foreignChild: '$30',
-      nationalAdult: '₡12.500',
-      nationalChild: '₡12.500',
-      group: '$40 p.p. desde 4 personas',
-      private: '$120 para 1-2 personas',
-      promo: '$39 p.p. temporada baja'
+      general: '$45'
     }
   },
   {
@@ -471,9 +461,7 @@ export const tours = [
       foreignChild: '$45',
       nationalAdult: '₡12.500',
       nationalChild: '₡12.500',
-      group: '$68 p.p. desde 3 personas',
-      private: '$175 para 1-2 personas',
-      promo: '$68 p.p. temporada baja'
+      private: '$175 para 1-2 personas'
     }
   }
 ]
@@ -481,7 +469,7 @@ export const tours = [
 export const packages = [
   {
     name: 'Caminata + Aguas Termales',
-    price: 'Desde $85 p.p.',
+    price: 'Desde $60 p.p.',
     detail:
       'Piedras Rojas + Morpho Blanca + Cabro Muco por la mañana y cierre relajado en aguas termales. Ideal para parejas y grupos pequeños.',
     bestFor: 'Aventura completa'

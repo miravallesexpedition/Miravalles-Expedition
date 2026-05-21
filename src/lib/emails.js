@@ -32,12 +32,19 @@ function escapeHtml(value) {
 
 function bookingRows(booking) {
   const customerType = booking.customer_type === 'national' ? 'Nacional o residente' : 'Extranjero'
+  const partyRows = Number(booking.children_count || 0) > 0
+    ? `
+      <p><strong>Adultos:</strong> ${escapeHtml(booking.adult_count || 0)}</p>
+      <p><strong>Niños:</strong> ${escapeHtml(booking.children_count || 0)}</p>
+    `
+    : ''
 
   return `
     <p><strong>Tour:</strong> ${escapeHtml(booking.tour_name)}</p>
     <p><strong>Fecha:</strong> ${escapeHtml(booking.tour_date)}</p>
     <p><strong>Hora preferida:</strong> ${escapeHtml(formatBookingTime(booking.preferred_time || 'Por confirmar'))}</p>
     <p><strong>Participantes:</strong> ${escapeHtml(booking.participants_count)}</p>
+    ${partyRows}
     <p><strong>Tipo de cliente:</strong> ${escapeHtml(customerType)}</p>
     <p><strong>Precio total estimado:</strong> ${escapeHtml(formatMoney(booking.total_price, booking.currency || 'USD'))}</p>
   `

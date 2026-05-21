@@ -41,7 +41,7 @@ export default async function TourDetailPage({ params }) {
     `Fecha deseada:`,
     `Cantidad de personas:`,
     `Tarifa extranjera base: ${tour.priceLabel}`,
-    `Tarifa nacional/residente: ${tour.pricing?.nationalAdult || 'Consultar'}`,
+    `Tarifa nacional/residente: ${tour.pricing?.nationalAdult || tour.pricing?.general || 'Consultar'}`,
     'Quiero confirmar disponibilidad y punto de encuentro.'
   ].join('\n')
 
@@ -99,7 +99,7 @@ export default async function TourDetailPage({ params }) {
           <Metric label="Distancia" value={tour.distance || 'Consultar'} />
           <Metric label="Dificultad" value={tour.level} />
           <Metric label="Desde" value={tour.priceLabel} />
-          <Metric label="Nacional" value={tour.pricing?.nationalAdult || 'Consultar'} />
+          <Metric label="Nacional" value={tour.pricing?.nationalAdult || tour.pricing?.general || 'Consultar'} />
           <Metric label="Transporte" value="No incluido" />
         </div>
       </section>
@@ -199,6 +199,14 @@ function InfoGrid({ tour }) {
 }
 
 function buildPricingItems(tour) {
+  if (tour.pricing?.general) {
+    return [
+      `Precio general: ${tour.pricing.general}`,
+      tour.pricing?.private && `Privado: ${tour.pricing.private}`,
+      tour.pricing?.promo && `Promoción: ${tour.pricing.promo}`
+    ].filter(Boolean)
+  }
+
   return [
     tour.pricing?.foreignAdult && `Adulto extranjero: ${tour.pricing.foreignAdult}`,
     tour.pricing?.foreignChild && `Niño extranjero: ${tour.pricing.foreignChild}`,

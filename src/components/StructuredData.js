@@ -21,7 +21,7 @@ export default function StructuredData() {
         },
         areaServed: ['Guanacaste', 'Volcán Miravalles', 'Fortuna'],
         sameAs: [business.mapsUrl],
-        priceRange: '$35-$190'
+        priceRange: '$15-$240'
       },
       ...tours.map((tour) => ({
         '@type': 'TouristTrip',

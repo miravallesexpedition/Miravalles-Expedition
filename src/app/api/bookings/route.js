@@ -2,7 +2,7 @@ import crypto from 'crypto'
 import { bookingService, tourService } from '@/lib/services'
 import { buildMailtoUrl, buildWhatsAppUrl, contact } from '@/lib/siteConfig'
 import { emailService } from '@/lib/emails'
-import { formatMoney, getTourQuote, normalizeCustomerType } from '@/lib/pricing'
+import { formatMoney, getTourChildQuote, getTourQuote, normalizeCustomerType } from '@/lib/pricing'
 import { formatBookingTime, isValidBookingTime } from '@/lib/timeSlots'
 
 export const dynamic = 'force-dynamic'
@@ -12,6 +12,7 @@ export async function POST(request) {
     const body = await request.json()
     const { tourId, email, firstName, lastName, phone, tourDate, preferredTime, specialRequests } = body
     const participantsCount = Number(body.participantsCount)
+    const childrenCount = Math.max(0, Number(body.childrenCount || 0))
     const customerType = normalizeCustomerType(body.customerType)
     const cleanEmail = String(email || '').trim().toLowerCase()
     const cleanFirstName = String(firstName || '').trim()
@@ -31,6 +32,13 @@ export async function POST(request) {
     if (!Number.isInteger(participantsCount) || participantsCount < 1 || participantsCount > 60) {
       return Response.json(
         { error: 'La cantidad de participantes debe estar entre 1 y 60' },
+        { status: 400 }
+      )
+    }
+
+    if (!Number.isInteger(childrenCount) || childrenCount > participantsCount) {
+      return Response.json(
+        { error: 'La cantidad de niños debe ser válida y no mayor al total de personas' },
         { status: 400 }
       )
     }
@@ -74,17 +82,26 @@ export async function POST(request) {
 
     const confirmationToken = crypto.randomBytes(32).toString('hex')
     const quote = getTourQuote(tour, customerType)
+    const childQuote = getTourChildQuote(tour, customerType)
+    const adultCount = Math.max(0, participantsCount - childrenCount)
 
-    if (!Number.isFinite(quote.unitPrice)) {
+    if (!Number.isFinite(quote.unitPrice) || !Number.isFinite(childQuote.unitPrice) || quote.currency !== childQuote.currency) {
       return Response.json(
         { error: 'La tarifa de este tour requiere confirmación manual' },
         { status: 400 }
       )
     }
 
-    const totalPrice = quote.unitPrice * participantsCount
+    const totalPrice = (quote.unitPrice * adultCount) + (childQuote.unitPrice * childrenCount)
     const totalLabel = formatMoney(totalPrice, quote.currency)
     const customerTypeLabel = customerType === 'national' ? 'Nacional o residente' : 'Extranjero'
+    const priceLabel = childrenCount > 0
+      ? `Adulto: ${quote.priceLabel} / Niño: ${childQuote.priceLabel}`
+      : quote.priceLabel
+    const enrichedSpecialRequests = [
+      childrenCount > 0 ? `Adultos: ${adultCount}. Niños: ${childrenCount}.` : null,
+      cleanSpecialRequests
+    ].filter(Boolean).join('\n')
 
     const bookingPayload = {
       tour_id: tourId,
@@ -99,10 +116,10 @@ export async function POST(request) {
       customer_type: customerType,
       currency: quote.currency,
       unit_price: quote.unitPrice,
-      price_label: quote.priceLabel,
+      price_label: priceLabel,
       total_price: totalPrice,
       preferred_time: cleanPreferredTime,
-      special_requests: cleanSpecialRequests
+      special_requests: enrichedSpecialRequests
     }
 
     const booking = await bookingService.createBooking(bookingPayload)
@@ -113,13 +130,15 @@ export async function POST(request) {
       `Fecha: ${cleanTourDate}`,
       `Hora preferida: ${formatBookingTime(cleanPreferredTime)}`,
       `Participantes: ${participantsCount}`,
+      `Adultos: ${adultCount}`,
+      `Niños: ${childrenCount}`,
       `Tipo de cliente: ${customerTypeLabel}`,
-      `Precio por persona: ${quote.priceLabel}`,
+      `Precio: ${priceLabel}`,
       `Total estimado: ${totalLabel}`,
       `Nombre: ${cleanFirstName} ${cleanLastName}`,
       `Correo: ${cleanEmail}`,
       `Teléfono: ${cleanPhone || 'No indicado'}`,
-      `Notas: ${cleanSpecialRequests || 'Ninguna'}`,
+      `Notas: ${enrichedSpecialRequests || 'Ninguna'}`,
       'Transporte: no incluido'
     ].join('\n')
 
@@ -147,7 +166,9 @@ export async function POST(request) {
         participants_count: participantsCount,
         total_price: totalPrice,
         currency: quote.currency,
-        customer_type: customerType
+        customer_type: customerType,
+        adult_count: adultCount,
+        children_count: childrenCount
       }, whatsappUrl)
     } catch (emailError) {
       console.error('Error sending admin booking email:', emailError)
@@ -164,7 +185,9 @@ export async function POST(request) {
           participants_count: participantsCount,
           total_price: totalPrice,
           currency: quote.currency,
-          customer_type: customerType
+          customer_type: customerType,
+          adult_count: adultCount,
+          children_count: childrenCount
         }, confirmationUrl)
         customerConfirmationEmailSent = true
       } catch (emailError) {

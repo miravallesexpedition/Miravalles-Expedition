@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { track } from '@vercel/analytics'
 import { business, contact } from '@/lib/siteConfig'
-import { calculateBookingTotal, getTourQuote } from '@/lib/pricing'
+import { calculateBookingTotal, getTourChildQuote, getTourQuote } from '@/lib/pricing'
 import { bookingTimeSlots, formatBookingTime } from '@/lib/timeSlots'
 
 export default function PaymentSection({ cart, onClose }) {
@@ -13,6 +13,7 @@ export default function PaymentSection({ cart, onClose }) {
     email: '',
     phone: '',
     participantsCount: 1,
+    childrenCount: 0,
     customerType: 'foreign',
     preferredTime: '07:00',
     paymentPreference: 'Coordinar por WhatsApp',
@@ -25,8 +26,8 @@ export default function PaymentSection({ cart, onClose }) {
   const selectedDate = primaryCartItem?.selectedDate ? formatDate(primaryCartItem.selectedDate) : ''
 
   const quoteSummary = useMemo(() => (
-    calculateBookingTotal(cart, formData.participantsCount, formData.customerType)
-  ), [cart, formData.participantsCount, formData.customerType])
+    calculateBookingTotal(cart, formData.participantsCount, formData.customerType, formData.childrenCount)
+  ), [cart, formData.participantsCount, formData.customerType, formData.childrenCount])
 
   useEffect(() => {
     if (!primaryCartItem?.id || !selectedDate) return
@@ -65,7 +66,25 @@ export default function PaymentSection({ cart, onClose }) {
 
   const handleChange = (event) => {
     const { name, value } = event.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
+    setFormData((prev) => {
+      if (name === 'participantsCount') {
+        const participantsCount = Math.max(1, Number(value || 1))
+        return {
+          ...prev,
+          participantsCount,
+          childrenCount: Math.min(Number(prev.childrenCount || 0), participantsCount)
+        }
+      }
+
+      if (name === 'childrenCount') {
+        return {
+          ...prev,
+          childrenCount: Math.min(Number(value || 0), Number(prev.participantsCount || 1))
+        }
+      }
+
+      return { ...prev, [name]: value }
+    })
   }
 
   const handleSubmit = async (event) => {
@@ -90,6 +109,7 @@ export default function PaymentSection({ cart, onClose }) {
             lastName: formData.lastName,
             phone: formData.phone,
             participantsCount: formData.participantsCount,
+            childrenCount: formData.childrenCount,
             customerType: formData.customerType,
             tourDate: formatDate(item.selectedDate),
             preferredTime: formData.preferredTime,
@@ -182,10 +202,10 @@ export default function PaymentSection({ cart, onClose }) {
                   className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3"
                 >
                   <option value="foreign">Extranjero / USD</option>
-                  <option value="national">Nacional o residente / CRC</option>
+                  <option value="national">Nacional o residente</option>
                 </select>
               </Field>
-              <Field label="Personas">
+              <Field label="Personas total">
                 <input
                   type="number"
                   name="participantsCount"
@@ -194,6 +214,17 @@ export default function PaymentSection({ cart, onClose }) {
                   value={formData.participantsCount}
                   onChange={handleChange}
                   required
+                  className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3"
+                />
+              </Field>
+              <Field label="Niños">
+                <input
+                  type="number"
+                  name="childrenCount"
+                  min="0"
+                  max={formData.participantsCount}
+                  value={formData.childrenCount}
+                  onChange={handleChange}
                   className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3"
                 />
               </Field>
@@ -315,7 +346,14 @@ export default function PaymentSection({ cart, onClose }) {
                   <p className="font-black text-[#11130f]">{item.name}</p>
                   <p className="text-sm text-gray-600">{formatDate(item.selectedDate)}</p>
                   <p className="text-sm text-gray-600">{formatSelectedTime(formData.preferredTime)}</p>
-                  <p className="text-sm font-bold text-green-800">{getTourQuote(item, formData.customerType).priceLabel} p.p.</p>
+                  <p className="text-sm font-bold text-green-800">
+                    Adulto {getTourQuote(item, formData.customerType).priceLabel}
+                  </p>
+                  {Number(formData.childrenCount || 0) > 0 && (
+                    <p className="text-sm font-bold text-green-800">
+                      Niño {getTourChildQuote(item, formData.customerType).priceLabel}
+                    </p>
+                  )}
                 </div>
               ))}
             </div>
@@ -323,7 +361,7 @@ export default function PaymentSection({ cart, onClose }) {
               <p className="text-xs font-black uppercase tracking-[0.16em] text-gray-500">Total estimado</p>
               <p className="mt-1 text-4xl font-black text-green-800">{quoteSummary.label}</p>
               <p className="mt-2 text-xs leading-5 text-gray-600">
-                {quoteSummary.currency === 'CRC' ? 'Tarifa nacional/residente.' : 'Tarifa base para extranjeros.'} {business.noTransportNotice}
+                {formData.customerType === 'national' ? 'Tarifa nacional/residente.' : 'Tarifa base para extranjeros.'} {business.noTransportNotice}
               </p>
             </div>
           </aside>
