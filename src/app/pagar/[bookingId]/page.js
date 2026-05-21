@@ -52,6 +52,9 @@ export default async function PayBookingPage({ params }) {
             <p className="mt-2 text-sm leading-6 text-blue-900">
               Al continuar se abrirá PayPal para completar el pago en una página segura. No se registra el pago hasta que lo confirmés en PayPal.
             </p>
+            <p className="mt-2 text-xs font-semibold text-blue-800">
+              Miravalles Expedition no guarda datos de tarjeta. Revisá que la página de pago pertenezca a PayPal antes de finalizar.
+            </p>
             <Link
               href={`/api/payments/paypal/create/${booking.id}`}
               className="mt-4 inline-flex w-full justify-center rounded bg-blue-600 px-5 py-3 font-semibold text-white hover:bg-blue-700"

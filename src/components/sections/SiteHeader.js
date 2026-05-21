@@ -9,6 +9,7 @@ import { buildWhatsAppUrl, contact, tourImages } from '@/lib/siteConfig'
 const navItems = [
   { label: 'Tours', href: '/#tours' },
   { label: 'Galería', href: '/#gallery' },
+  { label: 'Pago seguro', href: '/#pago-seguro' },
   { label: 'Guías', href: '/#guides' },
   { label: 'Preguntas', href: '/#faq' }
 ]

@@ -197,6 +197,13 @@ export default function PaymentSection({ cart, onClose }) {
               />
             </Field>
 
+            <div className="rounded-2xl border border-green-900/10 bg-white p-4 text-sm leading-6 text-gray-700">
+              <p className="font-black text-[#071d14]">Pago seguro y confirmado</p>
+              <p className="mt-1">
+                Primero creamos la solicitud y confirmamos disponibilidad. Para pagos en USD, el botón de confirmación te lleva a PayPal; no guardamos datos de tarjeta en este sitio.
+              </p>
+            </div>
+
             {status.message && (
               <div className={`rounded-2xl p-4 text-sm ${
                 status.type === 'error' ? 'bg-red-50 text-red-700' :

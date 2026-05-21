@@ -13,6 +13,7 @@ import HeroSection from '@/components/sections/HeroSection'
 import MapSection from '@/components/sections/MapSection'
 import PaymentSection from '@/components/sections/PaymentSection'
 import PricingSection from '@/components/sections/PricingSection'
+import SecurePaymentSection from '@/components/sections/SecurePaymentSection'
 import ShoppingCart from '@/components/sections/ShoppingCart'
 import SiteHeader from '@/components/sections/SiteHeader'
 import TestimonialsSection from '@/components/sections/TestimonialsSection'
@@ -131,6 +132,7 @@ export default function Home() {
         </div>
       </section>
 
+      <SecurePaymentSection />
       <MapSection />
       <FAQSection />
 
