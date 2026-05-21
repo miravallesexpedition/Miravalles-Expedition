@@ -227,6 +227,7 @@ function buildPricingItems(tour) {
   if (tour.pricing?.general) {
     return [
       `Precio general: ${tour.pricing.general}`,
+      tour.pricing?.custom && `Ruta especial: ${tour.pricing.custom}`,
       tour.pricing?.private && `Privado: ${tour.pricing.private}`,
       tour.pricing?.promo && `Promoción: ${tour.pricing.promo}`
     ].filter(Boolean)

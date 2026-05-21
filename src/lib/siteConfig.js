@@ -35,6 +35,7 @@ export const tourImages = {
   orchids: '/images/orchids.jpg',
   trailSign: '/images/trail-sign.jpg',
   forestTrail: '/images/forest-trail.jpg',
+  hotSprings: '/images/colinas-termales-generated.jpg',
   cabroMucoFall: '/images/cabro-muco-waterfall-clean.jpg',
   cabroMucoUnderWaterfall: '/images/cabro-muco-under-waterfall.jpg',
   morphoBlancaGuide: '/images/morpho-blanca-8627.jpg',
@@ -137,6 +138,12 @@ export const galleryImages = [
     caption: 'Río de montaña'
   },
   {
+    url: tourImages.hotSprings,
+    alt: 'Imagen ilustrativa de aguas termales volcánicas en Miravalles',
+    caption: 'Aguas termales en Colinas del Miravalles',
+    featured: true
+  },
+  {
     url: tourImages.volcano,
     alt: 'Vista del Volcán Miravalles en Guanacaste',
     caption: 'Volcán Miravalles',
@@ -199,6 +206,11 @@ export const pricingGuidelines = [
     label: 'Privado',
     value: 'Desde $160',
     detail: 'Ideal para parejas o viajeros que quieren ritmo personalizado.'
+  },
+  {
+    label: 'Aves especializado',
+    value: 'Desde $95',
+    detail: 'Para Palo Verde, humedales, playas o especies objetivo; entradas y logística se confirman aparte.'
   },
   {
     label: 'Temporada baja',
@@ -288,40 +300,45 @@ export const tours = [
   },
   {
     id: 'aguas-termales-miravalles',
-    name: 'Aguas Termales Miravalles',
+    name: 'Aguas Termales en Colinas del Miravalles',
     shortName: 'Aguas Termales',
     price: 15,
     priceLabel: '$15',
     level: 'Fácil',
     duration: 'Flexible, cierran a las 9:00 p.m.',
-    distance: 'Ruta corta / baja exigencia',
-    image: tourImages.redRockWaterfall,
-    location: 'Zona Miravalles',
+    distance: 'Baja exigencia / acceso local',
+    image: tourImages.hotSprings,
+    location: 'Colinas del Miravalles',
     description:
-      'Experiencia relajada para disfrutar aguas termales y ambiente volcánico después de un día de aventura o como plan tranquilo de tarde.',
+      'Experiencia relajada en Colinas del Miravalles para disfrutar aguas termales y ambiente volcánico después de un día de aventura o como plan tranquilo de tarde.',
     overview:
-      'Una experiencia suave para bajar el ritmo, sentir la energía volcánica de Miravalles y cerrar el día en un ambiente natural.',
+      'Una experiencia suave para bajar el ritmo, sentir la energía volcánica de Miravalles y cerrar el día en un ambiente natural. Colinas del Miravalles cuenta con piscinas termales y se ubica cerca de rutas como Cabro Muco y el entorno del volcán.',
     whatToExpect: [
       'Coordinación previa del acceso y horario recomendado.',
-      'Orientación local para llegar al punto correcto.',
-      'Tiempo flexible para relajarse en aguas termales.'
+      'Orientación local para llegar a Colinas del Miravalles.',
+      'Tiempo flexible para relajarse en aguas termales.',
+      'Opción ideal para combinar con la caminata de cataratas cuando el cliente quiere cerrar el día sin prisa.'
     ],
     itinerary: [
       { title: 'Coordinación', text: 'Confirmamos hora, punto y recomendaciones por WhatsApp.' },
-      { title: 'Llegada al sitio', text: 'Ingreso al área termal según disponibilidad y condiciones del día.' },
+      { title: 'Llegada a Colinas', text: 'Ingreso al área termal según disponibilidad y condiciones del día.' },
       { title: 'Relajación', text: 'Tiempo libre para disfrutar el agua caliente natural.' }
     ],
-    highlights: ['Aguas termales', 'Ambiente volcánico', 'Plan relajado', 'Horario flexible'],
-    includes: ['Coordinación local', 'Agua', 'Refrigerio o snacks', 'Orientación en la zona'],
+    highlights: ['Colinas del Miravalles', 'Aguas termales', 'Ambiente volcánico', 'Plan relajado'],
+    includes: commonIncludes,
     notIncluded: commonNotIncluded,
-    bring: ['Traje de baño', 'Toalla', 'Sandalias', 'Cambio de ropa', 'Repelente'],
+    bring: [...commonBring, 'Traje de baño', 'Toalla', 'Sandalias', 'Cambio de ropa'],
     recommendations: defaultRecommendations,
     safety: defaultSafety,
-    gallery: [tourImages.redRockWaterfall, tourImages.volcano, tourImages.bromelia],
+    gallery: [tourImages.hotSprings, tourImages.volcano, tourImages.bromelia],
     faqs: [
       {
         question: '¿Hasta qué hora están abiertas?',
         answer: 'Las aguas termales cierran a las 9:00 p.m.; el horario exacto se coordina según disponibilidad.'
+      },
+      {
+        question: '¿La imagen de termales es una foto real?',
+        answer: 'De momento usamos una imagen ilustrativa temporal mientras incorporamos fotografías propias de Colinas del Miravalles.'
       }
     ],
     pricing: {
@@ -333,17 +350,17 @@ export const tours = [
     id: 'crater-volcan-miravalles',
     name: 'Camino al Cráter del Volcán Miravalles',
     shortName: 'Cráter Miravalles',
-    price: 85,
-    priceLabel: '$85',
+    price: 95,
+    priceLabel: '$95',
     level: 'Difícil',
-    duration: '5 a 6 horas',
-    distance: 'Consultar según ruta y clima',
+    duration: '6 a 7 horas',
+    distance: '10-11 km ida y vuelta aprox.',
     image: tourImages.volcano,
     location: 'Volcán Miravalles',
     description:
-      'Caminata exigente para viajeros con buena condición física que quieren una experiencia de montaña, vistas amplias y terreno volcánico.',
+      'Caminata exigente para viajeros con buena condición física que quieren una experiencia de montaña, desnivel fuerte, vistas amplias y terreno volcánico.',
     overview:
-      'Una ruta más física para quienes buscan montaña, paisaje abierto y una sensación real de expedición cerca del Volcán Miravalles.',
+      'Una ruta más física para quienes buscan montaña, paisaje abierto y una sensación real de expedición cerca del Volcán Miravalles. La distancia y el tiempo pueden cambiar por clima, acceso y condición del sendero.',
     whatToExpect: [
       'Briefing de seguridad y evaluación del clima.',
       'Ascenso por terreno natural con pausas controladas.',
@@ -369,11 +386,11 @@ export const tours = [
       }
     ],
     pricing: {
-      foreignAdult: '$85',
+      foreignAdult: '$95',
       foreignChild: 'No recomendado para niños pequeños',
-      nationalAdult: '₡30.000',
+      nationalAdult: '₡35.000',
       nationalChild: 'Consultar',
-      private: '$240 para 1-2 personas'
+      private: '$260 para 1-2 personas'
     }
   },
   {
@@ -383,28 +400,33 @@ export const tours = [
     price: 45,
     priceLabel: '$45',
     level: 'Fácil',
-    duration: '3 horas',
-    distance: 'Caminata suave',
+    duration: '3 horas base / medio día bajo solicitud',
+    distance: 'Ruta suave o desplazamiento según hábitat',
     image: tourImages.bird,
-    location: 'Fortuna y alrededores de Miravalles',
+    location: 'Miravalles, Palo Verde y rutas según objetivo',
     description:
-      'Salida tranquila de observación de aves, ideal temprano en la mañana para viajeros que disfrutan fotografía, binoculares y naturaleza sin prisa.',
+      'Salida de observación de aves diseñada según el interés del cliente: aves de bosque, humedales, zonas abiertas, playas u objetivos específicos en Miravalles, Palo Verde y alrededores.',
     overview:
-      'Un recorrido pausado para observar aves, flores, árboles y detalles de vida silvestre con acompañamiento local.',
+      'Un recorrido pausado y flexible para observar aves, flores, árboles y vida silvestre con acompañamiento local. La ruta se define según las especies que el cliente quiere buscar, el clima, la temporada y el hábitat: bosque, humedal, playa, zona abierta o Palo Verde.',
     whatToExpect: [
       'Salida recomendada temprano en la mañana.',
       'Ritmo suave, silencioso y enfocado en observación.',
-      'Uso de binoculares cuando aplica y guía local para identificar puntos de interés.'
+      'Uso de binoculares cuando aplica y guía local para identificar puntos de interés.',
+      'Ruta ajustable si el cliente busca aves de bosque, humedales, playa, Palo Verde u otra zona cercana.'
     ],
     itinerary: [
       { title: 'Inicio temprano', text: 'Coordinamos la mejor hora según clima y actividad de aves.' },
+      { title: 'Objetivo de aves', text: 'Definimos si la prioridad son aves de bosque, humedal, zonas abiertas, playa o una especie específica.' },
       { title: 'Observación', text: 'Recorrido tranquilo con pausas para escuchar, mirar y fotografiar.' },
       { title: 'Cierre', text: 'Regreso con recomendaciones de naturaleza y próximos puntos de interés.' }
     ],
-    highlights: ['Aves locales', 'Binoculares', 'Fotografía', 'Ritmo suave'],
+    highlights: ['Aves de bosque', 'Humedales', 'Palo Verde', 'Ruta personalizada'],
     includes: commonIncludes,
-    notIncluded: commonNotIncluded,
-    bring: ['Ropa cómoda', 'Zapatos cerrados', 'Repelente', 'Cámara', 'Sombrero o gorra'],
+    notIncluded: [
+      ...commonNotIncluded,
+      'Entradas, bote o servicios externos si se elige Palo Verde u otra zona especial'
+    ],
+    bring: [...commonBring, 'Sombrero o gorra', 'Lista de aves objetivo si tenés una'],
     recommendations: defaultRecommendations,
     safety: defaultSafety,
     gallery: [tourImages.bird, tourImages.duck, tourImages.butterfly, tourImages.orchids],
@@ -412,10 +434,16 @@ export const tours = [
       {
         question: '¿Cuál es la mejor hora?',
         answer: 'Generalmente temprano en la mañana, cuando hay más actividad de aves y mejor luz.'
+      },
+      {
+        question: '¿Se puede buscar una especie específica?',
+        answer: 'Sí. El tour se puede diseñar según aves de bosque, humedales, playas, Palo Verde u objetivos específicos. En ese caso se confirma ruta, precio y logística por WhatsApp.'
       }
     ],
     pricing: {
-      general: '$45'
+      general: '$45 Miravalles (3 horas)',
+      custom: 'Palo Verde, humedales o playas: desde $95 p.p. según objetivo y logística',
+      private: 'Ruta especializada desde $140'
     }
   },
   {
@@ -483,9 +511,9 @@ export const packages = [
   },
   {
     name: 'Caminata de Aves',
-    price: 'Desde $45 p.p.',
+    price: 'Desde $45 p.p. / especial desde $95',
     detail:
-      'Salida de 3 horas para observación de aves y vida silvestre con binoculares. Mejor temprano en la mañana.',
+      'Salida de 3 horas en Miravalles o ruta especializada hacia Palo Verde, humedales o playas según las aves que busque el cliente.',
     bestFor: 'Naturaleza'
   },
   {
@@ -523,9 +551,18 @@ export const experienceDetails = [
     title: 'Duración',
     items: [
       'Piedras Rojas + Morpho Blanca + Cabro Muco: 4 horas',
-      'Aguas termales: horario flexible, cierran a las 9:00 p.m.',
-      'Tour de aves: 3 horas',
-      'Camino al cráter: 5 a 6 horas'
+      'Aguas termales en Colinas del Miravalles: horario flexible, cierran a las 9:00 p.m.',
+      'Tour de aves: 3 horas base; rutas especiales según objetivo',
+      'Camino al cráter: 6 a 7 horas'
+    ]
+  },
+  {
+    title: 'Distancias',
+    items: [
+      'Piedras Rojas + Morpho Blanca + Cabro Muco: 10 km ida y vuelta',
+      'Camino al cráter: 10-11 km ida y vuelta aprox., según ruta y clima',
+      'Aguas termales en Colinas del Miravalles: baja exigencia',
+      'Tour de aves: caminata suave o ruta ajustable según hábitat'
     ]
   },
   {
@@ -565,6 +602,16 @@ export const siteFaqs = [
       'Piedras Rojas + Morpho Blanca + Cabro Muco es dificultad media. El camino al cráter es difícil. Aguas termales y tour de aves son fáciles.'
   },
   {
+    question: '¿Dónde son las aguas termales?',
+    answer:
+      'Las aguas termales se coordinan en Colinas del Miravalles. De momento usamos una imagen ilustrativa temporal hasta agregar fotografías propias del sitio.'
+  },
+  {
+    question: '¿El tour de aves siempre es en Miravalles?',
+    answer:
+      'No necesariamente. La ruta se define según las aves que el cliente quiere buscar: bosque, humedales, playas, Miravalles, Palo Verde u otras zonas cercanas. Rutas especiales pueden cambiar precio, duración y entradas externas.'
+  },
+  {
     question: '¿Cómo confirmo mi reserva?',
     answer:
       'Elegís el tour y la fecha, enviás la solicitud y te confirmamos por WhatsApp o correo. El número oficial es +506 7006 3382.'
@@ -583,7 +630,10 @@ export const seoKeywords = [
   'Catarata Piedras Rojas',
   'Catarata Morpho Blanca',
   'Catarata Cabro Muco',
-  'Volcán Miravalles'
+  'Volcán Miravalles',
+  'Colinas del Miravalles',
+  'birdwatching Guanacaste',
+  'Palo Verde birdwatching'
 ]
 
 export function getTourById(id) {
