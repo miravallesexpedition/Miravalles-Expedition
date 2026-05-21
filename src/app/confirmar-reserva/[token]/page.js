@@ -4,6 +4,14 @@ import { formatMoney } from '@/lib/pricing'
 
 export const dynamic = 'force-dynamic'
 
+export const metadata = {
+  title: 'Confirmar reserva',
+  robots: {
+    index: false,
+    follow: false
+  }
+}
+
 export default async function ConfirmBookingPage({ params }) {
   const { token } = await params
   const result = await confirmBookingByToken(token)
@@ -19,18 +27,18 @@ export default async function ConfirmBookingPage({ params }) {
   const alreadyConfirmed = result.status === 'already-confirmed'
   const currency = result.booking.currency || 'USD'
   const totalLabel = formatMoney(result.booking.total_price, currency)
-  const paymentCta = currency === 'USD' ? 'Continuar al pago con PayPal' : 'Coordinar pago nacional'
+  const paymentCta = currency === 'USD' ? 'Continuar al pago con PayPal' : 'Coordinar pago en colones'
 
   return (
-    <main className="min-h-screen bg-gray-50 px-4 py-16">
-      <section className="mx-auto max-w-xl rounded-lg bg-white p-8 shadow">
-        <p className="mb-2 text-sm font-semibold text-green-700">
+    <main className="min-h-screen bg-[#061b13] px-4 py-16 text-white">
+      <section className="mx-auto max-w-xl rounded-[2rem] border border-white/10 bg-white/10 p-8 shadow-2xl backdrop-blur">
+        <p className="mb-2 text-sm font-black uppercase tracking-[0.18em] text-amber-200">
           {alreadyConfirmed ? 'Reserva ya confirmada' : 'Reserva confirmada'}
         </p>
-        <h1 className="mb-4 text-3xl font-bold text-gray-900">
+        <h1 className="mb-4 text-3xl font-black text-white">
           {alreadyConfirmed ? 'Tu reserva ya estaba lista' : 'Gracias por confirmar tu reserva'}
         </h1>
-        <div className="mb-6 space-y-2 text-gray-700">
+        <div className="mb-6 space-y-2 text-white/75">
           <p><strong>Tour:</strong> {result.tour.name}</p>
           <p><strong>Fecha:</strong> {result.booking.tour_date}</p>
           <p><strong>Hora preferida:</strong> {formatTime(result.booking.preferred_time)}</p>
@@ -39,7 +47,7 @@ export default async function ConfirmBookingPage({ params }) {
         </div>
         <Link
           href={result.paymentUrl}
-          className="inline-flex w-full justify-center rounded bg-green-700 px-5 py-3 font-semibold text-white hover:bg-green-800"
+          className="inline-flex w-full justify-center rounded-full bg-amber-300 px-5 py-4 font-black text-[#071d14] hover:bg-amber-200"
         >
           {paymentCta}
         </Link>
@@ -59,10 +67,10 @@ function formatTime(value) {
 
 function Message({ title, body }) {
   return (
-    <main className="min-h-screen bg-gray-50 px-4 py-16">
-      <section className="mx-auto max-w-xl rounded-lg bg-white p-8 shadow">
-        <h1 className="mb-3 text-3xl font-bold text-gray-900">{title}</h1>
-        <p className="text-gray-700">{body}</p>
+    <main className="min-h-screen bg-[#061b13] px-4 py-16 text-white">
+      <section className="mx-auto max-w-xl rounded-[2rem] border border-white/10 bg-white/10 p-8 shadow-2xl backdrop-blur">
+        <h1 className="mb-3 text-3xl font-black text-white">{title}</h1>
+        <p className="leading-7 text-white/75">{body}</p>
       </section>
     </main>
   )

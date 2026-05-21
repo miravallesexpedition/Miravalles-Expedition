@@ -12,8 +12,8 @@ const trustItems = [
     text: 'La dificultad, duración, qué llevar y qué no incluye se comunican antes de confirmar.'
   },
   {
-    title: 'Reseñas reales',
-    text: 'La sección de reseñas queda preparada para mostrar opiniones verificadas cuando estén disponibles.'
+    title: 'Seguimiento directo',
+    text: 'Después de solicitar una reserva, el contacto se mantiene por WhatsApp o correo para resolver dudas antes del tour.'
   }
 ]
 
@@ -31,7 +31,7 @@ export default function TestimonialsSection() {
             </h2>
           </div>
           <p className="text-lg leading-8 text-gray-700">
-            Esta sección evita testimonios inventados. Construye confianza con promesas claras de operación y queda lista para reseñas verificadas de viajeros reales.
+            La confianza se construye antes de pedir el pago: información clara, contacto directo, rutas reales y expectativas honestas sobre cada experiencia.
           </p>
         </div>
 

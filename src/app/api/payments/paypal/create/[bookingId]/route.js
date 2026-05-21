@@ -19,7 +19,7 @@ export async function GET(request, { params }) {
 
     if ((booking.currency || 'USD') !== 'USD') {
       return Response.json(
-        { error: 'PayPal solo está disponible para pagos en USD. Las reservas nacionales se coordinan por WhatsApp.' },
+        { error: 'PayPal solo está disponible para pagos en USD. Las reservas en colones se coordinan por WhatsApp.' },
         { status: 400 }
       )
     }

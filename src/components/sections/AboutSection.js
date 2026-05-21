@@ -4,7 +4,7 @@ import { business, tourImages } from '@/lib/siteConfig'
 const proofPoints = [
   { label: 'Sendero principal', value: '10 km' },
   { label: 'Duración base', value: '4 horas' },
-  { label: 'Tipo de grupo', value: 'Grupos pequeños' },
+  { label: 'Tipo de grupo', value: '2-10 personas' },
   { label: 'Transporte', value: 'No incluido' }
 ]
 

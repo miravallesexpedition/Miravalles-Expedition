@@ -21,6 +21,15 @@ export default function GallerySection() {
     return () => window.removeEventListener('keydown', handleKey)
   })
 
+  useEffect(() => {
+    if (activeIndex === null) return undefined
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = previousOverflow
+    }
+  }, [activeIndex])
+
   const open = (index) => {
     setActiveIndex(index)
     setZoomed(false)
@@ -88,7 +97,12 @@ export default function GallerySection() {
       </div>
 
       {activeImage && (
-        <div className="fixed inset-0 z-[80] bg-black/95 p-3 text-white sm:p-6">
+        <div
+          className="fixed inset-0 z-[80] bg-black/95 p-3 text-white sm:p-6"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Galería: ${activeImage.caption}`}
+        >
           <div className="mb-3 flex items-center justify-between gap-3">
             <div>
               <p className="text-xs font-black uppercase tracking-[0.2em] text-amber-200">
@@ -106,6 +120,7 @@ export default function GallerySection() {
               <button
                 onClick={close}
                 className="rounded-full bg-white px-4 py-2 text-sm font-black text-black"
+                aria-label="Cerrar galería"
               >
                 Cerrar
               </button>

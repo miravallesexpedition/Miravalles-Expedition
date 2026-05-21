@@ -5,6 +5,12 @@ import './globals.css'
 
 export const metadata = {
   metadataBase: new URL('https://miravallesexpedition.com'),
+  applicationName: 'Miravalles Expedition',
+  creator: 'Miravalles Expedition',
+  publisher: 'Miravalles Expedition',
+  category: 'travel',
+  referrer: 'origin-when-cross-origin',
+  manifest: '/manifest.webmanifest',
   title: {
     default: 'Miravalles Expedition | Tours de aventura premium en Guanacaste',
     template: '%s | Miravalles Expedition'
@@ -22,6 +28,12 @@ export const metadata = {
     type: 'website',
     images: [
       {
+        url: tourImages.hero,
+        width: 2200,
+        height: 1467,
+        alt: 'Catarata y poza natural en Miravalles, Costa Rica'
+      },
+      {
         url: tourImages.logo,
         width: 1254,
         height: 1254,
@@ -31,6 +43,24 @@ export const metadata = {
   },
   alternates: {
     canonical: '/'
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1
+    }
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Miravalles Expedition',
+    description:
+      'Cataratas escondidas, senderos volcánicos, observación de aves y experiencias locales en Guanacaste, Costa Rica.',
+    images: [tourImages.hero]
   },
   icons: {
     icon: [

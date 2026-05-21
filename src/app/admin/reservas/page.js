@@ -7,7 +7,11 @@ import { formatBookingTime } from '@/lib/timeSlots'
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
-  title: 'Panel de reservas'
+  title: 'Panel de reservas',
+  robots: {
+    index: false,
+    follow: false
+  }
 }
 
 export default async function AdminBookingsPage({ searchParams }) {

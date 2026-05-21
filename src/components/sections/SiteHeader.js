@@ -71,13 +71,15 @@ export default function SiteHeader({ onReserve }) {
           onClick={() => setOpen((value) => !value)}
           className="rounded-full border border-white/20 px-4 py-2 text-sm font-bold lg:hidden"
           aria-expanded={open}
+          aria-controls="mobile-menu"
+          aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
         >
           Menú
         </button>
       </div>
 
       {open && (
-        <div className="border-t border-white/10 bg-[#061b13] px-4 py-4 lg:hidden">
+        <div id="mobile-menu" className="border-t border-white/10 bg-[#061b13] px-4 py-4 lg:hidden">
           <div className="grid gap-3">
             {navItems.map((item) => (
               <Link

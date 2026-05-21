@@ -6,6 +6,14 @@ import { formatMoney } from '@/lib/pricing'
 
 export const dynamic = 'force-dynamic'
 
+export const metadata = {
+  title: 'Pago de reserva',
+  robots: {
+    index: false,
+    follow: false
+  }
+}
+
 export default async function PayBookingPage({ params }) {
   const { bookingId } = await params
   const booking = await bookingService.getBookingById(bookingId)
@@ -33,19 +41,19 @@ export default async function PayBookingPage({ params }) {
   ].join('\n')
 
   return (
-    <main className="min-h-screen bg-gray-50 px-4 py-16">
-      <section className="mx-auto max-w-xl rounded-lg bg-white p-8 shadow">
-        <p className="mb-2 text-sm font-semibold uppercase tracking-[0.18em] text-green-700">
+    <main className="min-h-screen bg-[#061b13] px-4 py-16 text-white">
+      <section className="mx-auto max-w-xl rounded-[2rem] border border-white/10 bg-white/10 p-8 shadow-2xl backdrop-blur">
+        <p className="mb-2 text-sm font-black uppercase tracking-[0.18em] text-amber-200">
           Reserva confirmada
         </p>
-        <h1 className="mb-4 text-3xl font-bold text-gray-900">Pago de reserva</h1>
-        <div className="mb-6 space-y-2 text-gray-700">
+        <h1 className="mb-4 text-3xl font-black text-white">Pago de reserva</h1>
+        <div className="mb-6 space-y-2 text-white/75">
           <p><strong>Tour:</strong> {tour?.name || 'Tour reservado'}</p>
           <p><strong>Fecha:</strong> {booking.tour_date}</p>
           <p><strong>Hora preferida:</strong> {formatTime(booking.preferred_time)}</p>
           <p><strong>Participantes:</strong> {booking.participants_count}</p>
           <p><strong>Moneda:</strong> {currency}</p>
-          <p className="text-2xl font-bold text-green-700">{totalLabel}</p>
+          <p className="text-2xl font-black text-amber-200">{totalLabel}</p>
         </div>
 
         {canPayWithPayPal ? (
@@ -59,7 +67,7 @@ export default async function PayBookingPage({ params }) {
             </p>
             <Link
               href={`/api/payments/paypal/create/${booking.id}`}
-              className="mt-4 inline-flex w-full justify-center rounded bg-blue-600 px-5 py-3 font-semibold text-white hover:bg-blue-700"
+              className="mt-4 inline-flex w-full justify-center rounded-full bg-blue-600 px-5 py-3 font-black text-white hover:bg-blue-700"
             >
               Continuar con PayPal
             </Link>
@@ -67,25 +75,25 @@ export default async function PayBookingPage({ params }) {
         ) : (
           <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
             <p className="font-semibold text-amber-900">
-              {currency === 'CRC' ? 'Pago nacional por coordinar' : 'Pago en línea pendiente de activar'}
+              {currency === 'CRC' ? 'Pago en colones por coordinar' : 'Pago manual disponible'}
             </p>
             <p className="mt-2 text-sm leading-6 text-amber-800">
               {currency === 'CRC'
-                ? 'Las reservas nacionales en colones se coordinan por WhatsApp, depósito o efectivo.'
-                : 'PayPal queda disponible cuando se configuren las credenciales reales. Mientras tanto, podés coordinar depósito, efectivo o método preferido por WhatsApp.'}
+                ? 'Las reservas en colones se coordinan por WhatsApp, depósito o efectivo para mantener el monto exacto de la tarifa local.'
+                : 'Esta reserva no está disponible para pago automático en este momento. Podés coordinar depósito, efectivo o método preferido por WhatsApp.'}
             </p>
             <div className="mt-4 grid gap-2 sm:grid-cols-2">
               <a
                 href={buildWhatsAppUrl(summary)}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex justify-center rounded bg-green-700 px-4 py-2 font-semibold text-white hover:bg-green-800"
+                className="inline-flex justify-center rounded-full bg-green-700 px-4 py-2 font-black text-white hover:bg-green-800"
               >
                 Coordinar por WhatsApp
               </a>
               <a
                 href={buildMailtoUrl('Pago de reserva Miravalles Expedition', summary)}
-                className="inline-flex justify-center rounded bg-gray-950 px-4 py-2 font-semibold text-white hover:bg-gray-800"
+                className="inline-flex justify-center rounded-full bg-gray-950 px-4 py-2 font-black text-white hover:bg-gray-800"
               >
                 Enviar por correo
               </a>
@@ -93,7 +101,7 @@ export default async function PayBookingPage({ params }) {
           </div>
         )}
 
-        <p className="mt-5 text-center text-sm text-gray-500">
+        <p className="mt-5 text-center text-sm text-white/55">
           Contacto oficial: {contact.phoneDisplay}
         </p>
       </section>
@@ -112,10 +120,10 @@ function formatTime(value) {
 
 function Message({ title, body }) {
   return (
-    <main className="min-h-screen bg-gray-50 px-4 py-16">
-      <section className="mx-auto max-w-xl rounded-lg bg-white p-8 shadow">
-        <h1 className="mb-3 text-3xl font-bold text-gray-900">{title}</h1>
-        <p className="text-gray-700">{body}</p>
+    <main className="min-h-screen bg-[#061b13] px-4 py-16 text-white">
+      <section className="mx-auto max-w-xl rounded-[2rem] border border-white/10 bg-white/10 p-8 shadow-2xl backdrop-blur">
+        <h1 className="mb-3 text-3xl font-black text-white">{title}</h1>
+        <p className="leading-7 text-white/75">{body}</p>
       </section>
     </main>
   )

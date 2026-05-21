@@ -36,12 +36,13 @@ export default async function TourDetailPage({ params }) {
   const tour = getTourById(tourId)
   if (!tour) notFound()
 
+  const secondaryPrice = getSecondaryPrice(tour)
   const whatsappMessage = [
     `Hola, quiero reservar el tour ${tour.name}.`,
     `Fecha deseada:`,
     `Cantidad de personas:`,
-    `Tarifa extranjera base: ${tour.priceLabel}`,
-    `Tarifa nacional/residente: ${tour.pricing?.nationalAdult || tour.pricing?.general || 'Consultar'}`,
+    tour.pricing?.general ? `Precio base: ${tour.priceLabel}` : `Tarifa extranjera base: ${tour.priceLabel}`,
+    secondaryPrice.message,
     'Quiero confirmar disponibilidad y punto de encuentro.'
   ].join('\n')
 
@@ -99,7 +100,7 @@ export default async function TourDetailPage({ params }) {
           <Metric label="Distancia" value={tour.distance || 'Consultar'} />
           <Metric label="Dificultad" value={tour.level} />
           <Metric label="Desde" value={tour.priceLabel} />
-          <Metric label="Nacional" value={tour.pricing?.nationalAdult || tour.pricing?.general || 'Consultar'} />
+          <Metric label={secondaryPrice.label} value={secondaryPrice.value} />
           <Metric label="Transporte" value="No incluido" />
         </div>
       </section>
@@ -158,6 +159,30 @@ function Metric({ label, value }) {
       <p className="mt-2 text-xl font-black text-white">{value}</p>
     </div>
   )
+}
+
+function getSecondaryPrice(tour) {
+  if (tour.pricing?.nationalAdult) {
+    return {
+      label: 'Nacional',
+      value: tour.pricing.nationalAdult,
+      message: `Tarifa nacional/residente: ${tour.pricing.nationalAdult}`
+    }
+  }
+
+  if (tour.pricing?.general) {
+    return {
+      label: 'General',
+      value: tour.pricing.general,
+      message: `Precio general: ${tour.pricing.general}`
+    }
+  }
+
+  return {
+    label: 'Precio',
+    value: 'Consultar',
+    message: 'Precio: consultar'
+  }
 }
 
 function InfoGrid({ tour }) {
@@ -296,10 +321,10 @@ function TourFaq({ tour }) {
               <p className="mt-2 leading-7 text-gray-700">{faq.answer}</p>
             </article>
           ))}
-          <article className="rounded-[1.5rem] border border-dashed border-gray-300 bg-white p-6">
-            <h3 className="font-black">Reseñas</h3>
+          <article className="rounded-[1.5rem] border border-green-900/10 bg-white p-6">
+            <h3 className="font-black">Confianza antes de salir</h3>
             <p className="mt-2 leading-7 text-gray-700">
-              Placeholder claro: aquí se mostrarán reseñas verificadas cuando estén disponibles. No se publican testimonios inventados.
+              Antes de confirmar revisamos clima, nivel del grupo, punto de encuentro y recomendaciones. Este espacio se reservará para reseñas verificadas de clientes cuando estén listas para publicarse.
             </p>
           </article>
         </div>

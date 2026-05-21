@@ -104,7 +104,7 @@ export default function HeroSection({ onViewTours, onReserve }) {
             <div className="mt-6 grid grid-cols-2 gap-3">
               <Metric value="10 km" label="Caminata principal" />
               <Metric value="4 h" label="Duración base" />
-              <Metric value="2-8" label="Grupo ideal" />
+              <Metric value="2-10" label="Grupo ideal" />
               <Metric value="Local" label="Guiado" />
             </div>
           </aside>

@@ -21,13 +21,18 @@ export default function DatePicker({ selectedTour, onDateSelect, onClose }) {
   if (!selectedTour) return null
 
   return (
-    <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+    <div
+      className="fixed inset-0 z-[70] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="date-dialog-title"
+    >
       <div className="w-full max-w-xl overflow-hidden rounded-[1.75rem] bg-[#f8f4ea] shadow-2xl">
         <div className="bg-[#071d14] p-6 text-white">
           <div className="flex items-start justify-between gap-4">
             <div>
               <p className="text-xs font-black uppercase tracking-[0.2em] text-amber-200">Reservar aventura</p>
-              <h3 className="mt-2 text-2xl font-black">Elegí la fecha</h3>
+              <h3 id="date-dialog-title" className="mt-2 text-2xl font-black">Elegí la fecha</h3>
               <p className="mt-2 text-sm text-white/70">{selectedTour.name}</p>
             </div>
             <button onClick={onClose} className="rounded-full bg-white/10 px-4 py-2 font-black hover:bg-white/20" aria-label="Cerrar">

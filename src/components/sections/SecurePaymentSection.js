@@ -36,7 +36,7 @@ const flowSteps = [
   {
     number: '03',
     title: 'Pagás con enlace seguro',
-    text: 'Si pagás en USD, continuás a PayPal. Si sos nacional o residente, coordinamos CRC por WhatsApp.'
+    text: 'Si pagás en USD, continuás a PayPal. Si la reserva es en colones, coordinamos el método por WhatsApp.'
   },
   {
     number: '04',
@@ -80,7 +80,7 @@ export default function SecurePaymentSection() {
                 Lo importante
               </p>
               <p className="mt-3 text-xl font-black leading-8 text-[#071d14]">
-                Para pagos internacionales usamos PayPal. Para tarifas nacionales en colones, coordinamos el método directamente por WhatsApp antes de confirmar.
+                Para pagos en USD usamos PayPal. Para tarifas en colones, coordinamos el método directamente por WhatsApp antes de confirmar.
               </p>
               <p className="mt-4 text-sm leading-7 text-gray-700">
                 Nunca te pedimos datos sensibles de tarjeta por WhatsApp, correo o formulario. Si pagás en línea, verificá que la página de pago sea de PayPal antes de completar la transacción.
