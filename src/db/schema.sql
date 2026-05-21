@@ -30,6 +30,7 @@ CREATE TABLE bookings (
   phone TEXT,
   participants_count INT DEFAULT 1,
   tour_date DATE NOT NULL,
+  preferred_time TEXT,
   status TEXT CHECK (status IN ('pending', 'confirmed', 'cancelled', 'completed')) DEFAULT 'pending',
   confirmation_token TEXT UNIQUE,
   customer_type TEXT CHECK (customer_type IN ('foreign', 'national')) DEFAULT 'foreign',
@@ -40,6 +41,11 @@ CREATE TABLE bookings (
   payment_status TEXT CHECK (payment_status IN ('pending', 'completed', 'failed')) DEFAULT 'pending',
   payment_method TEXT CHECK (payment_method IN ('paypal')),
   payment_id TEXT,
+  paypal_order_id TEXT,
+  paypal_capture_id TEXT,
+  payment_completed_at TIMESTAMP WITH TIME ZONE,
+  payment_failed_at TIMESTAMP WITH TIME ZONE,
+  payment_failure_reason TEXT,
   special_requests TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   confirmed_at TIMESTAMP WITH TIME ZONE,
@@ -76,6 +82,8 @@ CREATE INDEX idx_bookings_email ON bookings(email);
 CREATE INDEX idx_bookings_status ON bookings(status);
 CREATE INDEX idx_bookings_tour_date ON bookings(tour_date);
 CREATE INDEX idx_bookings_confirmation_token ON bookings(confirmation_token);
+CREATE INDEX idx_bookings_paypal_order_id ON bookings(paypal_order_id);
+CREATE INDEX idx_bookings_paypal_capture_id ON bookings(paypal_capture_id);
 CREATE INDEX idx_email_logs_booking_id ON email_logs(booking_id);
 CREATE INDEX idx_tours_is_active ON tours(is_active);
 

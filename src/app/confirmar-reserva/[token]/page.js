@@ -33,6 +33,7 @@ export default async function ConfirmBookingPage({ params }) {
         <div className="mb-6 space-y-2 text-gray-700">
           <p><strong>Tour:</strong> {result.tour.name}</p>
           <p><strong>Fecha:</strong> {result.booking.tour_date}</p>
+          <p><strong>Hora preferida:</strong> {formatTime(result.booking.preferred_time)}</p>
           <p><strong>Participantes:</strong> {result.booking.participants_count}</p>
           <p><strong>Total:</strong> {totalLabel}</p>
         </div>
@@ -45,6 +46,15 @@ export default async function ConfirmBookingPage({ params }) {
       </section>
     </main>
   )
+}
+
+function formatTime(value) {
+  if (!value) return 'Por confirmar'
+  if (!/^\d{2}:\d{2}$/.test(String(value))) return value
+  const [hours, minutes] = String(value).split(':').map(Number)
+  const suffix = hours >= 12 ? 'p.m.' : 'a.m.'
+  const hour12 = hours % 12 || 12
+  return `${hour12}:${String(minutes).padStart(2, '0')} ${suffix}`
 }
 
 function Message({ title, body }) {

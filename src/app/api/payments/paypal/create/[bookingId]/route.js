@@ -44,6 +44,8 @@ export async function GET(request, { params }) {
       return Response.json({ error: 'PayPal no devolvió un enlace de aprobación' }, { status: 502 })
     }
 
+    await bookingService.markPaymentOrderCreated(booking.id, order.id)
+
     return NextResponse.redirect(approveLink)
   } catch (error) {
     console.error('Error creating PayPal order:', error)

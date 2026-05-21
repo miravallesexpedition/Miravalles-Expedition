@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic'
 export async function POST(request) {
   try {
     const body = await request.json()
-    const { tourId, email, firstName, lastName, phone, tourDate, specialRequests } = body
+    const { tourId, email, firstName, lastName, phone, tourDate, preferredTime, specialRequests } = body
     const participantsCount = Number(body.participantsCount)
     const customerType = normalizeCustomerType(body.customerType)
     const cleanEmail = String(email || '').trim().toLowerCase()
@@ -17,6 +17,7 @@ export async function POST(request) {
     const cleanLastName = String(lastName || '').trim()
     const cleanPhone = String(phone || '').trim()
     const cleanTourDate = String(tourDate || '').trim()
+    const cleanPreferredTime = String(preferredTime || '07:00').trim()
     const cleanSpecialRequests = String(specialRequests || '').trim()
 
     if (!tourId || !cleanEmail || !cleanFirstName || !cleanLastName || !cleanTourDate) {
@@ -51,6 +52,13 @@ export async function POST(request) {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(cleanTourDate) || cleanTourDate < todayCostaRica) {
       return Response.json(
         { error: 'La fecha del tour debe ser válida y futura' },
+        { status: 400 }
+      )
+    }
+
+    if (!/^\d{2}:\d{2}$/.test(cleanPreferredTime)) {
+      return Response.json(
+        { error: 'La hora preferida debe ser válida' },
         { status: 400 }
       )
     }
@@ -92,6 +100,7 @@ export async function POST(request) {
       unit_price: quote.unitPrice,
       price_label: quote.priceLabel,
       total_price: totalPrice,
+      preferred_time: cleanPreferredTime,
       special_requests: cleanSpecialRequests
     }
 
@@ -101,6 +110,7 @@ export async function POST(request) {
       'Nueva solicitud de reserva',
       `Tour: ${tour.name}`,
       `Fecha: ${cleanTourDate}`,
+      `Hora preferida: ${formatTime(cleanPreferredTime)}`,
       `Participantes: ${participantsCount}`,
       `Tipo de cliente: ${customerTypeLabel}`,
       `Precio por persona: ${quote.priceLabel}`,
@@ -132,6 +142,7 @@ export async function POST(request) {
         last_name: cleanLastName,
         tour_name: tour.name,
         tour_date: cleanTourDate,
+        preferred_time: cleanPreferredTime,
         participants_count: participantsCount,
         total_price: totalPrice,
         currency: quote.currency,
@@ -148,6 +159,7 @@ export async function POST(request) {
           first_name: cleanFirstName,
           tour_name: tour.name,
           tour_date: cleanTourDate,
+          preferred_time: cleanPreferredTime,
           participants_count: participantsCount,
           total_price: totalPrice,
           currency: quote.currency,
@@ -184,4 +196,12 @@ export async function POST(request) {
       { status: 500 }
     )
   }
+}
+
+function formatTime(value) {
+  const [hours, minutes] = String(value).split(':').map(Number)
+  if (!Number.isFinite(hours) || !Number.isFinite(minutes)) return value
+  const suffix = hours >= 12 ? 'p.m.' : 'a.m.'
+  const hour12 = hours % 12 || 12
+  return `${hour12}:${String(minutes).padStart(2, '0')} ${suffix}`
 }

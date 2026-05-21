@@ -5,6 +5,25 @@ import { track } from '@vercel/analytics'
 import { business, contact } from '@/lib/siteConfig'
 import { calculateBookingTotal, getTourQuote } from '@/lib/pricing'
 
+const timeSlots = [
+  { value: '05:30', label: '5:30 a.m.' },
+  { value: '06:00', label: '6:00 a.m.' },
+  { value: '06:30', label: '6:30 a.m.' },
+  { value: '07:00', label: '7:00 a.m.' },
+  { value: '07:30', label: '7:30 a.m.' },
+  { value: '08:00', label: '8:00 a.m.' },
+  { value: '08:30', label: '8:30 a.m.' },
+  { value: '09:00', label: '9:00 a.m.' },
+  { value: '10:00', label: '10:00 a.m.' },
+  { value: '13:00', label: '1:00 p.m.' },
+  { value: '14:00', label: '2:00 p.m.' },
+  { value: '15:00', label: '3:00 p.m.' },
+  { value: '16:00', label: '4:00 p.m.' },
+  { value: '17:00', label: '5:00 p.m.' },
+  { value: '18:00', label: '6:00 p.m.' },
+  { value: '19:00', label: '7:00 p.m.' }
+]
+
 export default function PaymentSection({ cart, onClose }) {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -13,7 +32,7 @@ export default function PaymentSection({ cart, onClose }) {
     phone: '',
     participantsCount: 1,
     customerType: 'foreign',
-    preferredTime: 'Mañana',
+    preferredTime: '07:00',
     paymentPreference: 'Coordinar por WhatsApp',
     specialRequests: ''
   })
@@ -52,9 +71,10 @@ export default function PaymentSection({ cart, onClose }) {
             participantsCount: formData.participantsCount,
             customerType: formData.customerType,
             tourDate: formatDate(item.selectedDate),
+            preferredTime: formData.preferredTime,
             specialRequests: formData.specialRequests
-              ? `${formData.specialRequests}\nHorario preferido: ${formData.preferredTime}\nPago preferido: ${formData.paymentPreference}`
-              : `Horario preferido: ${formData.preferredTime}\nPago preferido: ${formData.paymentPreference}`
+              ? `${formData.specialRequests}\nPago preferido: ${formData.paymentPreference}`
+              : `Pago preferido: ${formData.paymentPreference}`
           })
         })
 
@@ -166,9 +186,9 @@ export default function PaymentSection({ cart, onClose }) {
                   onChange={handleChange}
                   className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3"
                 >
-                  <option>Mañana</option>
-                  <option>Tarde</option>
-                  <option>Flexible</option>
+                  {timeSlots.map((slot) => (
+                    <option key={slot.value} value={slot.value}>{slot.label}</option>
+                  ))}
                 </select>
               </Field>
               <Field label="Pago">
@@ -258,6 +278,7 @@ export default function PaymentSection({ cart, onClose }) {
                 <div key={`${item.id || item.name}-${i}`} className="border-b border-gray-100 pb-3">
                   <p className="font-black text-[#11130f]">{item.name}</p>
                   <p className="text-sm text-gray-600">{formatDate(item.selectedDate)}</p>
+                  <p className="text-sm text-gray-600">{formatSelectedTime(formData.preferredTime)}</p>
                   <p className="text-sm font-bold text-green-800">{getTourQuote(item, formData.customerType).priceLabel} p.p.</p>
                 </div>
               ))}
@@ -288,4 +309,8 @@ function Field({ label, children }) {
 function formatDate(date) {
   if (!date) return ''
   return new Date(date).toISOString().slice(0, 10)
+}
+
+function formatSelectedTime(value) {
+  return timeSlots.find((slot) => slot.value === value)?.label || value
 }

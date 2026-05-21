@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
-import { bookingService } from '@/lib/services'
+import { emailService } from '@/lib/emails'
+import { bookingService, tourService } from '@/lib/services'
 import { paymentService } from '@/lib/paypal'
 
 export const dynamic = 'force-dynamic'
@@ -15,12 +16,45 @@ export async function GET(request) {
   }
 
   try {
+    const booking = await bookingService.getBookingById(bookingId)
+
+    if (!booking) {
+      return NextResponse.redirect(`${appUrl}/pago-cancelado?bookingId=${bookingId}`)
+    }
+
+    if (booking.payment_status === 'completed') {
+      return NextResponse.redirect(`${appUrl}/pago-exitoso?bookingId=${bookingId}`)
+    }
+
     const capture = await paymentService.capturePayment(orderId)
-    await bookingService.markPaymentCompleted(bookingId, capture.id || orderId)
+    const captureId = getCaptureId(capture) || orderId
+    const updatedBooking = await bookingService.markPaymentCompleted(bookingId, captureId, {
+      paypalOrderId: orderId
+    })
+
+    if (booking?.payment_status !== 'completed') {
+      await sendPaymentEmail(updatedBooking)
+    }
 
     return NextResponse.redirect(`${appUrl}/pago-exitoso?bookingId=${bookingId}`)
   } catch (error) {
     console.error('Error capturing PayPal payment:', error)
     return NextResponse.redirect(`${appUrl}/pago-cancelado?bookingId=${bookingId}`)
+  }
+}
+
+function getCaptureId(capture) {
+  return capture?.purchase_units?.[0]?.payments?.captures?.[0]?.id || capture?.id || null
+}
+
+async function sendPaymentEmail(booking) {
+  try {
+    const tour = await tourService.getTourById(booking.tour_id)
+    await emailService.sendPaymentReceivedEmail(booking.email, {
+      ...booking,
+      tour_name: tour?.name || 'Tour reservado'
+    })
+  } catch (error) {
+    console.error('Error sending payment confirmation email:', error)
   }
 }

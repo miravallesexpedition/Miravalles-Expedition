@@ -35,10 +35,19 @@ function bookingRows(booking) {
   return `
     <p><strong>Tour:</strong> ${escapeHtml(booking.tour_name)}</p>
     <p><strong>Fecha:</strong> ${escapeHtml(booking.tour_date)}</p>
+    <p><strong>Hora preferida:</strong> ${escapeHtml(formatTime(booking.preferred_time || 'Por confirmar'))}</p>
     <p><strong>Participantes:</strong> ${escapeHtml(booking.participants_count)}</p>
     <p><strong>Tipo de cliente:</strong> ${escapeHtml(customerType)}</p>
     <p><strong>Precio total estimado:</strong> ${escapeHtml(formatMoney(booking.total_price, booking.currency || 'USD'))}</p>
   `
+}
+
+function formatTime(value) {
+  if (!/^\d{2}:\d{2}$/.test(String(value))) return value
+  const [hours, minutes] = String(value).split(':').map(Number)
+  const suffix = hours >= 12 ? 'p.m.' : 'a.m.'
+  const hour12 = hours % 12 || 12
+  return `${hour12}:${String(minutes).padStart(2, '0')} ${suffix}`
 }
 
 export const emailService = {
@@ -130,6 +139,35 @@ export const emailService = {
       })
     } catch (error) {
       console.error('Error sending confirmed booking email:', error)
+      throw error
+    }
+  },
+
+  async sendPaymentReceivedEmail(email, booking) {
+    try {
+      return await sendEmail({
+        from: fromEmail,
+        to: email,
+        subject: 'Pago recibido - Miravalles Expedition',
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <h1 style="color: #166534;">Pago recibido</h1>
+            <div style="background: #dcfce7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #166534;">
+              <p style="color: #15803d; margin: 0;">Registramos correctamente el pago de tu reserva.</p>
+            </div>
+            <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <h2 style="color: #1f2937; margin-top: 0;">Resumen</h2>
+              <p><strong>ID de reserva:</strong> ${escapeHtml(booking.id)}</p>
+              ${bookingRows(booking)}
+              <p><strong>ID de pago:</strong> ${escapeHtml(booking.paypal_capture_id || booking.payment_id || 'Registrado')}</p>
+            </div>
+            <p><strong>Importante:</strong> antes del tour confirmaremos punto de encuentro, clima y recomendaciones por WhatsApp.</p>
+            <p style="color: #666; font-size: 12px;">Preguntas: <strong>${escapeHtml(contact.phoneDisplay)}</strong> | <strong>${escapeHtml(contactEmail)}</strong></p>
+          </div>
+        `
+      })
+    } catch (error) {
+      console.error('Error sending payment received email:', error)
       throw error
     }
   },

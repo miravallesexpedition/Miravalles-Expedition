@@ -1,6 +1,7 @@
 export const isPayPalConfigured = Boolean(
   process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID && process.env.PAYPAL_SECRET_KEY
 )
+export const isPayPalWebhookConfigured = Boolean(process.env.PAYPAL_WEBHOOK_ID)
 
 const paypalEnvironment = process.env.PAYPAL_ENV === 'live' ? 'live' : 'sandbox'
 const paypalBaseUrl = paypalEnvironment === 'live'
@@ -113,6 +114,41 @@ export const paymentService = {
       console.error('Error capturing payment:', error)
       throw error
     }
+  },
+
+  async verifyWebhookSignature(headers, webhookEvent) {
+    ensurePayPalEnabled()
+
+    if (!isPayPalWebhookConfigured) {
+      throw new Error('PayPal webhook deshabilitado: falta PAYPAL_WEBHOOK_ID.')
+    }
+
+    const accessToken = await this.getAccessToken()
+    const response = await fetch(`${paypalBaseUrl}/v1/notifications/verify-webhook-signature`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      },
+      body: JSON.stringify({
+        auth_algo: headers.get('paypal-auth-algo'),
+        cert_url: headers.get('paypal-cert-url'),
+        transmission_id: headers.get('paypal-transmission-id'),
+        transmission_sig: headers.get('paypal-transmission-sig'),
+        transmission_time: headers.get('paypal-transmission-time'),
+        webhook_id: process.env.PAYPAL_WEBHOOK_ID,
+        webhook_event: webhookEvent
+      })
+    })
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => null)
+      console.error('PayPal webhook verification error:', error)
+      return false
+    }
+
+    const result = await response.json()
+    return result.verification_status === 'SUCCESS'
   },
 
   // Obtener token de acceso

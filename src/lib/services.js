@@ -167,15 +167,71 @@ export const bookingService = {
     return booking
   },
 
-  async markPaymentCompleted(bookingId, paymentId) {
+  async markPaymentOrderCreated(bookingId, orderId) {
     if (isSupabaseConfigured) {
       const { data, error } = await supabase
         .from('bookings')
         .update({
-          payment_status: 'completed',
+          payment_status: 'pending',
           payment_method: 'paypal',
-          payment_id: paymentId
+          payment_id: orderId,
+          paypal_order_id: orderId
         })
+        .eq('id', bookingId)
+        .select('*')
+        .single()
+
+      if (error) throw new Error(error.message)
+      return data
+    }
+
+    const booking = fallbackBookings.find((item) => String(item.id) === String(bookingId))
+    if (!booking) return null
+    booking.payment_status = 'pending'
+    booking.payment_method = 'paypal'
+    booking.payment_id = orderId
+    booking.paypal_order_id = orderId
+    return booking
+  },
+
+  async getBookingByPayPalOrderId(orderId) {
+    if (!orderId) return null
+
+    if (isSupabaseConfigured) {
+      const { data, error } = await supabase
+        .from('bookings')
+        .select('*')
+        .or(`paypal_order_id.eq.${orderId},payment_id.eq.${orderId}`)
+        .maybeSingle()
+
+      if (error) throw new Error(error.message)
+      return data
+    }
+
+    return fallbackBookings.find((item) => (
+      String(item.paypal_order_id) === String(orderId) ||
+      String(item.payment_id) === String(orderId)
+    )) || null
+  },
+
+  async markPaymentCompleted(bookingId, paymentId, metadata = {}) {
+    const completedAt = new Date().toISOString()
+    const updatePayload = {
+      payment_status: 'completed',
+      payment_method: 'paypal',
+      payment_id: paymentId,
+      paypal_capture_id: paymentId,
+      payment_completed_at: completedAt
+    }
+
+    if (metadata.paypalOrderId) {
+      updatePayload.paypal_order_id = metadata.paypalOrderId
+    }
+
+    if (isSupabaseConfigured) {
+      const { data, error } = await supabase
+        .from('bookings')
+        .update(updatePayload)
         .eq('id', bookingId)
         .select('*')
         .single()
@@ -189,6 +245,36 @@ export const bookingService = {
     booking.payment_status = 'completed'
     booking.payment_method = 'paypal'
     booking.payment_id = paymentId
+    booking.paypal_capture_id = paymentId
+    booking.paypal_order_id = metadata.paypalOrderId || booking.paypal_order_id
+    booking.payment_completed_at = completedAt
+    return booking
+  },
+
+  async markPaymentFailed(bookingId, reason = 'PayPal rechazó o reversó el pago') {
+    const failedAt = new Date().toISOString()
+
+    if (isSupabaseConfigured) {
+      const { data, error } = await supabase
+        .from('bookings')
+        .update({
+          payment_status: 'failed',
+          payment_failure_reason: reason,
+          payment_failed_at: failedAt
+        })
+        .eq('id', bookingId)
+        .select('*')
+        .single()
+
+      if (error) throw new Error(error.message)
+      return data
+    }
+
+    const booking = fallbackBookings.find((item) => String(item.id) === String(bookingId))
+    if (!booking) return null
+    booking.payment_status = 'failed'
+    booking.payment_failure_reason = reason
+    booking.payment_failed_at = failedAt
     return booking
   }
 }

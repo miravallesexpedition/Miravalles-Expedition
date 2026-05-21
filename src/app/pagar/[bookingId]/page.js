@@ -27,6 +27,7 @@ export default async function PayBookingPage({ params }) {
     `Reserva: ${booking.id}`,
     `Tour: ${tour?.name || 'Tour reservado'}`,
     `Fecha: ${booking.tour_date}`,
+    `Hora preferida: ${formatTime(booking.preferred_time)}`,
     `Participantes: ${booking.participants_count}`,
     `Total: ${totalLabel}`
   ].join('\n')
@@ -41,6 +42,7 @@ export default async function PayBookingPage({ params }) {
         <div className="mb-6 space-y-2 text-gray-700">
           <p><strong>Tour:</strong> {tour?.name || 'Tour reservado'}</p>
           <p><strong>Fecha:</strong> {booking.tour_date}</p>
+          <p><strong>Hora preferida:</strong> {formatTime(booking.preferred_time)}</p>
           <p><strong>Participantes:</strong> {booking.participants_count}</p>
           <p><strong>Moneda:</strong> {currency}</p>
           <p className="text-2xl font-bold text-green-700">{totalLabel}</p>
@@ -97,6 +99,15 @@ export default async function PayBookingPage({ params }) {
       </section>
     </main>
   )
+}
+
+function formatTime(value) {
+  if (!value) return 'Por confirmar'
+  if (!/^\d{2}:\d{2}$/.test(String(value))) return value
+  const [hours, minutes] = String(value).split(':').map(Number)
+  const suffix = hours >= 12 ? 'p.m.' : 'a.m.'
+  const hour12 = hours % 12 || 12
+  return `${hour12}:${String(minutes).padStart(2, '0')} ${suffix}`
 }
 
 function Message({ title, body }) {
