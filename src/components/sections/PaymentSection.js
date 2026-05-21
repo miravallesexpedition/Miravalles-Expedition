@@ -19,7 +19,7 @@ export default function PaymentSection({ cart, onClose }) {
     specialRequests: ''
   })
   const [status, setStatus] = useState({ type: 'idle', message: '', links: null })
-  const [availability, setAvailability] = useState({ type: 'idle', slots: [] })
+  const [availability, setAvailability] = useState({ type: 'idle', slots: [], capacityPerSlot: 10, largeGroupsMessage: '' })
 
   const primaryCartItem = cart[0] || null
   const selectedDate = primaryCartItem?.selectedDate ? formatDate(primaryCartItem.selectedDate) : ''
@@ -33,7 +33,7 @@ export default function PaymentSection({ cart, onClose }) {
 
     let ignore = false
     async function loadAvailability() {
-      setAvailability({ type: 'loading', slots: [] })
+      setAvailability({ type: 'loading', slots: [], capacityPerSlot: 10, largeGroupsMessage: '' })
       try {
         const params = new URLSearchParams({
           tourId: primaryCartItem.id,
@@ -43,11 +43,16 @@ export default function PaymentSection({ cart, onClose }) {
         const payload = await response.json()
 
         if (!ignore && response.ok) {
-          setAvailability({ type: 'ready', slots: payload.slots || [] })
+          setAvailability({
+            type: 'ready',
+            slots: payload.slots || [],
+            capacityPerSlot: payload.capacityPerSlot || 10,
+            largeGroupsMessage: payload.largeGroupsMessage || ''
+          })
         }
       } catch (error) {
         if (!ignore) {
-          setAvailability({ type: 'error', slots: [] })
+          setAvailability({ type: 'error', slots: [], capacityPerSlot: 10, largeGroupsMessage: '' })
         }
       }
     }
@@ -57,19 +62,6 @@ export default function PaymentSection({ cart, onClose }) {
       ignore = true
     }
   }, [primaryCartItem?.id, selectedDate])
-
-  useEffect(() => {
-    if (availability.type !== 'ready' || !availability.slots.length) return
-
-    const people = Math.max(1, Number(formData.participantsCount || 1))
-    const selectedSlot = availability.slots.find((slot) => slot.value === formData.preferredTime)
-    if (!selectedSlot || selectedSlot.remaining >= people) return
-
-    const nextAvailable = availability.slots.find((slot) => slot.remaining >= people)
-    if (nextAvailable) {
-      setFormData((prev) => ({ ...prev, preferredTime: nextAvailable.value }))
-    }
-  }, [availability, formData.participantsCount, formData.preferredTime])
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -198,7 +190,7 @@ export default function PaymentSection({ cart, onClose }) {
                   type="number"
                   name="participantsCount"
                   min="1"
-                  max="20"
+                  max="60"
                   value={formData.participantsCount}
                   onChange={handleChange}
                   required
@@ -218,18 +210,20 @@ export default function PaymentSection({ cart, onClose }) {
                   {bookingTimeSlots.map((slot) => {
                     const slotAvailability = availability.slots.find((item) => item.value === slot.value)
                     const people = Math.max(1, Number(formData.participantsCount || 1))
-                    const isUnavailable = Boolean(slotAvailability && slotAvailability.remaining < people)
+                    const isFull = Boolean(slotAvailability && slotAvailability.remaining <= 0)
+                    const needsConfirmation = Boolean(slotAvailability && slotAvailability.remaining > 0 && slotAvailability.remaining < people)
+                    const note = isFull ? ' - cupo estándar lleno' : needsConfirmation ? ' - confirmar grupo' : ''
 
                     return (
-                      <option key={slot.value} value={slot.value} disabled={isUnavailable}>
-                        {slot.label}{isUnavailable ? ' - sin cupo' : ''}
+                      <option key={slot.value} value={slot.value}>
+                        {slot.label}{note}
                       </option>
                     )
                   })}
                 </select>
                 {availability.type === 'ready' && (
                   <p className="mt-2 text-xs leading-5 text-gray-600">
-                    Cupos aproximados por horario. La disponibilidad final se confirma antes del pago.
+                    Cupo estándar: {availability.capacityPerSlot} personas por horario. Grupos grandes se revisan por WhatsApp antes del pago.
                   </p>
                 )}
               </Field>

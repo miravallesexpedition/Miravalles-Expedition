@@ -28,9 +28,9 @@ export async function POST(request) {
       )
     }
 
-    if (!Number.isInteger(participantsCount) || participantsCount < 1 || participantsCount > 20) {
+    if (!Number.isInteger(participantsCount) || participantsCount < 1 || participantsCount > 60) {
       return Response.json(
-        { error: 'La cantidad de participantes debe estar entre 1 y 20' },
+        { error: 'La cantidad de participantes debe estar entre 1 y 60' },
         { status: 400 }
       )
     }

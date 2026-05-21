@@ -3,7 +3,10 @@ import { bookingTimeSlots } from '@/lib/timeSlots'
 
 export const dynamic = 'force-dynamic'
 
-const defaultCapacityPerSlot = Number(process.env.MAX_PARTICIPANTS_PER_SLOT || 10)
+const defaultCapacityPerSlot = Number(process.env.MAX_PARTICIPANTS_PER_TOUR || process.env.MAX_PARTICIPANTS_PER_SLOT || 10)
+const tourCapacityById = {
+  'aguas-termales-miravalles': Number(process.env.MAX_PARTICIPANTS_HOT_SPRINGS || 30)
+}
 
 export async function GET(request) {
   try {
@@ -18,6 +21,7 @@ export async function GET(request) {
       )
     }
 
+    const capacityPerSlot = tourCapacityById[tourId] || defaultCapacityPerSlot
     const bookings = await bookingService.getBookingsForDate(tourId, date)
     const bookedByTime = bookings.reduce((acc, booking) => {
       const time = booking.preferred_time || '07:00'
@@ -28,7 +32,7 @@ export async function GET(request) {
 
     const slots = bookingTimeSlots.map((slot) => {
       const booked = bookedByTime[slot.value] || 0
-      const remaining = Math.max(0, defaultCapacityPerSlot - booked)
+      const remaining = Math.max(0, capacityPerSlot - booked)
 
       return {
         ...slot,
@@ -41,7 +45,8 @@ export async function GET(request) {
     return Response.json({
       tourId,
       date,
-      capacityPerSlot: defaultCapacityPerSlot,
+      capacityPerSlot,
+      largeGroupsMessage: 'Para grupos grandes se confirma disponibilidad manualmente por WhatsApp.',
       slots
     })
   } catch (error) {
