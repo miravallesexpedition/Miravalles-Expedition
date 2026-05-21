@@ -1,28 +1,10 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { track } from '@vercel/analytics'
 import { business, contact } from '@/lib/siteConfig'
 import { calculateBookingTotal, getTourQuote } from '@/lib/pricing'
-
-const timeSlots = [
-  { value: '05:30', label: '5:30 a.m.' },
-  { value: '06:00', label: '6:00 a.m.' },
-  { value: '06:30', label: '6:30 a.m.' },
-  { value: '07:00', label: '7:00 a.m.' },
-  { value: '07:30', label: '7:30 a.m.' },
-  { value: '08:00', label: '8:00 a.m.' },
-  { value: '08:30', label: '8:30 a.m.' },
-  { value: '09:00', label: '9:00 a.m.' },
-  { value: '10:00', label: '10:00 a.m.' },
-  { value: '13:00', label: '1:00 p.m.' },
-  { value: '14:00', label: '2:00 p.m.' },
-  { value: '15:00', label: '3:00 p.m.' },
-  { value: '16:00', label: '4:00 p.m.' },
-  { value: '17:00', label: '5:00 p.m.' },
-  { value: '18:00', label: '6:00 p.m.' },
-  { value: '19:00', label: '7:00 p.m.' }
-]
+import { bookingTimeSlots, formatBookingTime } from '@/lib/timeSlots'
 
 export default function PaymentSection({ cart, onClose }) {
   const [formData, setFormData] = useState({
@@ -37,10 +19,57 @@ export default function PaymentSection({ cart, onClose }) {
     specialRequests: ''
   })
   const [status, setStatus] = useState({ type: 'idle', message: '', links: null })
+  const [availability, setAvailability] = useState({ type: 'idle', slots: [] })
+
+  const primaryCartItem = cart[0] || null
+  const selectedDate = primaryCartItem?.selectedDate ? formatDate(primaryCartItem.selectedDate) : ''
 
   const quoteSummary = useMemo(() => (
     calculateBookingTotal(cart, formData.participantsCount, formData.customerType)
   ), [cart, formData.participantsCount, formData.customerType])
+
+  useEffect(() => {
+    if (!primaryCartItem?.id || !selectedDate) return
+
+    let ignore = false
+    async function loadAvailability() {
+      setAvailability({ type: 'loading', slots: [] })
+      try {
+        const params = new URLSearchParams({
+          tourId: primaryCartItem.id,
+          date: selectedDate
+        })
+        const response = await fetch(`/api/availability?${params.toString()}`)
+        const payload = await response.json()
+
+        if (!ignore && response.ok) {
+          setAvailability({ type: 'ready', slots: payload.slots || [] })
+        }
+      } catch (error) {
+        if (!ignore) {
+          setAvailability({ type: 'error', slots: [] })
+        }
+      }
+    }
+
+    loadAvailability()
+    return () => {
+      ignore = true
+    }
+  }, [primaryCartItem?.id, selectedDate])
+
+  useEffect(() => {
+    if (availability.type !== 'ready' || !availability.slots.length) return
+
+    const people = Math.max(1, Number(formData.participantsCount || 1))
+    const selectedSlot = availability.slots.find((slot) => slot.value === formData.preferredTime)
+    if (!selectedSlot || selectedSlot.remaining >= people) return
+
+    const nextAvailable = availability.slots.find((slot) => slot.remaining >= people)
+    if (nextAvailable) {
+      setFormData((prev) => ({ ...prev, preferredTime: nextAvailable.value }))
+    }
+  }, [availability, formData.participantsCount, formData.preferredTime])
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -186,10 +215,23 @@ export default function PaymentSection({ cart, onClose }) {
                   onChange={handleChange}
                   className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3"
                 >
-                  {timeSlots.map((slot) => (
-                    <option key={slot.value} value={slot.value}>{slot.label}</option>
-                  ))}
+                  {bookingTimeSlots.map((slot) => {
+                    const slotAvailability = availability.slots.find((item) => item.value === slot.value)
+                    const people = Math.max(1, Number(formData.participantsCount || 1))
+                    const isUnavailable = Boolean(slotAvailability && slotAvailability.remaining < people)
+
+                    return (
+                      <option key={slot.value} value={slot.value} disabled={isUnavailable}>
+                        {slot.label}{isUnavailable ? ' - sin cupo' : ''}
+                      </option>
+                    )
+                  })}
                 </select>
+                {availability.type === 'ready' && (
+                  <p className="mt-2 text-xs leading-5 text-gray-600">
+                    Cupos aproximados por horario. La disponibilidad final se confirma antes del pago.
+                  </p>
+                )}
               </Field>
               <Field label="Pago">
                 <select
@@ -312,5 +354,5 @@ function formatDate(date) {
 }
 
 function formatSelectedTime(value) {
-  return timeSlots.find((slot) => slot.value === value)?.label || value
+  return formatBookingTime(value)
 }

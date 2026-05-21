@@ -1,6 +1,7 @@
 import { Resend } from 'resend'
 import { contact } from './siteConfig'
 import { formatMoney } from './pricing'
+import { formatBookingTime } from './timeSlots'
 
 export const isResendConfigured = Boolean(process.env.RESEND_API_KEY)
 const resend = isResendConfigured ? new Resend(process.env.RESEND_API_KEY) : null
@@ -35,19 +36,22 @@ function bookingRows(booking) {
   return `
     <p><strong>Tour:</strong> ${escapeHtml(booking.tour_name)}</p>
     <p><strong>Fecha:</strong> ${escapeHtml(booking.tour_date)}</p>
-    <p><strong>Hora preferida:</strong> ${escapeHtml(formatTime(booking.preferred_time || 'Por confirmar'))}</p>
+    <p><strong>Hora preferida:</strong> ${escapeHtml(formatBookingTime(booking.preferred_time || 'Por confirmar'))}</p>
     <p><strong>Participantes:</strong> ${escapeHtml(booking.participants_count)}</p>
     <p><strong>Tipo de cliente:</strong> ${escapeHtml(customerType)}</p>
     <p><strong>Precio total estimado:</strong> ${escapeHtml(formatMoney(booking.total_price, booking.currency || 'USD'))}</p>
   `
 }
 
-function formatTime(value) {
-  if (!/^\d{2}:\d{2}$/.test(String(value))) return value
-  const [hours, minutes] = String(value).split(':').map(Number)
-  const suffix = hours >= 12 ? 'p.m.' : 'a.m.'
-  const hour12 = hours % 12 || 12
-  return `${hour12}:${String(minutes).padStart(2, '0')} ${suffix}`
+function preparationBlock() {
+  return `
+    <div style="background: #fffbeb; border: 1px solid #fde68a; padding: 18px; border-radius: 10px; margin: 20px 0;">
+      <h3 style="margin-top: 0; color: #713f12;">Antes del tour</h3>
+      <p><strong>Qué llevar:</strong> buena hidratación, zapatos cómodos para caminata, ropa fresca, bloqueador solar y repelente.</p>
+      <p><strong>Incluye:</strong> guía local, snacks, agua en caso de necesitarla, acompañamiento durante el recorrido y fotografías personales opcionales.</p>
+      <p><strong>No incluye:</strong> transporte. El punto de encuentro se confirma por WhatsApp.</p>
+    </div>
+  `
 }
 
 export const emailService = {
@@ -93,6 +97,7 @@ export const emailService = {
               ${bookingRows(booking)}
             </div>
             <p><strong>Importante:</strong> el transporte no está incluido. Coordinaremos el punto de encuentro por WhatsApp.</p>
+            ${preparationBlock()}
             <p style="color: #ef4444;"><strong>Confirmá tu reserva dentro de 24 horas desde este enlace:</strong></p>
             <div style="text-align: center; margin: 30px 0;">
               <a href="${escapeHtml(confirmationUrl)}" style="background: #166534; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">
@@ -128,6 +133,7 @@ export const emailService = {
               ${bookingRows(booking)}
             </div>
             <p><strong>Próximo paso:</strong> completá el pago para finalizar tu reserva.</p>
+            ${preparationBlock()}
             <div style="text-align: center; margin: 30px 0;">
               <a href="${escapeHtml(paymentUrl)}" style="background: #166534; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">
                 Proceder al pago
@@ -162,6 +168,7 @@ export const emailService = {
               <p><strong>ID de pago:</strong> ${escapeHtml(booking.paypal_capture_id || booking.payment_id || 'Registrado')}</p>
             </div>
             <p><strong>Importante:</strong> antes del tour confirmaremos punto de encuentro, clima y recomendaciones por WhatsApp.</p>
+            ${preparationBlock()}
             <p style="color: #666; font-size: 12px;">Preguntas: <strong>${escapeHtml(contact.phoneDisplay)}</strong> | <strong>${escapeHtml(contactEmail)}</strong></p>
           </div>
         `
@@ -187,7 +194,7 @@ export const emailService = {
               <p><strong>Fecha:</strong> ${escapeHtml(booking.tour_date)}</p>
               <p><strong>Lugar de encuentro:</strong> Fortuna, Guanacaste</p>
             </div>
-            <p>Recordá llevar ropa cómoda, zapatos para caminar, bloqueador solar y repelente contra insectos.</p>
+            ${preparationBlock()}
             <p style="color: #666; font-size: 14px;">Preguntas de último minuto: <strong>${escapeHtml(contact.phoneDisplay)}</strong></p>
           </div>
         `

@@ -43,10 +43,12 @@ export const tourImages = {
 }
 
 export const commonIncludes = [
-  'Guía local',
-  'Agua',
+  'Guía local con conocimiento de la zona',
+  'Agua en caso de necesitarla',
   'Refrigerio o snacks',
+  'Acompañamiento durante todo el recorrido',
   'Binoculares cuando aplica',
+  'Fotografías personales opcionales',
   'Coordinación previa por WhatsApp'
 ]
 
@@ -58,8 +60,9 @@ export const commonNotIncluded = [
 ]
 
 export const commonBring = [
-  'Ropa cómoda',
-  'Zapatos cerrados para caminar',
+  'Buena hidratación',
+  'Zapatos cómodos y cerrados para caminar',
+  'Ropa fresca y cómoda',
   'Bloqueador solar',
   'Repelente contra insectos',
   'Botella reutilizable',
@@ -214,8 +217,8 @@ const defaultRecommendations = [
 export const tours = [
   {
     id: 'catarata-cabro-muco-morpho-blanca',
-    name: 'Catarata Cabro Muco + Morpho Blanca',
-    shortName: 'Cabro Muco + Morpho Blanca',
+    name: 'Catarata Piedras Rojas + Morpho Blanca + Cabro Muco',
+    shortName: 'Piedras Rojas + Morpho + Cabro',
     price: 55,
     priceLabel: '$55',
     level: 'Media',
@@ -226,22 +229,22 @@ export const tours = [
     videos: [tourImages.morphoCabroVideo, tourImages.morphoBlancaClip],
     location: 'Fortuna, Guanacaste',
     description:
-      'Caminata guiada hacia dos cataratas escondidas en la zona del Volcán Miravalles, con pozas naturales, bosque y experiencia local auténtica.',
+      'Caminata guiada de aproximadamente 4 horas hacia Catarata Piedras Rojas, Morpho Blanca y Cabro Muco, con bosque tropical, pozas naturales y aventura local auténtica cerca del Volcán Miravalles.',
     overview:
-      'Una caminata de aventura real para viajeros que quieren ver una parte menos masiva de Guanacaste: senderos de bosque, agua cristalina, roca volcánica y dos cataratas con identidad local.',
+      'Vive una aventura inolvidable en medio de la naturaleza. Esta caminata conecta algunos de los rincones más hermosos de la zona: Catarata Piedras Rojas, Catarata Morpho Blanca y Catarata Cabro Muco. En el camino se observan flora, fauna, insectos exóticos, anfibios, reptiles y aves locales, con tiempo para nadar en las refrescantes aguas de Morpho Blanca y Cabro Muco cuando las condiciones son seguras.',
     whatToExpect: [
       'Inicio con briefing de seguridad y revisión del clima.',
       'Caminata por senderos naturales con pausas para fotos, agua y observación del entorno.',
-      'Llegada a las cataratas Cabro Muco y Morpho Blanca según condiciones del día.',
-      'Tiempo para disfrutar la poza natural, descansar y conectar con el paisaje.'
+      'Visita a Catarata Piedras Rojas, Morpho Blanca y Cabro Muco según condiciones del día.',
+      'Tiempo para nadar, descansar y conectar con el paisaje en Morpho Blanca y Cabro Muco cuando el clima lo permite.'
     ],
     itinerary: [
       { title: 'Encuentro local', text: 'Coordinamos el punto exacto por WhatsApp antes del tour.' },
-      { title: 'Sendero de bosque', text: 'Caminata progresiva con paradas para orientación, agua y fotografía.' },
-      { title: 'Cataratas escondidas', text: 'Visita a Cabro Muco y Morpho Blanca con tiempo para observar y disfrutar.' },
+      { title: 'Sendero de bosque', text: 'Caminata progresiva con paradas para orientación, agua, fotografía y observación de vida silvestre.' },
+      { title: 'Tres cataratas', text: 'Visita a Piedras Rojas, Morpho Blanca y Cabro Muco con tiempo para observar, nadar y disfrutar.' },
       { title: 'Regreso seguro', text: 'Vuelta al punto de inicio al ritmo del grupo.' }
     ],
-    highlights: ['Dos cataratas', 'Poza natural', 'Bosque tropical', 'Guía local'],
+    highlights: ['Tres cataratas', 'Pozas naturales', 'Flora y fauna', 'Guía local'],
     includes: commonIncludes,
     notIncluded: commonNotIncluded,
     bring: commonBring,
@@ -263,7 +266,11 @@ export const tours = [
       },
       {
         question: '¿Se puede nadar?',
-        answer: 'Depende del clima, nivel del agua y criterio del guía el día del tour.'
+        answer: 'Sí, normalmente hay oportunidad de nadar en Morpho Blanca y Cabro Muco. La decisión final depende del clima, nivel del agua y criterio del guía el día del tour.'
+      },
+      {
+        question: '¿Qué puedo ver durante la caminata?',
+        answer: 'Además de cataratas y bosque tropical, es posible observar insectos exóticos, anfibios, reptiles, aves de la zona y detalles de flora local.'
       }
     ],
     pricing: {
@@ -476,7 +483,7 @@ export const packages = [
     name: 'Caminata + Aguas Termales',
     price: 'Desde $85 p.p.',
     detail:
-      'Catarata Cabro Muco + Morpho Blanca por la mañana y cierre relajado en aguas termales. Ideal para parejas y grupos pequeños.',
+      'Piedras Rojas + Morpho Blanca + Cabro Muco por la mañana y cierre relajado en aguas termales. Ideal para parejas y grupos pequeños.',
     bestFor: 'Aventura completa'
   },
   {
@@ -518,7 +525,7 @@ export const experienceDetails = [
   {
     title: 'Dificultad',
     items: [
-      'Cabro Muco + Morpho Blanca: media',
+      'Piedras Rojas + Morpho Blanca + Cabro Muco: media',
       'Camino al cráter: difícil',
       'Aguas termales: fácil',
       'Tour de aves: fácil'
@@ -527,7 +534,7 @@ export const experienceDetails = [
   {
     title: 'Duración',
     items: [
-      'Cabro Muco + Morpho Blanca: 4 horas',
+      'Piedras Rojas + Morpho Blanca + Cabro Muco: 4 horas',
       'Aguas termales: horario flexible, cierran a las 9:00 p.m.',
       'Tour de aves: 3 horas',
       'Camino al cráter: 5 a 6 horas'
@@ -557,17 +564,17 @@ export const siteFaqs = [
   {
     question: '¿Qué incluye el tour?',
     answer:
-      'Incluye guía local, agua, refrigerio o snacks y binoculares cuando aplica. Algunos accesos externos se confirman antes de reservar.'
+      'Incluye guía local con conocimiento de la zona, acompañamiento durante todo el recorrido, refrigerio o snacks, agua en caso de necesitarla, binoculares cuando aplica y fotografías personales opcionales.'
   },
   {
     question: '¿Qué debo llevar?',
     answer:
-      'Ropa cómoda, zapatos cerrados para caminar, bloqueador solar, repelente contra insectos, botella reutilizable y cámara o celular protegido contra agua.'
+      'Buena hidratación, zapatos cómodos para caminata, ropa fresca y cómoda, bloqueador solar, repelente contra insectos, botella reutilizable y cámara o celular protegido contra agua.'
   },
   {
     question: '¿Qué dificultad tienen los tours?',
     answer:
-      'Cabro Muco + Morpho Blanca es dificultad media. El camino al cráter es difícil. Aguas termales y tour de aves son fáciles.'
+      'Piedras Rojas + Morpho Blanca + Cabro Muco es dificultad media. El camino al cráter es difícil. Aguas termales y tour de aves son fáciles.'
   },
   {
     question: '¿Cómo confirmo mi reserva?',
@@ -585,6 +592,9 @@ export const seoKeywords = [
   'eco tourism Costa Rica',
   'adventure tours Guanacaste',
   'cataratas en Guanacaste',
+  'Catarata Piedras Rojas',
+  'Catarata Morpho Blanca',
+  'Catarata Cabro Muco',
   'Volcán Miravalles'
 ]
 

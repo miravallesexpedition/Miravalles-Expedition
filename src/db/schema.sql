@@ -106,8 +106,8 @@ INSERT INTO tours (
 ) VALUES
 (
   'catarata-cabro-muco-morpho-blanca',
-  'Catarata Cabro Muco + Morpho Blanca',
-  'Caminata guiada de 10 km ida y vuelta hacia dos cataratas escondidas en la zona del Volcán Miravalles.',
+  'Catarata Piedras Rojas + Morpho Blanca + Cabro Muco',
+  'Caminata guiada de 10 km ida y vuelta hacia tres cataratas escondidas en la zona del Volcán Miravalles.',
   55.00,
   'moderate',
   4,

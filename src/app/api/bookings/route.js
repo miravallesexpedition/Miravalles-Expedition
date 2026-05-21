@@ -3,6 +3,7 @@ import { bookingService, tourService } from '@/lib/services'
 import { buildMailtoUrl, buildWhatsAppUrl, contact } from '@/lib/siteConfig'
 import { emailService } from '@/lib/emails'
 import { formatMoney, getTourQuote, normalizeCustomerType } from '@/lib/pricing'
+import { formatBookingTime, isValidBookingTime } from '@/lib/timeSlots'
 
 export const dynamic = 'force-dynamic'
 
@@ -56,7 +57,7 @@ export async function POST(request) {
       )
     }
 
-    if (!/^\d{2}:\d{2}$/.test(cleanPreferredTime)) {
+    if (!isValidBookingTime(cleanPreferredTime)) {
       return Response.json(
         { error: 'La hora preferida debe ser válida' },
         { status: 400 }
@@ -110,7 +111,7 @@ export async function POST(request) {
       'Nueva solicitud de reserva',
       `Tour: ${tour.name}`,
       `Fecha: ${cleanTourDate}`,
-      `Hora preferida: ${formatTime(cleanPreferredTime)}`,
+      `Hora preferida: ${formatBookingTime(cleanPreferredTime)}`,
       `Participantes: ${participantsCount}`,
       `Tipo de cliente: ${customerTypeLabel}`,
       `Precio por persona: ${quote.priceLabel}`,
@@ -196,12 +197,4 @@ export async function POST(request) {
       { status: 500 }
     )
   }
-}
-
-function formatTime(value) {
-  const [hours, minutes] = String(value).split(':').map(Number)
-  if (!Number.isFinite(hours) || !Number.isFinite(minutes)) return value
-  const suffix = hours >= 12 ? 'p.m.' : 'a.m.'
-  const hour12 = hours % 12 || 12
-  return `${hour12}:${String(minutes).padStart(2, '0')} ${suffix}`
 }

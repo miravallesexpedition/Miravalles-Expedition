@@ -244,7 +244,7 @@ function MediaSection({ tour }) {
             <h2 className="mt-4 text-4xl font-black">Mirá el terreno antes de llegar.</h2>
           </div>
           <p className="text-lg leading-8 text-gray-700">
-            Material visual real de Miravalles. Las fotos y videos muestran la ruta Morpho Blanca + Cabro Muco y el entorno volcánico.
+            Material visual real de Miravalles. Las fotos y videos muestran la ruta de cataratas, pozas naturales y el entorno volcánico.
           </p>
         </div>
 

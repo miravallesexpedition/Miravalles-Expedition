@@ -10,7 +10,7 @@ export const metadata = {
     template: '%s | Miravalles Expedition'
   },
   description:
-    'Tours de aventura premium en Guanacaste cerca del Volcán Miravalles: cataratas escondidas, caminatas, aguas termales, aves y guías locales auténticos.',
+    'Tours de aventura premium en Guanacaste cerca del Volcán Miravalles: Catarata Piedras Rojas, Morpho Blanca, Cabro Muco, caminatas, aguas termales, aves y guías locales auténticos.',
   keywords: seoKeywords,
   openGraph: {
     title: 'Miravalles Expedition',

@@ -144,6 +144,43 @@ export const bookingService = {
     return fallbackBookings.find((item) => String(item.id) === String(id)) || null
   },
 
+  async getBookingsForDate(tourId, tourDate) {
+    if (isSupabaseConfigured) {
+      const { data, error } = await supabase
+        .from('bookings')
+        .select('id,tour_id,tour_date,preferred_time,status,participants_count,payment_status')
+        .eq('tour_id', tourId)
+        .eq('tour_date', tourDate)
+        .in('status', ['pending', 'confirmed'])
+
+      if (error) throw new Error(error.message)
+      return data || []
+    }
+
+    return fallbackBookings.filter((item) => (
+      String(item.tour_id) === String(tourId) &&
+      String(item.tour_date) === String(tourDate) &&
+      ['pending', 'confirmed'].includes(item.status)
+    ))
+  },
+
+  async getRecentBookings(limit = 80) {
+    if (isSupabaseConfigured) {
+      const { data, error } = await supabase
+        .from('bookings')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(limit)
+
+      if (error) throw new Error(error.message)
+      return data || []
+    }
+
+    return [...fallbackBookings]
+      .sort((a, b) => String(b.created_at || '').localeCompare(String(a.created_at || '')))
+      .slice(0, limit)
+  },
+
   async confirmBooking(bookingId) {
     if (isSupabaseConfigured) {
       const { data, error } = await supabase
