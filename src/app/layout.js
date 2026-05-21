@@ -79,6 +79,9 @@ export default function RootLayout({ children }) {
     <html lang="es">
       <body className="font-sans">
         <StructuredData />
+        <a href="#contenido-principal" className="skip-link">
+          Saltar al contenido
+        </a>
         {children}
         <Analytics />
       </body>

@@ -85,7 +85,7 @@ export default function Home() {
   }
 
   return (
-    <main className="bg-[#f8f4ea]">
+    <main id="contenido-principal" className="bg-[#f8f4ea]">
       <SiteHeader onReserve={() => setShowContactForm(true)} />
 
       <HeroSection
@@ -159,7 +159,7 @@ export default function Home() {
         <p className="mt-2">{contact.phoneDisplay} | {contact.email}</p>
       </footer>
 
-      <FloatingWhatsApp />
+      <FloatingWhatsApp onReserve={() => setShowContactForm(true)} />
 
       {showDatePicker && (
         <DatePicker

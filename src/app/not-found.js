@@ -11,7 +11,7 @@ export const metadata = {
 
 export default function NotFoundPage() {
   return (
-    <main className="min-h-screen bg-[#061b13] px-4 py-16 text-white">
+    <main id="contenido-principal" className="min-h-screen bg-[#061b13] px-4 py-16 text-white">
       <section className="mx-auto flex min-h-[70vh] max-w-3xl flex-col items-center justify-center text-center">
         <p className="text-sm font-black uppercase tracking-[0.22em] text-amber-200">
           Miravalles Expedition

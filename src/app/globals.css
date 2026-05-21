@@ -21,6 +21,26 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 100;
+  transform: translateY(-150%);
+  border-radius: 999px;
+  background: #f8d46a;
+  color: #071d14;
+  font-weight: 900;
+  padding: 0.75rem 1rem;
+  transition: transform 160ms ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 3px solid rgba(6, 32, 22, 0.35);
+  outline-offset: 3px;
+}
+
 ::selection {
   background: #d5a84d;
   color: #071d14;

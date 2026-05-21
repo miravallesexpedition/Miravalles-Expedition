@@ -1,7 +1,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { parseMoney } from '@/lib/pricing'
 import { buildWhatsAppUrl, business, contact, getTourById, tours, tourImages } from '@/lib/siteConfig'
+
+const baseUrl = 'https://miravallesexpedition.com'
 
 export function generateStaticParams() {
   return tours.map((tour) => ({ tourId: tour.id }))
@@ -47,7 +50,8 @@ export default async function TourDetailPage({ params }) {
   ].join('\n')
 
   return (
-    <main className="bg-[#f8f4ea] text-[#11130f]">
+    <main id="contenido-principal" className="bg-[#f8f4ea] text-[#11130f]">
+      <TourStructuredData tour={tour} />
       <TourNav />
 
       <section className="relative min-h-[88vh] overflow-hidden bg-[#061b13] text-white">
@@ -134,6 +138,82 @@ export default async function TourDetailPage({ params }) {
       </footer>
     </main>
   )
+}
+
+function TourStructuredData({ tour }) {
+  const data = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${baseUrl}/tours/${tour.id}#breadcrumb`,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Inicio',
+            item: baseUrl
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tours',
+            item: `${baseUrl}/#tours`
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: tour.name,
+            item: `${baseUrl}/tours/${tour.id}`
+          }
+        ]
+      },
+      {
+        '@type': 'TouristTrip',
+        '@id': `${baseUrl}/tours/${tour.id}#tour`,
+        mainEntityOfPage: `${baseUrl}/tours/${tour.id}`,
+        name: tour.name,
+        description: tour.description,
+        image: `${baseUrl}${tour.image}`,
+        provider: {
+          '@type': 'LocalBusiness',
+          '@id': `${baseUrl}/#business`,
+          name: business.name,
+          telephone: contact.phoneDisplay,
+          email: contact.email
+        },
+        offers: {
+          '@type': 'Offer',
+          price: getStructuredPrice(tour),
+          priceCurrency: getStructuredCurrency(tour),
+          availability: 'https://schema.org/InStock',
+          url: `${baseUrl}/tours/${tour.id}`
+        },
+        additionalProperty: [
+          { '@type': 'PropertyValue', name: 'Duración', value: tour.duration },
+          { '@type': 'PropertyValue', name: 'Distancia', value: tour.distance || 'Consultar' },
+          { '@type': 'PropertyValue', name: 'Dificultad', value: tour.level },
+          { '@type': 'PropertyValue', name: 'Transporte', value: 'No incluido' }
+        ]
+      }
+    ]
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  )
+}
+
+function getStructuredPrice(tour) {
+  return parseMoney(tour.pricing?.general || tour.pricing?.foreignAdult || tour.priceLabel) || Number(tour.price || 0)
+}
+
+function getStructuredCurrency(tour) {
+  const label = String(tour.pricing?.general || tour.pricing?.foreignAdult || tour.priceLabel || '')
+  return label.includes('₡') || /\d{1,3}(?:\.\d{3})+/.test(label) ? 'CRC' : 'USD'
 }
 
 function TourNav() {
@@ -268,6 +348,9 @@ function MediaSection({ tour }) {
   const videos = Array.isArray(tour.videos) && tour.videos.length
     ? tour.videos
     : (tour.video ? [tour.video] : [])
+  const mediaNote = tour.id === 'aguas-termales-miravalles'
+    ? 'Imagen ilustrativa temporal para las aguas termales y material visual del entorno de Miravalles. Cuando tengas fotos propias de Colinas del Miravalles, las dejamos en esta sección.'
+    : 'Material visual real de Miravalles. Las fotos y videos muestran la ruta de cataratas, pozas naturales y el entorno volcánico.'
 
   return (
     <section className="px-4 py-20 sm:px-6 lg:px-10">
@@ -277,9 +360,7 @@ function MediaSection({ tour }) {
             <p className="text-sm font-black uppercase tracking-[0.22em] text-green-800">Galería y video</p>
             <h2 className="mt-4 text-4xl font-black">Mirá el terreno antes de llegar.</h2>
           </div>
-          <p className="text-lg leading-8 text-gray-700">
-            Material visual real de Miravalles. Las fotos y videos muestran la ruta de cataratas, pozas naturales y el entorno volcánico.
-          </p>
+          <p className="text-lg leading-8 text-gray-700">{mediaNote}</p>
         </div>
 
         {videos.length > 0 && (

@@ -41,7 +41,7 @@ export default async function PayBookingPage({ params }) {
   ].join('\n')
 
   return (
-    <main className="min-h-screen bg-[#061b13] px-4 py-16 text-white">
+    <main id="contenido-principal" className="min-h-screen bg-[#061b13] px-4 py-16 text-white">
       <section className="mx-auto max-w-xl rounded-[2rem] border border-white/10 bg-white/10 p-8 shadow-2xl backdrop-blur">
         <p className="mb-2 text-sm font-black uppercase tracking-[0.18em] text-amber-200">
           Reserva confirmada
@@ -120,7 +120,7 @@ function formatTime(value) {
 
 function Message({ title, body }) {
   return (
-    <main className="min-h-screen bg-[#061b13] px-4 py-16 text-white">
+    <main id="contenido-principal" className="min-h-screen bg-[#061b13] px-4 py-16 text-white">
       <section className="mx-auto max-w-xl rounded-[2rem] border border-white/10 bg-white/10 p-8 shadow-2xl backdrop-blur">
         <h1 className="mb-3 text-3xl font-black text-white">{title}</h1>
         <p className="leading-7 text-white/75">{body}</p>

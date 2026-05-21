@@ -19,7 +19,7 @@ export default async function PaymentCanceledPage({ searchParams }) {
   ].filter(Boolean).join('\n')
 
   return (
-    <main className="min-h-screen bg-[#f8f4ea] px-4 py-16 text-[#11130f]">
+    <main id="contenido-principal" className="min-h-screen bg-[#f8f4ea] px-4 py-16 text-[#11130f]">
       <section className="mx-auto flex min-h-[70vh] max-w-2xl flex-col justify-center rounded-[2rem] bg-white p-8 text-center shadow-2xl sm:p-12">
         <p className="text-sm font-black uppercase tracking-[0.22em] text-amber-700">
           Pago no completado

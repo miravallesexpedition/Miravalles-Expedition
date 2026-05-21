@@ -30,7 +30,7 @@ export default async function AdminBookingsPage({ searchParams }) {
   const bookings = await bookingService.getRecentBookings(100)
 
   return (
-    <main className="min-h-screen bg-[#f8f4ea] px-4 py-10 text-[#11130f] sm:px-6 lg:px-10">
+    <main id="contenido-principal" className="min-h-screen bg-[#f8f4ea] px-4 py-10 text-[#11130f] sm:px-6 lg:px-10">
       <div className="mx-auto max-w-7xl">
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -82,7 +82,7 @@ export default async function AdminBookingsPage({ searchParams }) {
 
 function LoginState() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#071d14] px-4 text-white">
+    <main id="contenido-principal" className="flex min-h-screen items-center justify-center bg-[#071d14] px-4 text-white">
       <section className="w-full max-w-md rounded-[1.5rem] bg-white p-8 text-[#11130f] shadow-2xl">
         <p className="text-xs font-black uppercase tracking-[0.22em] text-green-800">
           Panel privado
@@ -111,7 +111,7 @@ function LoginState() {
 
 function SetupState() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#f8f4ea] px-4 text-[#11130f]">
+    <main id="contenido-principal" className="flex min-h-screen items-center justify-center bg-[#f8f4ea] px-4 text-[#11130f]">
       <section className="w-full max-w-2xl rounded-[1.5rem] bg-white p-8 shadow-xl">
         <p className="text-xs font-black uppercase tracking-[0.22em] text-green-800">
           Configuración pendiente
