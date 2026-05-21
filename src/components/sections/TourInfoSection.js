@@ -7,14 +7,14 @@ export default function TourInfoSection() {
         <div className="mb-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <div>
             <p className="text-sm font-black uppercase tracking-[0.22em] text-green-800">
-              What to Expect
+              Qué esperar
             </p>
             <h2 className="mt-4 text-balance text-4xl font-black leading-tight text-[#11130f] sm:text-5xl">
-              Clear details before the adventure starts.
+              Detalles claros antes de iniciar la aventura.
             </h2>
           </div>
           <p className="text-lg leading-8 text-gray-700">
-            {business.noTransportNotice} Every booking is coordinated directly so visitors understand the terrain, weather, difficulty and meeting point.
+            {business.noTransportNotice} Cada reserva se coordina directamente para que sepás cómo es el terreno, el clima, la dificultad y el punto de encuentro.
           </p>
         </div>
 

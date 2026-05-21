@@ -2,10 +2,10 @@ import Image from 'next/image'
 import { business, tourImages } from '@/lib/siteConfig'
 
 const proofPoints = [
-  { label: 'Main trail', value: '10 km' },
-  { label: 'Base duration', value: '4 hours' },
-  { label: 'Group style', value: 'Small groups' },
-  { label: 'Transport', value: 'Not included' }
+  { label: 'Sendero principal', value: '10 km' },
+  { label: 'Duración base', value: '4 horas' },
+  { label: 'Tipo de grupo', value: 'Grupos pequeños' },
+  { label: 'Transporte', value: 'No incluido' }
 ]
 
 export default function AboutSection() {
@@ -32,17 +32,17 @@ export default function AboutSection() {
             />
           </div>
           <div className="absolute bottom-0 left-8 rounded-2xl bg-amber-300 px-5 py-4 text-[#071d14] shadow-xl">
-            <p className="text-xs font-black uppercase tracking-[0.22em]">Local access</p>
-            <p className="mt-1 text-2xl font-black">Hidden routes</p>
+            <p className="text-xs font-black uppercase tracking-[0.22em]">Acceso local</p>
+            <p className="mt-1 text-2xl font-black">Rutas escondidas</p>
           </div>
         </div>
 
         <div>
           <p className="text-sm font-black uppercase tracking-[0.22em] text-amber-200">
-            Experience Overview
+            Experiencia local
           </p>
           <h2 className="mt-4 text-balance text-4xl font-black leading-tight sm:text-5xl">
-            Premium adventure, guided by people who know Miravalles from the ground up.
+            Aventura premium guiada por personas que conocen Miravalles desde adentro.
           </h2>
           <p className="mt-6 text-lg leading-8 text-white/75">
             {business.positioning} La experiencia se construye con grupos pequeños, comunicación directa y rutas que mantienen la autenticidad local.
@@ -66,7 +66,7 @@ export default function AboutSection() {
             rel="noreferrer"
             className="mt-8 inline-flex rounded-full bg-white px-6 py-3 font-black text-[#071d14] transition hover:bg-amber-100"
           >
-            View location on Google Maps
+            Ver ubicación en Google Maps
           </a>
         </div>
       </div>

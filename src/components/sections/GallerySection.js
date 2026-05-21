@@ -47,14 +47,14 @@ export default function GallerySection() {
         <div className="mb-10 grid gap-6 lg:grid-cols-[1fr_420px] lg:items-end">
           <div>
             <p className="text-sm font-black uppercase tracking-[0.22em] text-amber-200">
-              Premium Gallery
+              Galería premium
             </p>
             <h2 className="mt-4 text-balance text-4xl font-black leading-tight sm:text-5xl">
-              Real Miravalles, framed like an expedition journal.
+              Miravalles real, con una mirada de expedición.
             </h2>
           </div>
           <p className="text-lg leading-8 text-white/70">
-            Open any image, navigate full screen and zoom in on the details. Every visual comes from the local landscape and real experience.
+            Abrí cualquier imagen, navegá en pantalla completa y acercate a los detalles. Todo el material visual viene del paisaje local y de experiencias reales.
           </p>
         </div>
 
@@ -66,7 +66,7 @@ export default function GallerySection() {
               className={`group relative mb-4 block w-full overflow-hidden rounded-[1.5rem] bg-white/5 text-left shadow-2xl ${
                 img.featured ? 'h-[420px]' : 'h-[300px]'
               }`}
-              aria-label={`Open ${img.alt}`}
+              aria-label={`Abrir ${img.alt}`}
             >
               <Image
                 src={img.url}
@@ -79,7 +79,7 @@ export default function GallerySection() {
               <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
                 <p className="font-black text-white">{img.caption}</p>
                 <span className="rounded-full bg-white/90 px-3 py-1 text-xs font-black uppercase tracking-[0.12em] text-[#071d14]">
-                  Open
+                  Abrir
                 </span>
               </div>
             </button>
@@ -101,13 +101,13 @@ export default function GallerySection() {
                 onClick={() => setZoomed((value) => !value)}
                 className="rounded-full border border-white/20 px-4 py-2 text-sm font-black hover:bg-white/10"
               >
-                {zoomed ? 'Fit' : 'Zoom'}
+                {zoomed ? 'Ajustar' : 'Zoom'}
               </button>
               <button
                 onClick={close}
                 className="rounded-full bg-white px-4 py-2 text-sm font-black text-black"
               >
-                Close
+                Cerrar
               </button>
             </div>
           </div>
@@ -126,16 +126,16 @@ export default function GallerySection() {
             <button
               onClick={goPrev}
               className="absolute left-3 top-1/2 rounded-full bg-white/90 px-4 py-3 font-black text-black shadow-xl"
-              aria-label="Previous image"
+              aria-label="Imagen anterior"
             >
-              Prev
+              Anterior
             </button>
             <button
               onClick={goNext}
               className="absolute right-3 top-1/2 rounded-full bg-white/90 px-4 py-3 font-black text-black shadow-xl"
-              aria-label="Next image"
+              aria-label="Imagen siguiente"
             >
-              Next
+              Siguiente
             </button>
           </div>
         </div>

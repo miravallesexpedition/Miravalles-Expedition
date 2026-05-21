@@ -4,7 +4,7 @@ export const business = {
   meetingPoint: 'Fortuna, cerca del Volcán Miravalles',
   mapsUrl: 'https://maps.app.goo.gl/9jzTzmpLHVMG65Wg8',
   mapsEmbedUrl: 'https://www.google.com/maps?q=Miravalles%20Expedition%4010.6752514,-85.1986184&z=15&hl=es&output=embed',
-  tagline: 'Discover hidden waterfalls, volcanic landscapes and local nature experiences in Guanacaste.',
+  tagline: 'Cataratas escondidas, paisajes volcánicos y experiencias locales de naturaleza en Guanacaste.',
   positioning:
     'Experiencias locales de caminata, cataratas, aves y naturaleza en la zona del Volcán Miravalles.',
   noTransportNotice:
@@ -21,6 +21,8 @@ export const tourImages = {
   logo: '/images/miravalles-expedition-logo.jpg',
   hero: '/images/hero-waterfall.jpg',
   heroVideo: '/videos/miravalles-hero.mp4',
+  morphoCabroVideo: '/videos/morpho-cabro-muco-hero.mp4',
+  morphoBlancaClip: '/videos/morpho-blanca-clip.mp4',
   catarataPool: '/images/hero-waterfall.jpg',
   catarataRiver: '/images/waterfall-river.jpg',
   tallWaterfall: '/images/tall-waterfall.jpeg',
@@ -33,7 +35,11 @@ export const tourImages = {
   orchids: '/images/orchids.jpg',
   trailSign: '/images/trail-sign.jpg',
   forestTrail: '/images/forest-trail.jpg',
-  cabroMucoFall: '/images/cabro-muco-waterfall-clean.jpg'
+  cabroMucoFall: '/images/cabro-muco-waterfall-clean.jpg',
+  cabroMucoUnderWaterfall: '/images/cabro-muco-under-waterfall.jpg',
+  morphoBlancaGuide: '/images/morpho-blanca-8627.jpg',
+  morphoBlancaPool: '/images/morpho-blanca-8686.jpg',
+  morphoBlancaWaterfall: '/images/morpho-blanca-8633.jpg'
 }
 
 export const commonIncludes = [
@@ -61,80 +67,102 @@ export const commonBring = [
 ]
 
 export const heroBadges = [
-  'Local Guides',
-  'Hidden Waterfalls',
-  'Small Groups',
-  'Safe Adventure'
+  'Guías locales',
+  'Cataratas escondidas',
+  'Grupos pequeños',
+  'Aventura segura'
 ]
 
 export const galleryImages = [
   {
+    url: tourImages.morphoBlancaWaterfall,
+    alt: 'Catarata Morpho Blanca entre roca volcánica y bosque',
+    caption: 'Catarata Morpho Blanca',
+    featured: true
+  },
+  {
+    url: tourImages.cabroMucoUnderWaterfall,
+    alt: 'Vista desde debajo de la catarata Cabro Muco',
+    caption: 'Bajo Cabro Muco',
+    featured: true
+  },
+  {
+    url: tourImages.morphoBlancaPool,
+    alt: 'Poza natural y río en la ruta Morpho Blanca',
+    caption: 'Poza natural de Morpho Blanca'
+  },
+  {
+    url: tourImages.morphoBlancaGuide,
+    alt: 'Guía local explorando las cascadas de Morpho Blanca',
+    caption: 'Ruta Morpho + Cabro Muco'
+  },
+  {
     url: tourImages.hero,
     alt: 'Catarata y poza natural en Miravalles',
-    caption: 'Hidden waterfall pool',
+    caption: 'Poza de catarata escondida',
     featured: true
   },
   {
     url: tourImages.cabroMucoFall,
     alt: 'Catarata Cabro Muco con poza natural',
-    caption: 'Cabro Muco waterfall'
+    caption: 'Catarata Cabro Muco'
   },
   {
     url: tourImages.tallWaterfall,
     alt: 'Catarata alta en la zona de Miravalles',
-    caption: 'Tall volcanic waterfall',
+    caption: 'Catarata volcánica',
     featured: true
   },
   {
     url: tourImages.forestTrail,
     alt: 'Sendero de bosque hacia las cataratas',
-    caption: 'Forest approach'
+    caption: 'Sendero de bosque'
   },
   {
     url: tourImages.trailSign,
     alt: 'Rótulo del sendero Cabro Muco',
-    caption: 'Cabro Muco trail'
+    caption: 'Sendero Cabro Muco'
   },
   {
     url: tourImages.redRockWaterfall,
     alt: 'Cascada sobre roca volcánica rojiza',
-    caption: 'Volcanic red rock'
+    caption: 'Roca volcánica rojiza'
   },
   {
     url: tourImages.catarataRiver,
     alt: 'Río y pequeñas cascadas de montaña',
-    caption: 'Mountain river'
+    caption: 'Río de montaña'
   },
   {
     url: tourImages.volcano,
     alt: 'Vista del Volcán Miravalles en Guanacaste',
-    caption: 'Miravalles Volcano',
+    caption: 'Volcán Miravalles',
     featured: true
   },
   {
     url: tourImages.bromelia,
     alt: 'Bromelia roja del bosque tropical',
-    caption: 'Tropical flora'
+    caption: 'Flora tropical'
   },
   {
     url: tourImages.butterfly,
     alt: 'Mariposa en una flor tropical',
-    caption: 'Wildlife details'
+    caption: 'Detalles de vida silvestre'
   },
   {
     url: tourImages.orchids,
     alt: 'Orquídeas naranjas de Costa Rica',
-    caption: 'Costa Rican orchids'
+    caption: 'Orquídeas de Costa Rica'
   },
   {
     url: tourImages.bird,
     alt: 'Ave local observada en Guanacaste',
-    caption: 'Birdwatching moments'
+    caption: 'Observación de aves'
   },
   {
     url: tourImages.duck,
     alt: 'Ave acuática entre vegetación tropical',
-    caption: 'Wetland wildlife'
+    caption: 'Vida silvestre'
   }
 ]
 
@@ -193,8 +221,9 @@ export const tours = [
     level: 'Media',
     duration: '4 horas',
     distance: '10 km ida y vuelta',
-    image: tourImages.hero,
-    video: tourImages.heroVideo,
+    image: tourImages.morphoBlancaWaterfall,
+    video: tourImages.morphoCabroVideo,
+    videos: [tourImages.morphoCabroVideo, tourImages.morphoBlancaClip],
     location: 'Fortuna, Guanacaste',
     description:
       'Caminata guiada hacia dos cataratas escondidas en la zona del Volcán Miravalles, con pozas naturales, bosque y experiencia local auténtica.',
@@ -218,7 +247,15 @@ export const tours = [
     bring: commonBring,
     recommendations: defaultRecommendations,
     safety: defaultSafety,
-    gallery: [tourImages.hero, tourImages.cabroMucoFall, tourImages.forestTrail, tourImages.trailSign],
+    gallery: [
+      tourImages.morphoBlancaWaterfall,
+      tourImages.cabroMucoUnderWaterfall,
+      tourImages.morphoBlancaPool,
+      tourImages.morphoBlancaGuide,
+      tourImages.hero,
+      tourImages.cabroMucoFall,
+      tourImages.trailSign
+    ],
     faqs: [
       {
         question: '¿Necesito experiencia previa?',
@@ -436,7 +473,7 @@ export const tours = [
 
 export const packages = [
   {
-    name: 'Hike + Aguas Termales',
+    name: 'Caminata + Aguas Termales',
     price: 'Desde $85 p.p.',
     detail:
       'Catarata Cabro Muco + Morpho Blanca por la mañana y cierre relajado en aguas termales. Ideal para parejas y grupos pequeños.',
@@ -450,7 +487,7 @@ export const packages = [
     bestFor: 'Parejas'
   },
   {
-    name: 'Birdwatching Hike',
+    name: 'Caminata de Aves',
     price: 'Desde $45 p.p.',
     detail:
       'Salida de 3 horas para observación de aves y vida silvestre con binoculares. Mejor temprano en la mañana.',

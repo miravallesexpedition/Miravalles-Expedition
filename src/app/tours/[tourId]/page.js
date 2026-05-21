@@ -18,8 +18,8 @@ export async function generateMetadata({ params }) {
   }
 
   return {
-    title: `${tour.name} | Adventure Tour in Guanacaste`,
-    description: `${tour.description} Duration: ${tour.duration}. Difficulty: ${tour.level}. Price from ${tour.priceLabel}.`,
+    title: `${tour.name} | Tour de aventura en Guanacaste`,
+    description: `${tour.description} Duración: ${tour.duration}. Dificultad: ${tour.level}. Precio desde ${tour.priceLabel}.`,
     alternates: {
       canonical: `/tours/${tour.id}`
     },
@@ -64,7 +64,7 @@ export default async function TourDetailPage({ params }) {
         <div className="section-shell relative flex min-h-[88vh] items-end pb-14 pt-28">
           <div className="max-w-4xl">
             <Link href="/#tours" className="mb-6 inline-flex rounded-full border border-white/20 px-4 py-2 text-sm font-black text-white/90 hover:bg-white/10">
-              Back to tours
+              Volver a tours
             </Link>
             <p className="text-sm font-black uppercase tracking-[0.22em] text-amber-200">
               {tour.location}
@@ -80,13 +80,13 @@ export default async function TourDetailPage({ params }) {
                 rel="noreferrer"
                 className="rounded-full bg-amber-300 px-8 py-4 text-center font-black text-[#071d14] hover:bg-amber-200"
               >
-                Book Now / WhatsApp
+                Reservar por WhatsApp
               </a>
               <Link
                 href="/#book"
                 className="rounded-full border border-white/25 px-8 py-4 text-center font-black text-white hover:bg-white/10"
               >
-                Booking flow
+                Ver reserva
               </Link>
             </div>
           </div>
@@ -95,12 +95,12 @@ export default async function TourDetailPage({ params }) {
 
       <section className="bg-[#061b13] px-4 pb-20 text-white sm:px-6 lg:px-10">
         <div className="mx-auto grid max-w-6xl gap-3 sm:grid-cols-2 lg:grid-cols-6">
-          <Metric label="Duration" value={tour.duration} />
-          <Metric label="Distance" value={tour.distance || 'Ask'} />
-          <Metric label="Difficulty" value={tour.level} />
-          <Metric label="From" value={tour.priceLabel} />
-          <Metric label="National" value={tour.pricing?.nationalAdult || 'Ask'} />
-          <Metric label="Transport" value="Not included" />
+          <Metric label="Duración" value={tour.duration} />
+          <Metric label="Distancia" value={tour.distance || 'Consultar'} />
+          <Metric label="Dificultad" value={tour.level} />
+          <Metric label="Desde" value={tour.priceLabel} />
+          <Metric label="Nacional" value={tour.pricing?.nationalAdult || 'Consultar'} />
+          <Metric label="Transporte" value="No incluido" />
         </div>
       </section>
 
@@ -108,10 +108,10 @@ export default async function TourDetailPage({ params }) {
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.85fr_1.15fr]">
           <div>
             <p className="text-sm font-black uppercase tracking-[0.22em] text-green-800">
-              Experience Overview
+              Resumen de experiencia
             </p>
             <h2 className="mt-4 text-balance text-4xl font-black leading-tight">
-              What makes this experience worth booking.
+              Por qué esta experiencia vale la pena.
             </h2>
           </div>
           <div className="space-y-6 text-lg leading-9 text-gray-700">
@@ -144,7 +144,7 @@ function TourNav() {
           <span className="text-sm font-black uppercase tracking-[0.25em]">Miravalles</span>
         </Link>
         <Link href="/#tours" className="rounded-full bg-white px-5 py-2 text-sm font-black text-[#071d14]">
-          All tours
+          Todos los tours
         </Link>
       </div>
     </header>
@@ -162,28 +162,28 @@ function Metric({ label, value }) {
 
 function InfoGrid({ tour }) {
   const sections = [
-    { title: 'What to Expect', items: tour.whatToExpect },
-    { title: 'Highlights', items: tour.highlights },
-    { title: 'Price', items: buildPricingItems(tour) },
-    { title: "What's Included", items: tour.includes },
-    { title: "What's Not Included", items: tour.notIncluded },
-    { title: 'What to Bring', items: tour.bring },
-    { title: 'Safety Information', items: tour.safety }
+    { title: 'Qué esperar', items: tour.whatToExpect },
+    { title: 'Destacados', items: tour.highlights },
+    { title: 'Precio', items: buildPricingItems(tour) },
+    { title: 'Qué incluye', items: tour.includes },
+    { title: 'Qué no incluye', items: tour.notIncluded },
+    { title: 'Qué llevar', items: tour.bring },
+    { title: 'Seguridad', items: tour.safety }
   ]
 
   return (
     <section className="bg-white px-4 py-20 sm:px-6 lg:px-10">
       <div className="mx-auto max-w-6xl">
         <div className="mb-10">
-          <p className="text-sm font-black uppercase tracking-[0.22em] text-green-800">Tour Details</p>
-          <h2 className="mt-4 text-4xl font-black">Everything organized before you book.</h2>
+          <p className="text-sm font-black uppercase tracking-[0.22em] text-green-800">Detalles del tour</p>
+          <h2 className="mt-4 text-4xl font-black">Todo claro antes de reservar.</h2>
         </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {sections.map((section) => (
             <article key={section.title} className="rounded-[1.5rem] border border-gray-200 bg-[#f8f4ea] p-6">
               <h3 className="text-xl font-black">{section.title}</h3>
               <ul className="mt-4 space-y-3 text-sm leading-7 text-gray-700">
-                {(section.items || ['Placeholder pendiente de completar.']).map((item) => (
+                {(section.items || ['Información pendiente de completar.']).map((item) => (
                   <li key={item} className="flex gap-3">
                     <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
                     <span>{item}</span>
@@ -200,13 +200,13 @@ function InfoGrid({ tour }) {
 
 function buildPricingItems(tour) {
   return [
-    tour.pricing?.foreignAdult && `Foreign adult: ${tour.pricing.foreignAdult}`,
-    tour.pricing?.foreignChild && `Foreign child: ${tour.pricing.foreignChild}`,
-    tour.pricing?.nationalAdult && `National/resident: ${tour.pricing.nationalAdult}`,
-    tour.pricing?.nationalChild && `National child: ${tour.pricing.nationalChild}`,
-    tour.pricing?.group && `Group: ${tour.pricing.group}`,
-    tour.pricing?.private && `Private: ${tour.pricing.private}`,
-    tour.pricing?.promo && `Promotion: ${tour.pricing.promo}`
+    tour.pricing?.foreignAdult && `Adulto extranjero: ${tour.pricing.foreignAdult}`,
+    tour.pricing?.foreignChild && `Niño extranjero: ${tour.pricing.foreignChild}`,
+    tour.pricing?.nationalAdult && `Nacional/residente: ${tour.pricing.nationalAdult}`,
+    tour.pricing?.nationalChild && `Niño nacional: ${tour.pricing.nationalChild}`,
+    tour.pricing?.group && `Grupo: ${tour.pricing.group}`,
+    tour.pricing?.private && `Privado: ${tour.pricing.private}`,
+    tour.pricing?.promo && `Promoción: ${tour.pricing.promo}`
   ].filter(Boolean)
 }
 
@@ -214,8 +214,8 @@ function Itinerary({ tour }) {
   return (
     <section className="bg-[#071d14] px-4 py-20 text-white sm:px-6 lg:px-10">
       <div className="mx-auto max-w-6xl">
-        <p className="text-sm font-black uppercase tracking-[0.22em] text-amber-200">Itinerary</p>
-        <h2 className="mt-4 text-4xl font-black">A clear rhythm for the day.</h2>
+        <p className="text-sm font-black uppercase tracking-[0.22em] text-amber-200">Itinerario</p>
+        <h2 className="mt-4 text-4xl font-black">Un ritmo claro para el día.</h2>
         <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {(tour.itinerary || []).map((step, index) => (
             <article key={step.title} className="rounded-[1.5rem] border border-white/10 bg-white/10 p-6">
@@ -231,27 +231,36 @@ function Itinerary({ tour }) {
 }
 
 function MediaSection({ tour }) {
+  const videos = Array.isArray(tour.videos) && tour.videos.length
+    ? tour.videos
+    : (tour.video ? [tour.video] : [])
+
   return (
     <section className="px-4 py-20 sm:px-6 lg:px-10">
       <div className="mx-auto max-w-6xl">
         <div className="mb-10 grid gap-6 lg:grid-cols-[1fr_420px] lg:items-end">
           <div>
-            <p className="text-sm font-black uppercase tracking-[0.22em] text-green-800">Gallery & Video</p>
-            <h2 className="mt-4 text-4xl font-black">See the terrain before you arrive.</h2>
+            <p className="text-sm font-black uppercase tracking-[0.22em] text-green-800">Galería y video</p>
+            <h2 className="mt-4 text-4xl font-black">Mirá el terreno antes de llegar.</h2>
           </div>
           <p className="text-lg leading-8 text-gray-700">
-            Real visual material from Miravalles. More tour-specific video can be added as new clips are selected.
+            Material visual real de Miravalles. Las fotos y videos muestran la ruta Morpho Blanca + Cabro Muco y el entorno volcánico.
           </p>
         </div>
 
-        {tour.video && (
-          <video
-            className="mb-5 h-[420px] w-full rounded-[2rem] object-cover shadow-2xl"
-            src={tour.video}
-            poster={tour.image}
-            controls
-            playsInline
-          />
+        {videos.length > 0 && (
+          <div className="mb-5 grid gap-4 lg:grid-cols-2">
+            {videos.map((video) => (
+              <video
+                key={video}
+                className="h-[420px] w-full rounded-[2rem] bg-black object-cover shadow-2xl"
+                src={video}
+                poster={tour.image}
+                controls
+                playsInline
+              />
+            ))}
+          </div>
         )}
 
         <div className="grid gap-4 md:grid-cols-4">
@@ -270,8 +279,8 @@ function TourFaq({ tour }) {
   return (
     <section className="bg-white px-4 py-20 sm:px-6 lg:px-10">
       <div className="mx-auto max-w-4xl">
-        <p className="text-sm font-black uppercase tracking-[0.22em] text-green-800">FAQs & Reviews</p>
-        <h2 className="mt-4 text-4xl font-black">Final questions before booking.</h2>
+        <p className="text-sm font-black uppercase tracking-[0.22em] text-green-800">Preguntas y reseñas</p>
+        <h2 className="mt-4 text-4xl font-black">Últimas dudas antes de reservar.</h2>
         <div className="mt-8 space-y-4">
           {(tour.faqs || []).map((faq) => (
             <article key={faq.question} className="rounded-[1.5rem] bg-[#f8f4ea] p-6">
@@ -280,7 +289,7 @@ function TourFaq({ tour }) {
             </article>
           ))}
           <article className="rounded-[1.5rem] border border-dashed border-gray-300 bg-white p-6">
-            <h3 className="font-black">Reviews</h3>
+            <h3 className="font-black">Reseñas</h3>
             <p className="mt-2 leading-7 text-gray-700">
               Placeholder claro: aquí se mostrarán reseñas verificadas cuando estén disponibles. No se publican testimonios inventados.
             </p>
@@ -295,12 +304,12 @@ function BookingBand({ tour, whatsappMessage }) {
   return (
     <section className="bg-[#f8f4ea] px-4 py-20 text-center sm:px-6 lg:px-10">
       <div className="mx-auto max-w-5xl rounded-[2rem] bg-[#071d14] p-8 text-white shadow-2xl sm:p-12">
-        <p className="text-sm font-black uppercase tracking-[0.22em] text-amber-200">Book Your Adventure</p>
+        <p className="text-sm font-black uppercase tracking-[0.22em] text-amber-200">Reservá tu aventura</p>
         <h2 className="mx-auto mt-4 max-w-3xl text-balance text-4xl font-black leading-tight">
-          Ready for {tour.shortName || tour.name}?
+          ¿Listo para {tour.shortName || tour.name}?
         </h2>
         <p className="mx-auto mt-4 max-w-2xl text-white/70">
-          Send a quick WhatsApp request and confirm date, group size, weather and meeting point directly with Miravalles Expedition.
+          Enviá una solicitud rápida por WhatsApp y confirmá fecha, tamaño del grupo, clima y punto de encuentro directamente con Miravalles Expedition.
         </p>
         <a
           href={buildWhatsAppUrl(whatsappMessage)}
@@ -308,7 +317,7 @@ function BookingBand({ tour, whatsappMessage }) {
           rel="noreferrer"
           className="mt-8 inline-flex rounded-full bg-amber-300 px-8 py-4 font-black text-[#071d14] hover:bg-amber-200"
         >
-          WhatsApp to Book
+          Reservar por WhatsApp
         </a>
       </div>
     </section>

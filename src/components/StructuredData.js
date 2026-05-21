@@ -28,7 +28,7 @@ export default function StructuredData() {
         name: tour.name,
         description: tour.description,
         image: `${baseUrl}${tour.image}`,
-        touristType: ['Adventure travelers', 'Nature travelers', 'Couples', 'Small groups'],
+        touristType: ['Viajeros de aventura', 'Amantes de naturaleza', 'Parejas', 'Grupos pequeños'],
         itinerary: {
           '@type': 'ItemList',
           itemListElement: tour.highlights?.map((highlight, index) => ({

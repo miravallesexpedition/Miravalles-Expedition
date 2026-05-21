@@ -11,24 +11,33 @@ const difficultyLabels = {
 
 function mapTour(row) {
   const fallbackTour = findFallbackTour(row.id) || fallbackTours[0]
-  const price = Number(row.price || fallbackTour.price)
+  const price = Number(fallbackTour.price || row.price)
 
   return {
     id: row.id,
-    name: row.name || fallbackTour.name,
+    name: fallbackTour.name || row.name,
     shortName: fallbackTour.shortName,
-    description: row.description || fallbackTour.description,
+    description: fallbackTour.description || row.description,
     price,
-    priceLabel: `$${price}`,
-    level: difficultyLabels[row.difficulty_level] || row.difficulty_level || fallbackTour.level || 'Moderado',
-    duration: row.duration_hours ? `${row.duration_hours} horas` : fallbackTour.duration,
-    distance: row.distance || fallbackTour.distance,
-    image: row.image_url || fallbackTour.image,
-    location: row.location || fallbackTour.location,
+    priceLabel: fallbackTour.priceLabel || `$${price}`,
+    level: fallbackTour.level || difficultyLabels[row.difficulty_level] || row.difficulty_level || 'Moderado',
+    duration: fallbackTour.duration || (row.duration_hours ? `${row.duration_hours} horas` : null),
+    distance: fallbackTour.distance || row.distance,
+    image: fallbackTour.image || row.image_url,
+    video: fallbackTour.video,
+    videos: fallbackTour.videos,
+    location: fallbackTour.location || row.location,
     highlights: fallbackTour.highlights,
-    includes: row.included_items || fallbackTour.includes,
-    notIncluded: row.not_included_items || fallbackTour.notIncluded,
-    bring: row.what_to_bring || fallbackTour.bring,
+    includes: fallbackTour.includes || row.included_items,
+    notIncluded: fallbackTour.notIncluded || row.not_included_items,
+    bring: fallbackTour.bring || row.what_to_bring,
+    overview: fallbackTour.overview,
+    whatToExpect: fallbackTour.whatToExpect,
+    itinerary: fallbackTour.itinerary,
+    recommendations: fallbackTour.recommendations,
+    safety: fallbackTour.safety,
+    gallery: fallbackTour.gallery,
+    faqs: fallbackTour.faqs,
     pricing: fallbackTour.pricing
   }
 }

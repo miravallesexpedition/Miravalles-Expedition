@@ -36,7 +36,7 @@ export async function POST(request) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(cleanEmail)) {
       return Response.json(
-        { error: 'Email inválido' },
+        { error: 'Correo inválido' },
         { status: 400 }
       )
     }
@@ -106,7 +106,7 @@ export async function POST(request) {
       `Precio por persona: ${quote.priceLabel}`,
       `Total estimado: ${totalLabel}`,
       `Nombre: ${cleanFirstName} ${cleanLastName}`,
-      `Email: ${cleanEmail}`,
+      `Correo: ${cleanEmail}`,
       `Teléfono: ${cleanPhone || 'No indicado'}`,
       `Notas: ${cleanSpecialRequests || 'Ninguna'}`,
       'Transporte: no incluido'
@@ -170,7 +170,7 @@ export async function POST(request) {
       emailSent: customerConfirmationEmailSent,
       message: booking.persisted
         ? (customerConfirmationEmailSent
-          ? 'Reserva creada. Por favor, verifica tu email para confirmar.'
+          ? 'Reserva creada. Por favor, revisá tu correo para confirmar.'
           : `Reserva registrada. Usa el botón de confirmación o contáctanos por WhatsApp para terminar el proceso con ${contact.phoneDisplay}.`)
         : `Solicitud preparada. Envíala por WhatsApp o correo para confirmar con ${contact.phoneDisplay}.`,
       confirmationUrl: booking.persisted ? confirmationUrl : null,

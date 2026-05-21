@@ -11,13 +11,13 @@ export default function FAQSection() {
       <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[420px_1fr]">
         <div>
           <p className="text-sm font-black uppercase tracking-[0.22em] text-green-800">
-            FAQ
+            Preguntas frecuentes
           </p>
           <h2 className="mt-4 text-balance text-4xl font-black leading-tight text-[#11130f]">
-            Questions travelers ask before booking.
+            Preguntas que los viajeros hacen antes de reservar.
           </h2>
           <p className="mt-5 leading-8 text-gray-700">
-            Clear answers reduce friction and help visitors feel safe before contacting the team.
+            Las respuestas claras reducen dudas y ayudan a contactar con más confianza.
           </p>
         </div>
 

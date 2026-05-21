@@ -3,16 +3,16 @@ import { tourImages } from '@/lib/siteConfig'
 
 const values = [
   {
-    title: 'Local knowledge',
-    text: 'We read the trail, the river, the weather and the rhythm of each group before pushing forward.'
+    title: 'Conocimiento local',
+    text: 'Leemos el sendero, el río, el clima y el ritmo de cada grupo antes de avanzar.'
   },
   {
-    title: 'Human pace',
-    text: 'Small groups leave space for photos, questions, rest and real connection with the place.'
+    title: 'Ritmo humano',
+    text: 'Los grupos pequeños dejan espacio para fotos, preguntas, descanso y conexión real con el lugar.'
   },
   {
-    title: 'Safe adventure',
-    text: 'Routes can change with rain, water levels and terrain. Safety comes before the photo.'
+    title: 'Aventura segura',
+    text: 'Las rutas pueden cambiar por lluvia, nivel del agua o terreno. La seguridad va primero.'
   }
 ]
 
@@ -22,13 +22,13 @@ export default function GuidesSection() {
       <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.9fr_1.1fr]">
         <div>
           <p className="text-sm font-black uppercase tracking-[0.22em] text-green-800">
-            Meet your local guides
+            Guías locales
           </p>
           <h2 className="mt-4 text-balance text-4xl font-black leading-tight text-[#11130f] sm:text-5xl">
-            Exploration guided by locals who care about the land and the visitor.
+            Exploración guiada por locales que cuidan la tierra y al visitante.
           </h2>
           <p className="mt-6 text-lg leading-8 text-gray-700">
-            Miravalles Expedition is built around local routes, honest recommendations and direct communication. The goal is not to rush people through a checklist, but to help them experience the landscape with confidence.
+            Miravalles Expedition nace de rutas locales, recomendaciones honestas y comunicación directa. La meta no es correr por una lista de paradas, sino vivir el paisaje con confianza.
           </p>
         </div>
 

@@ -8,9 +8,9 @@ import { buildWhatsAppUrl, contact, tourImages } from '@/lib/siteConfig'
 
 const navItems = [
   { label: 'Tours', href: '/#tours' },
-  { label: 'Gallery', href: '/#gallery' },
-  { label: 'Guides', href: '/#guides' },
-  { label: 'FAQ', href: '/#faq' }
+  { label: 'Galería', href: '/#gallery' },
+  { label: 'Guías', href: '/#guides' },
+  { label: 'Preguntas', href: '/#faq' }
 ]
 
 export default function SiteHeader({ onReserve }) {
@@ -28,7 +28,7 @@ export default function SiteHeader({ onReserve }) {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#061b13]/80 text-white backdrop-blur-xl">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-3" aria-label="Miravalles Expedition home">
+        <Link href="/" className="flex items-center gap-3" aria-label="Inicio Miravalles Expedition">
           <Image
             src={tourImages.logo}
             alt="Miravalles Expedition"
@@ -62,7 +62,7 @@ export default function SiteHeader({ onReserve }) {
             onClick={onReserve}
             className="rounded-full bg-amber-300 px-5 py-2 text-sm font-bold text-[#071d14] transition hover:bg-amber-200"
           >
-            Book Adventure
+            Reservar
           </button>
         </div>
 
@@ -71,7 +71,7 @@ export default function SiteHeader({ onReserve }) {
           className="rounded-full border border-white/20 px-4 py-2 text-sm font-bold lg:hidden"
           aria-expanded={open}
         >
-          Menu
+          Menú
         </button>
       </div>
 
@@ -95,7 +95,7 @@ export default function SiteHeader({ onReserve }) {
               }}
               className="rounded-lg bg-amber-300 px-4 py-3 font-bold text-[#071d14]"
             >
-              Book Adventure
+              Reservar
             </button>
             <button
               onClick={handleWhatsApp}

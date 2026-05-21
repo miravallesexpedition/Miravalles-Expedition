@@ -41,17 +41,25 @@ export default function HeroSection({ onViewTours, onReserve }) {
       <div className="section-shell relative flex min-h-screen items-center pt-28">
         <div className="grid w-full items-center gap-10 lg:grid-cols-[1fr_360px]">
           <div className="max-w-4xl reveal-soft">
+            <Image
+              src={tourImages.logo}
+              alt="Logo de Miravalles Expedition"
+              width={140}
+              height={140}
+              priority
+              className="mb-6 h-24 w-24 rounded-2xl bg-white object-contain p-3 shadow-2xl sm:h-32 sm:w-32"
+            />
             <div className="mb-7 inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-amber-100 backdrop-blur">
               <span className="h-2 w-2 rounded-full bg-amber-300" />
               {business.location}
             </div>
 
             <h1 className="text-balance text-5xl font-black leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl">
-              Hidden waterfalls. Local guides. Real Costa Rica.
+              Cataratas escondidas. Guías locales. Costa Rica real.
             </h1>
 
             <p className="mt-7 max-w-2xl text-lg leading-8 text-white/80 sm:text-xl">
-              Explore volcanic trails, crystal pools and wild tropical landscapes around Miravalles with a local team focused on safety, small groups and authentic adventure.
+              Explorá senderos volcánicos, pozas cristalinas y paisajes tropicales alrededor de Miravalles con un equipo local enfocado en seguridad, grupos pequeños y aventura auténtica.
             </p>
 
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -59,7 +67,7 @@ export default function HeroSection({ onViewTours, onReserve }) {
                 onClick={handleReserve}
                 className="rounded-full bg-amber-300 px-8 py-4 text-base font-black text-[#071d14] shadow-2xl shadow-amber-900/20 transition hover:-translate-y-0.5 hover:bg-amber-200"
               >
-                Book Adventure
+                Reservar aventura
               </button>
               <button
                 onClick={handleWhatsApp}
@@ -71,7 +79,7 @@ export default function HeroSection({ onViewTours, onReserve }) {
                 onClick={handleViewTours}
                 className="rounded-full px-8 py-4 text-base font-black text-white/90 transition hover:text-amber-200"
               >
-                View Tours
+                Ver tours
               </button>
             </div>
 
@@ -94,10 +102,10 @@ export default function HeroSection({ onViewTours, onReserve }) {
               className="aspect-square w-full rounded-[1.4rem] bg-white object-contain p-7"
             />
             <div className="mt-6 grid grid-cols-2 gap-3">
-              <Metric value="10 km" label="Main hike" />
-              <Metric value="4 hrs" label="Base duration" />
-              <Metric value="2-8" label="Ideal group" />
-              <Metric value="Local" label="Guided" />
+              <Metric value="10 km" label="Caminata principal" />
+              <Metric value="4 h" label="Duración base" />
+              <Metric value="2-8" label="Grupo ideal" />
+              <Metric value="Local" label="Guiado" />
             </div>
           </aside>
         </div>

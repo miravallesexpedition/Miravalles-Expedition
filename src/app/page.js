@@ -68,7 +68,7 @@ export default function Home() {
     const message = [
       'Hola, quiero más información sobre Miravalles Expedition.',
       `Nombre: ${formData.name}`,
-      `Email: ${formData.email}`,
+      `Correo: ${formData.email}`,
       `Teléfono: ${formData.phone}`,
       `Mensaje: ${formData.message || 'Sin mensaje adicional'}`
     ].join('\n')
@@ -112,21 +112,21 @@ export default function Home() {
       <section id="book" className="bg-[#f8f4ea] px-4 py-20 text-center sm:px-6 lg:px-10">
         <div className="mx-auto max-w-5xl rounded-[2rem] bg-[#071d14] p-8 text-white shadow-2xl sm:p-12">
           <p className="text-sm font-black uppercase tracking-[0.22em] text-amber-200">
-            Book Your Adventure
+            Reservá tu aventura
           </p>
           <h2 className="mx-auto mt-4 max-w-3xl text-balance text-4xl font-black leading-tight sm:text-5xl">
-            A premium booking flow that still feels personal.
+            Una reserva profesional que sigue sintiéndose personal.
           </h2>
           <div className="mt-10 grid gap-4 md:grid-cols-3">
-            <Step number="01" title="Choose your tour" text="Review details, difficulty, duration and price." />
-            <Step number="02" title="Pick a date" text="Send a request with people, time and notes." />
-            <Step number="03" title="Confirm by WhatsApp" text="We coordinate meeting point, weather and final details." />
+            <Step number="01" title="Elegí tu tour" text="Revisá detalles, dificultad, duración y precio." />
+            <Step number="02" title="Seleccioná fecha" text="Enviá la solicitud con personas, horario y notas." />
+            <Step number="03" title="Confirmamos juntos" text="Coordinamos punto de encuentro, clima y detalles finales." />
           </div>
           <button
             onClick={() => setShowContactForm(true)}
             className="mt-10 rounded-full bg-amber-300 px-8 py-4 font-black text-[#071d14] transition hover:bg-amber-200"
           >
-            Consult Availability
+            Consultar disponibilidad
           </button>
         </div>
       </section>
@@ -139,16 +139,16 @@ export default function Home() {
           Miravalles Expedition
         </p>
         <h2 className="mx-auto mt-4 max-w-3xl text-balance text-4xl font-black leading-tight sm:text-5xl">
-          Ready to discover the hidden side of Guanacaste?
+          ¿Listo para descubrir el lado escondido de Guanacaste?
         </h2>
         <p className="mx-auto mt-5 max-w-2xl text-white/70">
-          Reserve a hike, birdwatching route, hot springs plan or private nature photography experience with a local guide.
+          Reservá una caminata, ruta de aves, plan de aguas termales o experiencia privada de fotografía de naturaleza con guía local.
         </p>
         <button
           onClick={() => setShowContactForm(true)}
           className="mt-8 rounded-full bg-white px-8 py-4 text-lg font-black text-[#071d14] hover:bg-amber-100"
         >
-          Book Adventure
+          Reservar aventura
         </button>
       </section>
 

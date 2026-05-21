@@ -26,12 +26,12 @@ export default function DatePicker({ selectedTour, onDateSelect, onClose }) {
         <div className="bg-[#071d14] p-6 text-white">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-xs font-black uppercase tracking-[0.2em] text-amber-200">Book Adventure</p>
-              <h3 className="mt-2 text-2xl font-black">Choose your date</h3>
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-amber-200">Reservar aventura</p>
+              <h3 className="mt-2 text-2xl font-black">Elegí la fecha</h3>
               <p className="mt-2 text-sm text-white/70">{selectedTour.name}</p>
             </div>
             <button onClick={onClose} className="rounded-full bg-white/10 px-4 py-2 font-black hover:bg-white/20" aria-label="Cerrar">
-              Close
+              Cerrar
             </button>
           </div>
         </div>
@@ -59,7 +59,7 @@ export default function DatePicker({ selectedTour, onDateSelect, onClose }) {
             </div>
           </div>
           <p className="mt-4 rounded-2xl bg-white p-4 text-sm leading-6 text-gray-700">
-            This is a request, not an automatic confirmation. We confirm weather, meeting point and availability by WhatsApp.
+            Esta es una solicitud, no una confirmación automática. Confirmamos clima, punto de encuentro y disponibilidad por WhatsApp.
           </p>
         </div>
       </div>

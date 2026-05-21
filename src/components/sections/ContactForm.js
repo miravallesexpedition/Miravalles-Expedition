@@ -28,18 +28,18 @@ export default function ContactForm({ onSubmit, onClose }) {
         <div className="bg-[#071d14] p-6 text-white">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-xs font-black uppercase tracking-[0.2em] text-amber-200">Quick request</p>
-              <h3 className="mt-2 text-2xl font-black">Plan your Miravalles adventure</h3>
-              <p className="mt-2 text-sm text-white/70">We answer by WhatsApp or email.</p>
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-amber-200">Consulta rápida</p>
+              <h3 className="mt-2 text-2xl font-black">Planificá tu aventura en Miravalles</h3>
+              <p className="mt-2 text-sm text-white/70">Respondemos por WhatsApp o correo.</p>
             </div>
             <button onClick={onClose} className="rounded-full bg-white/10 px-4 py-2 font-black hover:bg-white/20" aria-label="Cerrar">
-              Close
+              Cerrar
             </button>
           </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4 p-5">
-          <Field label="Name">
+          <Field label="Nombre">
             <input
               type="text"
               name="name"
@@ -47,11 +47,11 @@ export default function ContactForm({ onSubmit, onClose }) {
               onChange={handleChange}
               required
               className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3"
-              placeholder="Your name"
+              placeholder="Tu nombre"
             />
           </Field>
 
-          <Field label="Email">
+          <Field label="Correo">
             <input
               type="email"
               name="email"
@@ -59,11 +59,11 @@ export default function ContactForm({ onSubmit, onClose }) {
               onChange={handleChange}
               required
               className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3"
-              placeholder="you@email.com"
+              placeholder="tu-correo@ejemplo.com"
             />
           </Field>
 
-          <Field label="Phone / WhatsApp">
+          <Field label="Teléfono / WhatsApp">
             <input
               type="tel"
               name="phone"
@@ -75,14 +75,14 @@ export default function ContactForm({ onSubmit, onClose }) {
             />
           </Field>
 
-          <Field label="Message">
+          <Field label="Mensaje">
             <textarea
               name="message"
               value={formData.message}
               onChange={handleChange}
               rows="4"
               className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3"
-              placeholder="Tour, date, number of people or questions..."
+              placeholder="Tour, fecha, cantidad de personas o preguntas..."
             />
           </Field>
 
@@ -90,7 +90,7 @@ export default function ContactForm({ onSubmit, onClose }) {
             type="submit"
             className="w-full rounded-full bg-[#071d14] py-4 font-black text-white transition hover:bg-green-900"
           >
-            Send Request
+            Enviar solicitud
           </button>
         </form>
       </div>

@@ -37,27 +37,27 @@ export default function ToursSection({ tours, onSelectTour, filters, onFilterCha
         <div className="mb-10 grid gap-6 lg:grid-cols-[1fr_420px] lg:items-end">
           <div>
             <p className="text-sm font-black uppercase tracking-[0.22em] text-green-800">
-              Signature Adventures
+              Aventuras principales
             </p>
             <h2 className="mt-4 text-balance text-4xl font-black leading-tight text-[#11130f] sm:text-5xl">
-              Tours designed like expeditions, not generic excursions.
+              Tours diseñados como expediciones, no como excursiones genéricas.
             </h2>
           </div>
           <p className="text-lg leading-8 text-gray-700">
-            Clear pricing, real photos, local guidance and compact groups. Every tour explains difficulty, duration and what is included before asking for a booking.
+            Precios claros, fotos reales, guía local y grupos compactos. Cada tour explica dificultad, duración y qué incluye antes de pedir una reserva.
           </p>
         </div>
 
         <div className="mb-8 rounded-[1.5rem] border border-black/5 bg-white/80 p-4 shadow-sm backdrop-blur">
           <div className="grid gap-4 md:grid-cols-[1fr_1fr_auto] md:items-end">
             <div>
-              <label className="mb-2 block text-xs font-black uppercase tracking-[0.16em] text-gray-600">Difficulty</label>
+              <label className="mb-2 block text-xs font-black uppercase tracking-[0.16em] text-gray-600">Dificultad</label>
               <select
                 value={filters.level || ''}
                 onChange={(event) => onFilterChange('level', event.target.value)}
                 className="w-full rounded-full border border-gray-200 bg-white px-4 py-3 font-semibold text-gray-900"
               >
-                <option value="">All levels</option>
+                <option value="">Todos los niveles</option>
                 <option value="Fácil">Fácil</option>
                 <option value="Media">Media</option>
                 <option value="Moderado">Moderado</option>
@@ -66,7 +66,7 @@ export default function ToursSection({ tours, onSelectTour, filters, onFilterCha
             </div>
 
             <div>
-              <label className="mb-2 block text-xs font-black uppercase tracking-[0.16em] text-gray-600">Max price</label>
+              <label className="mb-2 block text-xs font-black uppercase tracking-[0.16em] text-gray-600">Precio máximo</label>
               <input
                 type="range"
                 min="0"
@@ -75,7 +75,7 @@ export default function ToursSection({ tours, onSelectTour, filters, onFilterCha
                 onChange={(event) => onFilterChange('maxPrice', event.target.value)}
                 className="w-full accent-green-800"
               />
-              <p className="mt-1 text-sm font-semibold text-gray-600">Up to ${filters.maxPrice || 200}</p>
+              <p className="mt-1 text-sm font-semibold text-gray-600">Hasta ${filters.maxPrice || 200}</p>
             </div>
 
             <p className="rounded-full bg-[#071d14] px-5 py-3 text-center text-sm font-black text-white">
@@ -107,9 +107,9 @@ export default function ToursSection({ tours, onSelectTour, filters, onFilterCha
 
               <div className="p-6">
                 <div className="mb-5 grid grid-cols-3 gap-2 text-center">
-                  <InfoPill label="From" value={getTourPriceLabel(tour)} />
-                  <InfoPill label="Duration" value={tour.duration || 'Ask'} />
-                  <InfoPill label="Distance" value={tour.distance || 'Ask'} />
+                  <InfoPill label="Desde" value={getTourPriceLabel(tour)} />
+                  <InfoPill label="Duración" value={tour.duration || 'Consultar'} />
+                  <InfoPill label="Distancia" value={tour.distance || 'Consultar'} />
                 </div>
 
                 <p className="min-h-[96px] text-sm leading-7 text-gray-700">{tour.description}</p>
@@ -129,19 +129,19 @@ export default function ToursSection({ tours, onSelectTour, filters, onFilterCha
                     href={`/tours/${tour.id}`}
                     className="rounded-full border border-[#071d14] px-5 py-3 text-center font-black text-[#071d14] transition hover:bg-[#071d14] hover:text-white"
                   >
-                    View Details
+                    Ver detalles
                   </Link>
                   <button
                     onClick={() => handleSelect(tour)}
                     className="rounded-full bg-[#071d14] px-5 py-3 font-black text-white transition hover:bg-green-900"
                   >
-                    Book Now
+                    Reservar
                   </button>
                   <button
                     onClick={() => handleWhatsApp(tour)}
                     className="rounded-full px-5 py-3 font-black text-green-800 transition hover:bg-green-50"
                   >
-                    Ask on WhatsApp
+                    Consultar por WhatsApp
                   </button>
                 </div>
               </div>

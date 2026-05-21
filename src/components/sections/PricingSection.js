@@ -20,14 +20,14 @@ export default function PricingSection() {
         <div className="mb-10 grid gap-6 lg:grid-cols-[1fr_420px] lg:items-end">
           <div>
             <p className="text-sm font-black uppercase tracking-[0.22em] text-amber-200">
-              Price Architecture
+              Precios y paquetes
             </p>
             <h2 className="mt-4 text-balance text-4xl font-black leading-tight sm:text-5xl">
-              Premium value, clear pricing, no surprises.
+              Valor premium, precios claros y sin sorpresas.
             </h2>
           </div>
           <p className="text-lg leading-8 text-white/70">
-            The experience is positioned as guided local adventure: small groups, preparation, safety and access to places that are not presented like a mass-market stop.
+            La experiencia se presenta como aventura local guiada: grupos pequeños, preparación, seguridad y acceso a lugares que no se sienten como una parada masiva.
           </p>
         </div>
 
@@ -52,7 +52,7 @@ export default function PricingSection() {
                 onClick={() => handlePackageClick(item)}
                 className="mt-6 w-full rounded-full bg-[#071d14] px-4 py-3 font-black text-white transition hover:bg-green-900"
               >
-                Consult Package
+                Consultar paquete
               </button>
             </article>
           ))}

@@ -30,7 +30,7 @@ export default function PaymentSection({ cart, onClose }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    setStatus({ type: 'loading', message: 'Creating your booking request...', links: null })
+    setStatus({ type: 'loading', message: 'Creando tu solicitud de reserva...', links: null })
     track('booking_submit_attempt', {
       tours: cart.length,
       total: quoteSummary.total || 0,
@@ -102,12 +102,12 @@ export default function PaymentSection({ cart, onClose }) {
         <div className="bg-[#071d14] p-6 text-white">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-xs font-black uppercase tracking-[0.2em] text-amber-200">Secure request</p>
-              <h3 className="mt-2 text-2xl font-black">Complete booking request</h3>
-              <p className="mt-2 text-sm text-white/70">Availability is confirmed personally by WhatsApp or email.</p>
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-amber-200">Solicitud segura</p>
+              <h3 className="mt-2 text-2xl font-black">Completá tu solicitud de reserva</h3>
+              <p className="mt-2 text-sm text-white/70">La disponibilidad se confirma personalmente por WhatsApp o correo.</p>
             </div>
             <button onClick={onClose} className="rounded-full bg-white/10 px-4 py-2 font-black hover:bg-white/20" aria-label="Cerrar">
-              Close
+              Cerrar
             </button>
           </div>
         </div>
@@ -115,36 +115,36 @@ export default function PaymentSection({ cart, onClose }) {
         <div className="grid gap-5 p-5 lg:grid-cols-[1fr_240px]">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid gap-3 sm:grid-cols-2">
-              <Field label="First name">
+              <Field label="Nombre">
                 <input name="firstName" value={formData.firstName} onChange={handleChange} required className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3" />
               </Field>
-              <Field label="Last name">
+              <Field label="Apellido">
                 <input name="lastName" value={formData.lastName} onChange={handleChange} required className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3" />
               </Field>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2">
-              <Field label="Email">
+              <Field label="Correo">
                 <input type="email" name="email" value={formData.email} onChange={handleChange} required className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3" />
               </Field>
-              <Field label="Phone">
+              <Field label="Teléfono">
                 <input type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder={contact.phoneDisplay} className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3" />
               </Field>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2">
-              <Field label="Visitor">
+              <Field label="Visitante">
                 <select
                   name="customerType"
                   value={formData.customerType}
                   onChange={handleChange}
                   className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3"
                 >
-                  <option value="foreign">International / USD</option>
+                  <option value="foreign">Extranjero / USD</option>
                   <option value="national">Nacional o residente / CRC</option>
                 </select>
               </Field>
-              <Field label="People">
+              <Field label="Personas">
                 <input
                   type="number"
                   name="participantsCount"
@@ -159,7 +159,7 @@ export default function PaymentSection({ cart, onClose }) {
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2">
-              <Field label="Time">
+              <Field label="Horario">
                 <select
                   name="preferredTime"
                   value={formData.preferredTime}
@@ -171,7 +171,7 @@ export default function PaymentSection({ cart, onClose }) {
                   <option>Flexible</option>
                 </select>
               </Field>
-              <Field label="Payment">
+              <Field label="Pago">
                 <select
                   name="paymentPreference"
                   value={formData.paymentPreference}
@@ -186,14 +186,14 @@ export default function PaymentSection({ cart, onClose }) {
               </Field>
             </div>
 
-            <Field label="Special requests">
+            <Field label="Notas especiales">
               <textarea
                 name="specialRequests"
                 value={formData.specialRequests}
                 onChange={handleChange}
                 rows="3"
                 className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3"
-                placeholder="Children ages, physical condition, preferred time or questions."
+                placeholder="Edades de niños, condición física, horario preferido o preguntas."
               />
             </Field>
 
@@ -206,6 +206,14 @@ export default function PaymentSection({ cart, onClose }) {
                 <p>{status.message}</p>
                 {status.links && (
                   <div className="mt-3 flex flex-wrap gap-2">
+                    {status.links.confirmationUrl && (
+                      <a
+                        href={status.links.confirmationUrl}
+                        className="rounded-full bg-amber-300 px-4 py-2 font-black text-[#071d14]"
+                      >
+                        Confirmar y continuar al pago
+                      </a>
+                    )}
                     <a
                       href={status.links.whatsappUrl}
                       target="_blank"
@@ -213,23 +221,15 @@ export default function PaymentSection({ cart, onClose }) {
                       onClick={handleWhatsAppClick}
                       className="rounded-full bg-green-700 px-4 py-2 font-black text-white"
                     >
-                      Send by WhatsApp
+                      Enviar por WhatsApp
                     </a>
                     <a
                       href={status.links.mailtoUrl}
                       onClick={handleEmailClick}
                       className="rounded-full bg-gray-950 px-4 py-2 font-black text-white"
                     >
-                      Send by email
+                      Enviar por correo
                     </a>
-                    {status.links.confirmationUrl && (
-                      <a
-                        href={status.links.confirmationUrl}
-                        className="rounded-full bg-amber-300 px-4 py-2 font-black text-[#071d14]"
-                      >
-                        Confirm request
-                      </a>
-                    )}
                   </div>
                 )}
               </div>
@@ -240,12 +240,12 @@ export default function PaymentSection({ cart, onClose }) {
               disabled={status.type === 'loading'}
               className="w-full rounded-full bg-[#071d14] py-4 font-black text-white hover:bg-green-900 disabled:cursor-not-allowed disabled:bg-gray-400"
             >
-              {status.type === 'loading' ? 'Creating...' : 'Create Request'}
+              {status.type === 'loading' ? 'Creando...' : 'Crear solicitud'}
             </button>
           </form>
 
           <aside className="rounded-[1.5rem] bg-white p-5">
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-gray-500">Your request</p>
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-gray-500">Tu solicitud</p>
             <div className="mt-4 space-y-3">
               {cart.map((item, i) => (
                 <div key={`${item.id || item.name}-${i}`} className="border-b border-gray-100 pb-3">
@@ -256,10 +256,10 @@ export default function PaymentSection({ cart, onClose }) {
               ))}
             </div>
             <div className="mt-5 rounded-2xl bg-[#f4efe3] p-4">
-              <p className="text-xs font-black uppercase tracking-[0.16em] text-gray-500">Estimated total</p>
+              <p className="text-xs font-black uppercase tracking-[0.16em] text-gray-500">Total estimado</p>
               <p className="mt-1 text-4xl font-black text-green-800">{quoteSummary.label}</p>
               <p className="mt-2 text-xs leading-5 text-gray-600">
-                {quoteSummary.currency === 'CRC' ? 'Tarifa nacional/residente.' : 'International base rate.'} {business.noTransportNotice}
+                {quoteSummary.currency === 'CRC' ? 'Tarifa nacional/residente.' : 'Tarifa base para extranjeros.'} {business.noTransportNotice}
               </p>
             </div>
           </aside>

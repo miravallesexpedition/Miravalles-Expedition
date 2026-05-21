@@ -47,12 +47,18 @@ export default async function PayBookingPage({ params }) {
         </div>
 
         {canPayWithPayPal ? (
-          <Link
-            href={`/api/payments/paypal/create/${booking.id}`}
-            className="inline-flex w-full justify-center rounded bg-blue-600 px-5 py-3 font-semibold text-white hover:bg-blue-700"
-          >
-            Pagar con PayPal
-          </Link>
+          <div className="rounded-lg border border-blue-100 bg-blue-50 p-4">
+            <p className="font-semibold text-blue-950">Pago seguro disponible</p>
+            <p className="mt-2 text-sm leading-6 text-blue-900">
+              Al continuar se abrirá PayPal para completar el pago en una página segura. No se registra el pago hasta que lo confirmés en PayPal.
+            </p>
+            <Link
+              href={`/api/payments/paypal/create/${booking.id}`}
+              className="mt-4 inline-flex w-full justify-center rounded bg-blue-600 px-5 py-3 font-semibold text-white hover:bg-blue-700"
+            >
+              Continuar con PayPal
+            </Link>
+          </div>
         ) : (
           <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
             <p className="font-semibold text-amber-900">

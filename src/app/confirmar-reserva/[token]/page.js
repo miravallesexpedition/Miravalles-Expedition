@@ -19,6 +19,7 @@ export default async function ConfirmBookingPage({ params }) {
   const alreadyConfirmed = result.status === 'already-confirmed'
   const currency = result.booking.currency || 'USD'
   const totalLabel = formatMoney(result.booking.total_price, currency)
+  const paymentCta = currency === 'USD' ? 'Continuar al pago con PayPal' : 'Coordinar pago nacional'
 
   return (
     <main className="min-h-screen bg-gray-50 px-4 py-16">
@@ -39,7 +40,7 @@ export default async function ConfirmBookingPage({ params }) {
           href={result.paymentUrl}
           className="inline-flex w-full justify-center rounded bg-green-700 px-5 py-3 font-semibold text-white hover:bg-green-800"
         >
-          Proceder al pago
+          {paymentCta}
         </Link>
       </section>
     </main>

@@ -1,19 +1,19 @@
 const trustItems = [
   {
-    title: 'Guided by locals',
-    text: 'The route, pace and recommendations come from people who understand the area, weather and trail conditions.'
+    title: 'Guiado por locales',
+    text: 'La ruta, el ritmo y las recomendaciones vienen de personas que entienden la zona, el clima y el sendero.'
   },
   {
-    title: 'Small groups',
-    text: 'A quieter, more personal experience with time for photos, water breaks and real connection with nature.'
+    title: 'Grupos pequeños',
+    text: 'Una experiencia más tranquila y personal, con tiempo para fotos, pausas de agua y conexión real con la naturaleza.'
   },
   {
-    title: 'Clear expectations',
-    text: 'Difficulty, duration, what to bring and what is not included are communicated before confirming.'
+    title: 'Expectativas claras',
+    text: 'La dificultad, duración, qué llevar y qué no incluye se comunican antes de confirmar.'
   },
   {
-    title: 'Review-ready',
-    text: 'The review area is prepared for verified customer feedback as soon as real reviews are collected.'
+    title: 'Reseñas reales',
+    text: 'La sección de reseñas queda preparada para mostrar opiniones verificadas cuando estén disponibles.'
   }
 ]
 
@@ -24,14 +24,14 @@ export default function TestimonialsSection() {
         <div className="mb-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <div>
             <p className="text-sm font-black uppercase tracking-[0.22em] text-green-800">
-              Why Choose Us
+              Por qué elegirnos
             </p>
             <h2 className="mt-4 text-balance text-4xl font-black leading-tight text-[#11130f] sm:text-5xl">
-              Trust before booking.
+              Confianza antes de reservar.
             </h2>
           </div>
           <p className="text-lg leading-8 text-gray-700">
-            This section avoids fake testimonials. It builds confidence with clear operating promises now, and is ready for verified traveler reviews later.
+            Esta sección evita testimonios inventados. Construye confianza con promesas claras de operación y queda lista para reseñas verificadas de viajeros reales.
           </p>
         </div>
 

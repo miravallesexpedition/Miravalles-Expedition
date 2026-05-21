@@ -8,13 +8,13 @@ export default function MapSection() {
       <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[0.85fr_1.15fr]">
         <div>
           <p className="text-sm font-black uppercase tracking-[0.22em] text-amber-200">
-            Location
+            Ubicación
           </p>
           <h2 className="mt-4 text-balance text-4xl font-black leading-tight sm:text-5xl">
-            Fortuna, Guanacaste. Close to Miravalles Volcano.
+            Fortuna, Guanacaste. Cerca del Volcán Miravalles.
           </h2>
           <p className="mt-6 leading-8 text-white/70">
-            The exact meeting point is confirmed after requesting a reservation. This keeps the experience organized and helps us adjust details based on weather and route conditions.
+            El punto exacto de encuentro se confirma después de solicitar la reserva. Así mantenemos la experiencia ordenada y podemos ajustar detalles según clima y condiciones de la ruta.
           </p>
           <div className="mt-8 rounded-[1.5rem] border border-white/10 bg-white/10 p-6">
             <p className="font-black">{business.location}</p>
@@ -26,7 +26,7 @@ export default function MapSection() {
               rel="noreferrer"
               className="mt-5 inline-flex rounded-full bg-amber-300 px-5 py-3 font-black text-[#071d14] transition hover:bg-amber-200"
             >
-              Open Google Maps
+              Abrir Google Maps
             </a>
           </div>
         </div>
