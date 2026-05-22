@@ -33,6 +33,15 @@ const nextConfig = {
         ]
       }
     ]
+  },
+  async redirects() {
+    return [
+      {
+        source: '/tours/fotografia-naturaleza-miravalles',
+        destination: '/tours/tour-aves-vida-silvestre',
+        permanent: true
+      }
+    ]
   }
 }
 

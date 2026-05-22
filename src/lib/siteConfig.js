@@ -395,8 +395,8 @@ export const tours = [
   },
   {
     id: 'tour-aves-vida-silvestre',
-    name: 'Tour de Aves y Vida Silvestre',
-    shortName: 'Aves y Vida Silvestre',
+    name: 'Tour de Aves, Vida Silvestre y Fotografía de Naturaleza',
+    shortName: 'Aves y Naturaleza',
     price: 45,
     priceLabel: '$45',
     level: 'Fácil',
@@ -405,28 +405,28 @@ export const tours = [
     image: tourImages.bird,
     location: 'Miravalles, Palo Verde y rutas según objetivo',
     description:
-      'Salida de observación de aves diseñada según el interés del cliente: aves de bosque, humedales, zonas abiertas, playas u objetivos específicos en Miravalles, Palo Verde y alrededores.',
+      'Salida personalizada para observar aves, vida silvestre, flora tropical y detalles fotográficos de la naturaleza según el interés del cliente: bosque, humedales, zonas abiertas, playas, Miravalles, Palo Verde y alrededores.',
     overview:
-      'Un recorrido pausado y flexible para observar aves, flores, árboles y vida silvestre con acompañamiento local. La ruta se define según las especies que el cliente quiere buscar, el clima, la temporada y el hábitat: bosque, humedal, playa, zona abierta o Palo Verde.',
+      'Un recorrido pausado y flexible para observar aves, flores, árboles, mariposas y vida silvestre con acompañamiento local. También funciona como experiencia de fotografía de naturaleza: nos movemos con calma, esperamos buena luz y ajustamos la ruta según las especies, el clima, la temporada y el hábitat.',
     whatToExpect: [
       'Salida recomendada temprano en la mañana.',
       'Ritmo suave, silencioso y enfocado en observación.',
       'Uso de binoculares cuando aplica y guía local para identificar puntos de interés.',
-      'Ruta ajustable si el cliente busca aves de bosque, humedales, playa, Palo Verde u otra zona cercana.'
+      'Ruta ajustable si el cliente busca aves de bosque, humedales, playa, Palo Verde, flores, mariposas o fotografía de detalles naturales.'
     ],
     itinerary: [
       { title: 'Inicio temprano', text: 'Coordinamos la mejor hora según clima y actividad de aves.' },
-      { title: 'Objetivo de aves', text: 'Definimos si la prioridad son aves de bosque, humedal, zonas abiertas, playa o una especie específica.' },
-      { title: 'Observación', text: 'Recorrido tranquilo con pausas para escuchar, mirar y fotografiar.' },
+      { title: 'Objetivo natural', text: 'Definimos si la prioridad son aves de bosque, humedal, zonas abiertas, playa, flora, mariposas, detalles del bosque o una especie específica.' },
+      { title: 'Observación y fotos', text: 'Recorrido tranquilo con pausas para escuchar, mirar, fotografiar y disfrutar sin prisa.' },
       { title: 'Cierre', text: 'Regreso con recomendaciones de naturaleza y próximos puntos de interés.' }
     ],
-    highlights: ['Aves de bosque', 'Humedales', 'Palo Verde', 'Ruta personalizada'],
+    highlights: ['Aves de bosque', 'Vida silvestre', 'Fotografía de naturaleza', 'Ruta personalizada'],
     includes: commonIncludes,
     notIncluded: [
       ...commonNotIncluded,
       'Entradas, bote o servicios externos si se elige Palo Verde u otra zona especial'
     ],
-    bring: [...commonBring, 'Sombrero o gorra', 'Lista de aves objetivo si tenés una'],
+    bring: [...commonBring, 'Sombrero o gorra', 'Lista de aves o especies objetivo si tenés una', 'Batería extra si querés tomar muchas fotos'],
     recommendations: defaultRecommendations,
     safety: defaultSafety,
     gallery: [tourImages.bird, tourImages.duck, tourImages.butterfly, tourImages.orchids],
@@ -437,59 +437,17 @@ export const tours = [
       },
       {
         question: '¿Se puede buscar una especie específica?',
-        answer: 'Sí. El tour se puede diseñar según aves de bosque, humedales, playas, Palo Verde u objetivos específicos. En ese caso se confirma ruta, precio y logística por WhatsApp.'
+        answer: 'Sí. El tour se puede diseñar según aves de bosque, humedales, playas, Palo Verde, flora, mariposas u objetivos específicos. En ese caso se confirma ruta, precio y logística por WhatsApp.'
+      },
+      {
+        question: '¿Necesito cámara profesional?',
+        answer: 'No. Podés disfrutarlo con celular, cámara básica o equipo profesional. Si querés enfocarlo en fotografía, ajustamos el ritmo y las paradas.'
       }
     ],
     pricing: {
       general: '$45 Miravalles (3 horas)',
       custom: 'Palo Verde, humedales o playas: desde $95 p.p. según objetivo y logística',
       private: 'Ruta especializada desde $140'
-    }
-  },
-  {
-    id: 'fotografia-naturaleza-miravalles',
-    name: 'Fotografía de Naturaleza',
-    shortName: 'Fotografía de Naturaleza',
-    price: 75,
-    priceLabel: '$75',
-    level: 'Media',
-    duration: '4 horas',
-    distance: 'Ruta ajustable',
-    image: tourImages.butterfly,
-    location: 'Fortuna, Guanacaste',
-    description:
-      'Recorrido pausado para capturar cataratas, flores, aves, mariposas y detalles del bosque con acompañamiento local.',
-    overview:
-      'Una experiencia visual diseñada para moverse con calma, esperar la luz correcta y encontrar detalles reales del bosque tropical.',
-    whatToExpect: [
-      'Ruta flexible según luz, clima e intereses del visitante.',
-      'Tiempo adicional para fotos y composición.',
-      'Acompañamiento local para encontrar detalles naturales sin prisa.'
-    ],
-    itinerary: [
-      { title: 'Brief creativo', text: 'Definimos si priorizás cataratas, aves, flores, paisaje o detalles.' },
-      { title: 'Recorrido pausado', text: 'Caminata con paradas largas para fotografía.' },
-      { title: 'Cierre', text: 'Últimas tomas y coordinación de regreso.' }
-    ],
-    highlights: ['Ritmo fotográfico', 'Flora y fauna', 'Cataratas', 'Acompañamiento local'],
-    includes: commonIncludes,
-    notIncluded: commonNotIncluded,
-    bring: [...commonBring, 'Batería extra', 'Protección contra lluvia para cámara'],
-    recommendations: defaultRecommendations,
-    safety: defaultSafety,
-    gallery: [tourImages.butterfly, tourImages.orchids, tourImages.bromelia, tourImages.hero],
-    faqs: [
-      {
-        question: '¿Necesito cámara profesional?',
-        answer: 'No. Podés disfrutarlo con celular, cámara básica o equipo profesional.'
-      }
-    ],
-    pricing: {
-      foreignAdult: '$75',
-      foreignChild: '$45',
-      nationalAdult: '₡12.500',
-      nationalChild: '₡12.500',
-      private: '$175 para 1-2 personas'
     }
   }
 ]
@@ -510,18 +468,11 @@ export const packages = [
     bestFor: 'Parejas'
   },
   {
-    name: 'Caminata de Aves',
+    name: 'Aves, Vida Silvestre y Fotografía',
     price: 'Desde $45 p.p. / especial desde $95',
     detail:
-      'Salida de 3 horas en Miravalles o ruta especializada hacia Palo Verde, humedales o playas según las aves que busque el cliente.',
+      'Salida de 3 horas en Miravalles o ruta especializada hacia Palo Verde, humedales o playas según aves, flora, vida silvestre o fotografía de naturaleza que busque el cliente.',
     bestFor: 'Naturaleza'
-  },
-  {
-    name: 'Naturaleza y Fotografía',
-    price: 'Desde $75 p.p.',
-    detail:
-      'Ruta pausada para fotos de cataratas, flores, aves y mariposas. Buena opción para viajeros que prefieren calidad sobre prisa.',
-    bestFor: 'Creadores'
   }
 ]
 
@@ -544,7 +495,7 @@ export const experienceDetails = [
       'Piedras Rojas + Morpho Blanca + Cabro Muco: media',
       'Camino al cráter: difícil',
       'Aguas termales: fácil',
-      'Tour de aves: fácil'
+      'Tour de aves, vida silvestre y fotografía: fácil'
     ]
   },
   {
@@ -552,7 +503,7 @@ export const experienceDetails = [
     items: [
       'Piedras Rojas + Morpho Blanca + Cabro Muco: 4 horas',
       'Aguas termales en Colinas del Miravalles: horario flexible, cierran a las 9:00 p.m.',
-      'Tour de aves: 3 horas base; rutas especiales según objetivo',
+      'Tour de aves, vida silvestre y fotografía: 3 horas base; rutas especiales según objetivo',
       'Camino al cráter: 6 a 7 horas'
     ]
   },
@@ -562,7 +513,7 @@ export const experienceDetails = [
       'Piedras Rojas + Morpho Blanca + Cabro Muco: 10 km ida y vuelta',
       'Camino al cráter: 10-11 km ida y vuelta aprox., según ruta y clima',
       'Aguas termales en Colinas del Miravalles: baja exigencia',
-      'Tour de aves: caminata suave o ruta ajustable según hábitat'
+      'Tour de aves, vida silvestre y fotografía: caminata suave o ruta ajustable según hábitat'
     ]
   },
   {
@@ -607,9 +558,9 @@ export const siteFaqs = [
       'Las aguas termales se coordinan en Colinas del Miravalles. De momento usamos una imagen ilustrativa temporal hasta agregar fotografías propias del sitio.'
   },
   {
-    question: '¿El tour de aves siempre es en Miravalles?',
+    question: '¿El tour de aves y naturaleza siempre es en Miravalles?',
     answer:
-      'No necesariamente. La ruta se define según las aves que el cliente quiere buscar: bosque, humedales, playas, Miravalles, Palo Verde u otras zonas cercanas. Rutas especiales pueden cambiar precio, duración y entradas externas.'
+      'No necesariamente. La ruta se define según lo que el cliente quiere buscar: aves de bosque, humedales, playas, flora, mariposas, fotografía de naturaleza, Miravalles, Palo Verde u otras zonas cercanas. Rutas especiales pueden cambiar precio, duración y entradas externas.'
   },
   {
     question: '¿Cómo confirmo mi reserva?',
@@ -633,11 +584,17 @@ export const seoKeywords = [
   'Volcán Miravalles',
   'Colinas del Miravalles',
   'birdwatching Guanacaste',
-  'Palo Verde birdwatching'
+  'Palo Verde birdwatching',
+  'fotografía de naturaleza Costa Rica',
+  'vida silvestre Guanacaste'
 ]
 
 export function getTourById(id) {
-  return tours.find((tour) => String(tour.id) === String(id)) || null
+  const aliases = {
+    'fotografia-naturaleza-miravalles': 'tour-aves-vida-silvestre'
+  }
+  const normalizedId = aliases[String(id)] || id
+  return tours.find((tour) => String(tour.id) === String(normalizedId)) || null
 }
 
 export function buildWhatsAppUrl(message) {

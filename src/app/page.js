@@ -144,7 +144,7 @@ export default function Home() {
           ¿Listo para descubrir el lado escondido de Guanacaste?
         </h2>
         <p className="mx-auto mt-5 max-w-2xl text-white/70">
-          Reservá una caminata, ruta de aves, plan de aguas termales o experiencia privada de fotografía de naturaleza con guía local.
+          Reservá una caminata, ruta de aves y naturaleza, plan de aguas termales o experiencia privada con guía local.
         </p>
         <button
           onClick={() => setShowContactForm(true)}

@@ -2,6 +2,10 @@ import { tours as fallbackTours } from './siteConfig'
 import { isSupabaseConfigured, supabase } from './supabase'
 
 const fallbackBookings = []
+const retiredTourIds = new Set(['fotografia-naturaleza-miravalles'])
+const tourAliases = {
+  'fotografia-naturaleza-miravalles': 'tour-aves-vida-silvestre'
+}
 
 const difficultyLabels = {
   easy: 'Fácil',
@@ -43,7 +47,8 @@ function mapTour(row) {
 }
 
 function findFallbackTour(id) {
-  return fallbackTours.find((tour) => String(tour.id) === String(id)) || null
+  const normalizedId = tourAliases[String(id)] || id
+  return fallbackTours.find((tour) => String(tour.id) === String(normalizedId)) || null
 }
 
 export const tourService = {
@@ -58,7 +63,8 @@ export const tourService = {
         .order('created_at', { ascending: true })
 
       if (error) throw new Error(error.message)
-      return data?.length ? data.map(mapTour) : fallbackTours
+      const activeTours = (data || []).filter((tour) => !retiredTourIds.has(String(tour.id)))
+      return activeTours.length ? activeTours.map(mapTour) : fallbackTours
     } catch (error) {
       console.error('Supabase tours unavailable, using fallback tours:', error)
       return fallbackTours
