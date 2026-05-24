@@ -128,7 +128,7 @@ INSERT INTO tours (
   'easy',
   3,
   15,
-  '/images/colinas-termales-generated.jpg',
+  '/images/termales-guayacan-piscina.jpg',
   'Fortuna de Bagaces, Guanacaste',
   ARRAY['es', 'en'],
   ARRAY['Coordinación local', 'Agua', 'Refrigerio o snacks'],

@@ -35,7 +35,8 @@ export const tourImages = {
   orchids: '/images/orchids.jpg',
   trailSign: '/images/trail-sign.jpg',
   forestTrail: '/images/forest-trail.jpg',
-  hotSprings: '/images/colinas-termales-generated.jpg',
+  hotSprings: '/images/termales-guayacan-piscina.jpg',
+  hotSpringsRelax: '/images/termales-guayacan-relax.jpg',
   cabroMucoFall: '/images/cabro-muco-waterfall-clean.jpg',
   cabroMucoUnderWaterfall: '/images/cabro-muco-under-waterfall.jpg',
   morphoBlancaGuide: '/images/morpho-blanca-8627.jpg',
@@ -139,8 +140,14 @@ export const galleryImages = [
   },
   {
     url: tourImages.hotSprings,
-    alt: 'Imagen ilustrativa de aguas termales volcánicas en Termales El Guayacán',
-    caption: 'Termales El Guayacán',
+    alt: 'Piscina termal rodeada de vegetación en Termales El Guayacán',
+    caption: 'Piscinas termales El Guayacán',
+    featured: true
+  },
+  {
+    url: tourImages.hotSpringsRelax,
+    alt: 'Visitante relajándose en piscina termal de Termales El Guayacán',
+    caption: 'Relajación en El Guayacán',
     featured: true
   },
   {
@@ -336,15 +343,15 @@ export const tours = [
     bring: [...commonBring, 'Traje de baño', 'Toalla', 'Sandalias', 'Cambio de ropa'],
     recommendations: defaultRecommendations,
     safety: defaultSafety,
-    gallery: [tourImages.hotSprings, tourImages.volcano, tourImages.bromelia],
+    gallery: [tourImages.hotSprings, tourImages.hotSpringsRelax, tourImages.volcano, tourImages.bromelia],
     faqs: [
       {
         question: '¿Dónde queda Termales El Guayacán?',
         answer: 'Se ubica en la zona de Fortuna de Bagaces, Guanacaste. Coordinamos la orientación y detalles por WhatsApp antes de la visita.'
       },
       {
-        question: '¿La imagen de termales es una foto real?',
-        answer: 'De momento usamos una imagen ilustrativa temporal mientras incorporamos las fotografías propias de Termales El Guayacán que vas a compartir.'
+        question: '¿Las imágenes de termales son definitivas?',
+        answer: 'De momento usamos estas imágenes temporales para presentar mejor la experiencia. Cuando tengamos más fotos del lugar, las actualizamos en la galería.'
       },
       {
         question: '¿El horario y servicios pueden cambiar?',
@@ -595,7 +602,7 @@ export const siteFaqs = [
   {
     question: '¿Dónde son las aguas termales?',
     answer:
-      'Las aguas termales se coordinan en Termales El Guayacán, en la zona de Fortuna de Bagaces. De momento usamos una imagen ilustrativa temporal hasta agregar fotografías propias del sitio.'
+      'Las aguas termales se coordinan en Termales El Guayacán, en la zona de Fortuna de Bagaces. De momento usamos imágenes temporales hasta agregar más fotografías del sitio.'
   },
   {
     question: '¿El tour de aves y naturaleza siempre es en Miravalles?',
