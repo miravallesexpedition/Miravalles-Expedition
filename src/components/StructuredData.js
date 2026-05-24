@@ -27,7 +27,7 @@ export default function StructuredData() {
         telephone: contact.phoneDisplay,
         email: contact.email,
         description: business.tagline,
-        priceRange: '$15-$260',
+        priceRange: '$15-$400',
         address: {
           '@type': 'PostalAddress',
           addressLocality: 'Fortuna',
@@ -43,7 +43,8 @@ export default function StructuredData() {
           'Fortuna',
           'Guanacaste',
           'Volcán Miravalles',
-          'Colinas del Miravalles',
+          'Termales El Guayacán',
+          'Bagaces',
           'Palo Verde'
         ],
         knowsAbout: seoKeywords,

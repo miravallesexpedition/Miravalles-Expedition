@@ -349,7 +349,7 @@ function MediaSection({ tour }) {
     ? tour.videos
     : (tour.video ? [tour.video] : [])
   const mediaNote = tour.id === 'aguas-termales-miravalles'
-    ? 'Imagen ilustrativa temporal para las aguas termales y material visual del entorno de Miravalles. Cuando tengas fotos propias de Colinas del Miravalles, las dejamos en esta sección.'
+    ? 'Imagen ilustrativa temporal para Termales El Guayacán y material visual del entorno de Miravalles. Cuando compartas las fotos propias del lugar, las dejamos en esta sección.'
     : 'Material visual real de Miravalles. Las fotos y videos muestran la ruta de cataratas, pozas naturales y el entorno volcánico.'
 
   return (

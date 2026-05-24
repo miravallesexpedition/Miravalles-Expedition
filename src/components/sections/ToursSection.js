@@ -62,6 +62,7 @@ export default function ToursSection({ tours, onSelectTour, filters, onFilterCha
                 <option value="Media">Media</option>
                 <option value="Moderado">Moderado</option>
                 <option value="Difícil">Difícil</option>
+                <option value="Extrema">Extrema</option>
               </select>
             </div>
 

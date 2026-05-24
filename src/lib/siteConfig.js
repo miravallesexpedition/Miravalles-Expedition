@@ -139,8 +139,8 @@ export const galleryImages = [
   },
   {
     url: tourImages.hotSprings,
-    alt: 'Imagen ilustrativa de aguas termales volcánicas en Miravalles',
-    caption: 'Aguas termales en Colinas del Miravalles',
+    alt: 'Imagen ilustrativa de aguas termales volcánicas en Termales El Guayacán',
+    caption: 'Termales El Guayacán',
     featured: true
   },
   {
@@ -200,7 +200,12 @@ export const pricingGuidelines = [
   {
     label: 'Aguas termales',
     value: '$15',
-    detail: 'Precio general para nacionales y extranjeros.'
+    detail: 'Plan relajado en Termales El Guayacán; detalles finales se confirman por WhatsApp.'
+  },
+  {
+    label: 'Cráter extremo',
+    value: '$200',
+    detail: 'Tarifa para extranjeros. Una salida semanal, solo para personas con experiencia y excelente condición.'
   },
   {
     label: 'Privado',
@@ -300,31 +305,32 @@ export const tours = [
   },
   {
     id: 'aguas-termales-miravalles',
-    name: 'Aguas Termales en Colinas del Miravalles',
-    shortName: 'Aguas Termales',
+    name: 'Termales El Guayacán',
+    shortName: 'El Guayacán',
     price: 15,
     priceLabel: '$15',
     level: 'Fácil',
-    duration: 'Flexible, cierran a las 9:00 p.m.',
+    duration: 'Flexible, horario sujeto a disponibilidad',
     distance: 'Baja exigencia / acceso local',
     image: tourImages.hotSprings,
-    location: 'Colinas del Miravalles',
+    location: 'Fortuna de Bagaces, Guanacaste',
     description:
-      'Experiencia relajada en Colinas del Miravalles para disfrutar aguas termales y ambiente volcánico después de un día de aventura o como plan tranquilo de tarde.',
+      'Experiencia relajada en Termales El Guayacán, un centro recreativo y ecológico en Fortuna de Bagaces con piscinas termales, ambiente natural y opción ideal para cerrar el día cerca del Volcán Miravalles.',
     overview:
-      'Una experiencia suave para bajar el ritmo, sentir la energía volcánica de Miravalles y cerrar el día en un ambiente natural. Colinas del Miravalles cuenta con piscinas termales y se ubica cerca de rutas como Cabro Muco y el entorno del volcán.',
+      'Termales El Guayacán es una opción familiar y tranquila para bajar el ritmo después de una caminata o disfrutar un plan suave de descanso. La experiencia se coordina por WhatsApp para confirmar horario, disponibilidad, punto de encuentro y cualquier detalle vigente del centro termal.',
     whatToExpect: [
       'Coordinación previa del acceso y horario recomendado.',
-      'Orientación local para llegar a Colinas del Miravalles.',
-      'Tiempo flexible para relajarse en aguas termales.',
+      'Orientación local para llegar a Termales El Guayacán en Fortuna de Bagaces.',
+      'Tiempo flexible para relajarse en piscinas termales y disfrutar el entorno natural.',
+      'Ambiente familiar con zonas verdes, ranchos, toboganes y baños de arcilla sujetos a disponibilidad del lugar.',
       'Opción ideal para combinar con la caminata de cataratas cuando el cliente quiere cerrar el día sin prisa.'
     ],
     itinerary: [
       { title: 'Coordinación', text: 'Confirmamos hora, punto y recomendaciones por WhatsApp.' },
-      { title: 'Llegada a Colinas', text: 'Ingreso al área termal según disponibilidad y condiciones del día.' },
-      { title: 'Relajación', text: 'Tiempo libre para disfrutar el agua caliente natural.' }
+      { title: 'Llegada a El Guayacán', text: 'Ingreso al área termal según disponibilidad, horario y condiciones del día.' },
+      { title: 'Relajación', text: 'Tiempo libre para disfrutar las piscinas termales, zonas verdes y ambiente volcánico.' }
     ],
-    highlights: ['Colinas del Miravalles', 'Aguas termales', 'Ambiente volcánico', 'Plan relajado'],
+    highlights: ['Termales El Guayacán', 'Piscinas termales', 'Ambiente familiar', 'Plan relajado'],
     includes: commonIncludes,
     notIncluded: commonNotIncluded,
     bring: [...commonBring, 'Traje de baño', 'Toalla', 'Sandalias', 'Cambio de ropa'],
@@ -333,12 +339,16 @@ export const tours = [
     gallery: [tourImages.hotSprings, tourImages.volcano, tourImages.bromelia],
     faqs: [
       {
-        question: '¿Hasta qué hora están abiertas?',
-        answer: 'Las aguas termales cierran a las 9:00 p.m.; el horario exacto se coordina según disponibilidad.'
+        question: '¿Dónde queda Termales El Guayacán?',
+        answer: 'Se ubica en la zona de Fortuna de Bagaces, Guanacaste. Coordinamos la orientación y detalles por WhatsApp antes de la visita.'
       },
       {
         question: '¿La imagen de termales es una foto real?',
-        answer: 'De momento usamos una imagen ilustrativa temporal mientras incorporamos fotografías propias de Colinas del Miravalles.'
+        answer: 'De momento usamos una imagen ilustrativa temporal mientras incorporamos las fotografías propias de Termales El Guayacán que vas a compartir.'
+      },
+      {
+        question: '¿El horario y servicios pueden cambiar?',
+        answer: 'Sí. Como es un centro externo, confirmamos horario, disponibilidad, servicios activos y cualquier detalle vigente antes de la reserva.'
       }
     ],
     pricing: {
@@ -350,47 +360,77 @@ export const tours = [
     id: 'crater-volcan-miravalles',
     name: 'Camino al Cráter del Volcán Miravalles',
     shortName: 'Cráter Miravalles',
-    price: 95,
-    priceLabel: '$95',
-    level: 'Difícil',
-    duration: '6 a 7 horas',
+    price: 200,
+    priceLabel: '$200',
+    level: 'Extrema',
+    duration: '6 a 7 horas / 1 salida semanal',
     distance: '10-11 km ida y vuelta aprox.',
     image: tourImages.volcano,
     location: 'Volcán Miravalles',
     description:
-      'Caminata exigente para viajeros con buena condición física que quieren una experiencia de montaña, desnivel fuerte, vistas amplias y terreno volcánico.',
+      'Expedición extrema al Volcán Miravalles para personas con experiencia en montaña, excelente condición física y disposición para una ruta fuerte, técnica y limitada a una salida semanal.',
     overview:
-      'Una ruta más física para quienes buscan montaña, paisaje abierto y una sensación real de expedición cerca del Volcán Miravalles. La distancia y el tiempo pueden cambiar por clima, acceso y condición del sendero.',
+      'Esta no es una caminata recreativa. Es una salida exigente, disponible una vez por semana, diseñada para viajeros con experiencia previa, buena resistencia y respeto por el terreno volcánico. La ruta se confirma según clima, acceso, nivel del grupo y condiciones del sendero.',
     whatToExpect: [
-      'Briefing de seguridad y evaluación del clima.',
-      'Ascenso por terreno natural con pausas controladas.',
+      'Salida limitada a una vez por semana y sujeta a condiciones de clima, ruta y seguridad.',
+      'Evaluación previa del nivel físico y experiencia del participante.',
+      'Ascenso por terreno natural exigente, con desnivel, humedad, cambios de clima y pausas controladas.',
+      'Apoyo de carga para reducir el peso del visitante y caminar con el equipo mínimo recomendado.',
       'Vistas del paisaje volcánico cuando las condiciones lo permiten.'
     ],
     itinerary: [
-      { title: 'Preparación', text: 'Revisión de equipo, agua, clima y condición del grupo.' },
-      { title: 'Ascenso', text: 'Caminata exigente con ritmo constante y descansos.' },
-      { title: 'Puntos de vista', text: 'Paradas para paisaje, fotos y lectura del entorno volcánico.' },
+      { title: 'Preselección', text: 'Confirmamos experiencia, condición física, clima y disponibilidad semanal antes de aceptar la salida.' },
+      { title: 'Preparación', text: 'Revisión de equipo mínimo, agua, fruta, seguridad y distribución de carga.' },
+      { title: 'Ascenso extremo', text: 'Caminata fuerte con ritmo constante, descansos controlados y seguimiento del guía.' },
+      { title: 'Puntos de vista', text: 'Paradas breves para paisaje, fotos y lectura del entorno volcánico si el clima lo permite.' },
       { title: 'Descenso', text: 'Regreso controlado priorizando seguridad.' }
     ],
-    highlights: ['Vista volcánica', 'Ruta exigente', 'Naturaleza abierta', 'Experiencia privada disponible'],
-    includes: commonIncludes,
+    highlights: ['Una salida semanal', 'Dificultad extrema', 'Solo con experiencia', 'Apoyo de carga'],
+    includes: [
+      'Guía local especializado',
+      'Fruta fresca',
+      'Agua',
+      'Guía de carga o apoyo logístico para llevar el mínimo peso posible',
+      'Coordinación previa por WhatsApp',
+      'Evaluación de clima, ruta y condición del grupo'
+    ],
     notIncluded: commonNotIncluded,
-    bring: [...commonBring, 'Abrigo liviano', 'Bastones si los usás'],
-    recommendations: defaultRecommendations,
-    safety: defaultSafety,
+    bring: [
+      'Zapatos de montaña con excelente tracción',
+      'Ropa técnica o cómoda para clima cambiante',
+      'Abrigo liviano o impermeable',
+      'Bloqueador solar y repelente',
+      'Botella reutilizable',
+      'Equipo personal mínimo aprobado por el guía',
+      'Bastones si los usás'
+    ],
+    recommendations: [
+      'Reservar con anticipación porque solo se realiza una salida por semana.',
+      'Informar experiencia previa, condición física, lesiones o limitaciones antes de confirmar.',
+      'No llevar peso innecesario; el equipo se coordina para caminar con lo mínimo indispensable.'
+    ],
+    safety: [
+      'Solo apto para personas con experiencia en caminatas exigentes y muy buena condición física.',
+      'El guía puede cancelar, reprogramar o ajustar la ruta por clima, nivel del grupo o seguridad.',
+      'No recomendado para principiantes, niños pequeños, personas con lesiones recientes o baja resistencia.'
+    ],
     gallery: [tourImages.volcano, tourImages.forestTrail, tourImages.bromelia],
     faqs: [
       {
         question: '¿Es recomendado para niños?',
-        answer: 'No se recomienda para niños pequeños. Se revisa caso por caso según experiencia y condición física.'
+        answer: 'No. Es una ruta de dificultad extrema, recomendada solo para adultos o participantes con experiencia real, excelente condición física y aprobación previa del guía.'
+      },
+      {
+        question: '¿Cuándo se realiza?',
+        answer: 'Solo se realiza una vez por semana y la fecha exacta se confirma por WhatsApp según clima, disponibilidad y nivel del grupo.'
       }
     ],
     pricing: {
-      foreignAdult: '$95',
-      foreignChild: 'No recomendado para niños pequeños',
+      foreignAdult: '$200',
+      foreignChild: 'No recomendado',
       nationalAdult: '₡35.000',
       nationalChild: 'Consultar',
-      private: '$260 para 1-2 personas'
+      private: 'Desde $260 para 1 persona / $400 para 2 personas'
     }
   },
   {
@@ -457,7 +497,7 @@ export const packages = [
     name: 'Caminata + Aguas Termales',
     price: 'Desde $60 p.p.',
     detail:
-      'Piedras Rojas + Morpho Blanca + Cabro Muco por la mañana y cierre relajado en aguas termales. Ideal para parejas y grupos pequeños.',
+      'Piedras Rojas + Morpho Blanca + Cabro Muco por la mañana y cierre relajado en Termales El Guayacán. Ideal para parejas y grupos pequeños.',
     bestFor: 'Aventura completa'
   },
   {
@@ -493,7 +533,7 @@ export const experienceDetails = [
     title: 'Dificultad',
     items: [
       'Piedras Rojas + Morpho Blanca + Cabro Muco: media',
-      'Camino al cráter: difícil',
+      'Camino al cráter: extrema, solo para personas con experiencia y excelente condición física',
       'Aguas termales: fácil',
       'Tour de aves, vida silvestre y fotografía: fácil'
     ]
@@ -502,9 +542,9 @@ export const experienceDetails = [
     title: 'Duración',
     items: [
       'Piedras Rojas + Morpho Blanca + Cabro Muco: 4 horas',
-      'Aguas termales en Colinas del Miravalles: horario flexible, cierran a las 9:00 p.m.',
+      'Termales El Guayacán: horario flexible, sujeto a disponibilidad del lugar',
       'Tour de aves, vida silvestre y fotografía: 3 horas base; rutas especiales según objetivo',
-      'Camino al cráter: 6 a 7 horas'
+      'Camino al cráter: 6 a 7 horas, una salida semanal'
     ]
   },
   {
@@ -512,7 +552,7 @@ export const experienceDetails = [
     items: [
       'Piedras Rojas + Morpho Blanca + Cabro Muco: 10 km ida y vuelta',
       'Camino al cráter: 10-11 km ida y vuelta aprox., según ruta y clima',
-      'Aguas termales en Colinas del Miravalles: baja exigencia',
+      'Termales El Guayacán: baja exigencia',
       'Tour de aves, vida silvestre y fotografía: caminata suave o ruta ajustable según hábitat'
     ]
   },
@@ -550,12 +590,12 @@ export const siteFaqs = [
   {
     question: '¿Qué dificultad tienen los tours?',
     answer:
-      'Piedras Rojas + Morpho Blanca + Cabro Muco es dificultad media. El camino al cráter es difícil. Aguas termales y tour de aves son fáciles.'
+      'Piedras Rojas + Morpho Blanca + Cabro Muco es dificultad media. El camino al cráter es extremo y solo para personas con experiencia y excelente condición física. Aguas termales y tour de aves son fáciles.'
   },
   {
     question: '¿Dónde son las aguas termales?',
     answer:
-      'Las aguas termales se coordinan en Colinas del Miravalles. De momento usamos una imagen ilustrativa temporal hasta agregar fotografías propias del sitio.'
+      'Las aguas termales se coordinan en Termales El Guayacán, en la zona de Fortuna de Bagaces. De momento usamos una imagen ilustrativa temporal hasta agregar fotografías propias del sitio.'
   },
   {
     question: '¿El tour de aves y naturaleza siempre es en Miravalles?',
@@ -582,7 +622,8 @@ export const seoKeywords = [
   'Catarata Morpho Blanca',
   'Catarata Cabro Muco',
   'Volcán Miravalles',
-  'Colinas del Miravalles',
+  'Termales El Guayacán',
+  'aguas termales Bagaces',
   'birdwatching Guanacaste',
   'Palo Verde birdwatching',
   'fotografía de naturaleza Costa Rica',

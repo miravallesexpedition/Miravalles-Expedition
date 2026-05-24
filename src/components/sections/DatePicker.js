@@ -65,6 +65,11 @@ export default function DatePicker({ selectedTour, onDateSelect, onClose }) {
           </div>
           <p className="mt-4 rounded-2xl bg-white p-4 text-sm leading-6 text-gray-700">
             Esta es una solicitud, no una confirmación automática. Confirmamos clima, punto de encuentro y disponibilidad por WhatsApp.
+            {selectedTour.id === 'crater-volcan-miravalles' && (
+              <span className="mt-2 block font-bold text-[#071d14]">
+                Importante: el tour al volcán solo se realiza una vez por semana y requiere aprobación previa del guía.
+              </span>
+            )}
           </p>
         </div>
       </div>
