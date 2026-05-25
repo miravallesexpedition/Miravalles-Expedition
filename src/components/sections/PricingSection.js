@@ -4,6 +4,9 @@ import { track } from '@vercel/analytics'
 import { buildWhatsAppUrl, packages, pricingGuidelines } from '@/lib/siteConfig'
 
 export default function PricingSection() {
+  const primaryPrices = pricingGuidelines.slice(0, 6)
+  const consultationPrices = pricingGuidelines.slice(6)
+
   const handlePackageClick = (item) => {
     track('package_whatsapp_click', { package: item.name })
     const message = [
@@ -31,19 +34,46 @@ export default function PricingSection() {
           </p>
         </div>
 
-        <div className="mb-12 grid gap-4 md:grid-cols-3">
-          {pricingGuidelines.map((item) => (
-            <div key={item.label} className="rounded-[1.5rem] border border-white/10 bg-white/10 p-6">
-              <p className="text-xs font-black uppercase tracking-[0.18em] text-white/50">{item.label}</p>
-              <p className="mt-3 text-4xl font-black text-amber-200">{item.value}</p>
-              <p className="mt-3 text-sm leading-6 text-white/70">{item.detail}</p>
+        <div className="mb-12 grid gap-5 lg:grid-cols-[1fr_360px]">
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            {primaryPrices.map((item) => (
+              <div key={item.label} className="rounded-[1.25rem] border border-white/10 bg-white/10 p-6">
+                <p className="text-xs font-black uppercase tracking-[0.18em] text-white/50">{item.label}</p>
+                <p className="mt-3 text-4xl font-black text-amber-200">{item.value}</p>
+                <p className="mt-3 text-sm leading-6 text-white/70">{item.detail}</p>
+              </div>
+            ))}
+          </div>
+
+          <aside className="rounded-[1.25rem] border border-amber-200/20 bg-amber-200 p-6 text-[#071d14]">
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-green-900/70">
+              Se confirma por WhatsApp
+            </p>
+            <h3 className="mt-3 text-2xl font-black">Opciones especiales sin confusión.</h3>
+            <div className="mt-6 space-y-4">
+              {consultationPrices.map((item) => (
+                <div key={item.label} className="border-t border-green-950/15 pt-4">
+                  <div className="flex items-baseline justify-between gap-4">
+                    <p className="font-black">{item.label}</p>
+                    <p className="font-black text-green-900">{item.value}</p>
+                  </div>
+                  <p className="mt-2 text-sm leading-6 text-green-950/70">{item.detail}</p>
+                </div>
+              ))}
             </div>
-          ))}
+          </aside>
+        </div>
+
+        <div className="mb-6">
+          <p className="text-sm font-black uppercase tracking-[0.22em] text-amber-200">
+            Experiencias combinadas
+          </p>
+          <h3 className="mt-3 text-3xl font-black">Paquetes para planear mejor el día.</h3>
         </div>
 
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {packages.map((item) => (
-            <article key={item.name} className="rounded-[1.5rem] bg-[#f8f4ea] p-6 text-[#11130f] shadow-2xl">
+            <article key={item.name} className="rounded-[1.25rem] bg-[#f8f4ea] p-6 text-[#11130f] shadow-2xl">
               <p className="text-xs font-black uppercase tracking-[0.18em] text-amber-700">{item.bestFor}</p>
               <h4 className="mt-3 text-2xl font-black">{item.name}</h4>
               <p className="mt-3 text-2xl font-black text-green-800">{item.price}</p>

@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import TourMediaGallery from '@/components/sections/TourMediaGallery'
 import { parseMoney } from '@/lib/pricing'
 import { buildWhatsAppUrl, business, contact, getTourById, tours, tourImages } from '@/lib/siteConfig'
 
@@ -267,30 +268,38 @@ function getSecondaryPrice(tour) {
 
 function InfoGrid({ tour }) {
   const sections = [
-    { title: 'Qué esperar', items: tour.whatToExpect },
-    { title: 'Destacados', items: tour.highlights },
-    { title: 'Precio', items: buildPricingItems(tour) },
-    { title: 'Qué incluye', items: tour.includes },
-    { title: 'Qué no incluye', items: tour.notIncluded },
-    { title: 'Qué llevar', items: tour.bring },
-    { title: 'Seguridad', items: tour.safety }
+    { title: 'Qué esperar', items: tour.whatToExpect, span: 'lg:col-span-4', tone: 'dark' },
+    { title: 'Precio', items: buildPricingItems(tour), span: 'lg:col-span-2', tone: 'price' },
+    { title: 'Qué incluye', items: tour.includes, span: 'lg:col-span-3' },
+    { title: 'Qué no incluye', items: tour.notIncluded, span: 'lg:col-span-3' },
+    { title: 'Qué llevar', items: tour.bring, span: 'lg:col-span-3' },
+    { title: 'Seguridad', items: tour.safety, span: 'lg:col-span-3' },
+    { title: 'Destacados', items: tour.highlights, span: 'lg:col-span-6', tone: 'highlights' }
   ]
 
   return (
     <section className="bg-white px-4 py-20 sm:px-6 lg:px-10">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-10">
-          <p className="text-sm font-black uppercase tracking-[0.22em] text-green-800">Detalles del tour</p>
-          <h2 className="mt-4 text-4xl font-black">Todo claro antes de reservar.</h2>
+        <div className="mb-10 grid gap-5 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+          <div>
+            <p className="text-sm font-black uppercase tracking-[0.22em] text-green-800">Detalles del tour</p>
+            <h2 className="mt-4 text-4xl font-black">Todo claro antes de reservar.</h2>
+          </div>
+          <p className="text-lg leading-8 text-gray-700">
+            Organizamos la información por prioridad: primero experiencia y precio, luego inclusiones, preparación y seguridad.
+          </p>
         </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
           {sections.map((section) => (
-            <article key={section.title} className="rounded-[1.5rem] border border-gray-200 bg-[#f8f4ea] p-6">
+            <article key={section.title} className={`${section.span} rounded-[1.25rem] border p-6 ${getInfoCardClass(section.tone)}`}>
               <h3 className="text-xl font-black">{section.title}</h3>
-              <ul className="mt-4 space-y-3 text-sm leading-7 text-gray-700">
+              <ul className={`mt-4 ${section.tone === 'highlights' ? 'flex flex-wrap gap-2 space-y-0' : 'space-y-3'} text-sm leading-7 ${section.tone === 'dark' ? 'text-white/75' : 'text-gray-700'}`}>
                 {(section.items || ['Información pendiente de completar.']).map((item) => (
-                  <li key={item} className="flex gap-3">
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+                  <li key={item} className={section.tone === 'highlights' ? 'rounded-full bg-white px-4 py-2 font-black text-green-900 shadow-sm' : 'flex gap-3'}>
+                    {section.tone !== 'highlights' && (
+                      <span className={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${section.tone === 'dark' ? 'bg-amber-300' : 'bg-amber-500'}`} />
+                    )}
                     <span>{item}</span>
                   </li>
                 ))}
@@ -301,6 +310,13 @@ function InfoGrid({ tour }) {
       </div>
     </section>
   )
+}
+
+function getInfoCardClass(tone) {
+  if (tone === 'dark') return 'border-[#071d14] bg-[#071d14] text-white shadow-2xl'
+  if (tone === 'price') return 'border-amber-200 bg-amber-50 text-[#11130f]'
+  if (tone === 'highlights') return 'border-green-900/10 bg-[#eef4e9] text-[#11130f]'
+  return 'border-gray-200 bg-[#f8f4ea] text-[#11130f]'
 }
 
 function buildPricingItems(tour) {
@@ -363,28 +379,12 @@ function MediaSection({ tour }) {
           <p className="text-lg leading-8 text-gray-700">{mediaNote}</p>
         </div>
 
-        {videos.length > 0 && (
-          <div className="mb-5 grid gap-4 lg:grid-cols-2">
-            {videos.map((video) => (
-              <video
-                key={video}
-                className="h-[420px] w-full rounded-[2rem] bg-black object-cover shadow-2xl"
-                src={video}
-                poster={tour.image}
-                controls
-                playsInline
-              />
-            ))}
-          </div>
-        )}
-
-        <div className="grid gap-4 md:grid-cols-4">
-          {(tour.gallery || [tour.image]).map((image) => (
-            <div key={image} className="relative h-72 overflow-hidden rounded-[1.5rem]">
-              <Image src={image} alt={tour.name} fill sizes="(min-width: 768px) 25vw, 100vw" className="object-cover" />
-            </div>
-          ))}
-        </div>
+        <TourMediaGallery
+          images={tour.gallery || [tour.image]}
+          videos={videos}
+          title={tour.name}
+          note={mediaNote}
+        />
       </div>
     </section>
   )

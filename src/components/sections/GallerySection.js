@@ -63,7 +63,7 @@ export default function GallerySection() {
             </h2>
           </div>
           <p className="text-lg leading-8 text-white/70">
-            Abrí cualquier imagen, navegá en pantalla completa y acercate a los detalles. Todo el material visual viene del paisaje local y de experiencias reales.
+            Abrí cualquier imagen, navegá en pantalla completa y acercate a los detalles. Todo el material visual es propio de Miravalles Expedition.
           </p>
         </div>
 
