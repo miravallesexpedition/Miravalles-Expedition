@@ -123,17 +123,17 @@ INSERT INTO tours (
 (
   'aguas-termales-miravalles',
   'Termales El Guayacán',
-  'Experiencia relajada en Termales El Guayacán, centro recreativo y ecológico en Fortuna de Bagaces con piscinas termales y ambiente natural.',
+  'Plan de descanso en Termales El Guayacán con piscinas de aguas termales naturales, jardines, barro volcánico, mirador y entorno geotérmico cerca del Volcán Miravalles.',
   15.00,
   'easy',
   3,
   15,
-  '/images/termales-guayacan-piscina.jpg',
+  '/images/termales-guayacan-atardecer.jpg',
   'Fortuna de Bagaces, Guanacaste',
   ARRAY['es', 'en'],
-  ARRAY['Coordinación local', 'Agua', 'Refrigerio o snacks'],
-  ARRAY['Transporte', 'Almuerzo', 'Gastos personales', 'Entradas externas cuando apliquen'],
-  ARRAY['Traje de baño', 'Toalla', 'Sandalias', 'Cambio de ropa', 'Repelente'],
+  ARRAY['Coordinación previa por WhatsApp', 'Piscinas termales según paquete confirmado', 'Servicios sanitarios, duchas y vestidores según disponibilidad', 'Baño de barro volcánico cuando esté habilitado', 'Mirador y áreas de descanso'],
+  ARRAY['Transporte', 'Almuerzo o alimentación adicional', 'Toalla', 'Gastos personales', 'Servicios externos no confirmados'],
+  ARRAY['Traje de baño', 'Toalla', 'Sandalias', 'Cambio de ropa', 'Bolsa para ropa mojada', 'Bloqueador solar', 'Repelente'],
   'Todo el año'
 ),
 (

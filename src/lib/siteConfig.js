@@ -35,8 +35,18 @@ export const tourImages = {
   orchids: '/images/orchids.jpg',
   trailSign: '/images/trail-sign.jpg',
   forestTrail: '/images/forest-trail.jpg',
-  hotSprings: '/images/termales-guayacan-piscina.jpg',
+  hotSprings: '/images/termales-guayacan-atardecer.jpg',
+  hotSpringsVolcanoPool: '/images/termales-guayacan-volcan-piscina.jpg',
+  hotSpringsPool: '/images/termales-guayacan-piscina.jpg',
   hotSpringsRelax: '/images/termales-guayacan-relax.jpg',
+  hotSpringsRanchos: '/images/termales-guayacan-ranchos.jpg',
+  hotSpringsMudArea: '/images/termales-guayacan-descanso-barro.jpg',
+  hotSpringsViewpoint: '/images/termales-guayacan-mirador.jpg',
+  hotSpringsGardens: '/images/termales-guayacan-jardines.jpg',
+  hotSpringsNightRelax: '/images/termales-guayacan-relax-noche.jpg',
+  hotSpringsNightPool: '/images/termales-guayacan-piscina-nocturna.jpg',
+  hotSpringsMudBath: '/images/termales-guayacan-barro-volcanico.jpg',
+  hotSpringsSculptures: '/images/termales-guayacan-esculturas.jpg',
   cabroMucoFall: '/images/cabro-muco-waterfall-clean.jpg',
   cabroMucoUnderWaterfall: '/images/cabro-muco-under-waterfall.jpg',
   morphoBlancaGuide: '/images/morpho-blanca-8627.jpg',
@@ -140,14 +150,14 @@ export const galleryImages = [
   },
   {
     url: tourImages.hotSprings,
-    alt: 'Piscina termal rodeada de vegetación en Termales El Guayacán',
-    caption: 'Piscinas termales El Guayacán',
+    alt: 'Piscina termal al atardecer con vista al Volcán Miravalles en Termales El Guayacán',
+    caption: 'Descanso en Termales El Guayacán',
     featured: true
   },
   {
-    url: tourImages.hotSpringsRelax,
-    alt: 'Visitante relajándose en piscina termal de Termales El Guayacán',
-    caption: 'Relajación en El Guayacán',
+    url: tourImages.hotSpringsViewpoint,
+    alt: 'Mirador de Termales El Guayacán con vista al entorno del Volcán Miravalles',
+    caption: 'Mirador hacia Miravalles',
     featured: true
   },
   {
@@ -322,36 +332,94 @@ export const tours = [
     image: tourImages.hotSprings,
     location: 'Fortuna de Bagaces, Guanacaste',
     description:
-      'Experiencia relajada en Termales El Guayacán, un centro recreativo y ecológico en Fortuna de Bagaces con piscinas termales, ambiente natural y opción ideal para cerrar el día cerca del Volcán Miravalles.',
+      'Plan de descanso en Termales El Guayacán para relajarse en aguas termales naturales, jardines, piscinas, barro volcánico, mirador y entorno geotérmico cerca del Volcán Miravalles.',
     overview:
-      'Termales El Guayacán es una opción familiar y tranquila para bajar el ritmo después de una caminata o disfrutar un plan suave de descanso. La experiencia se coordina por WhatsApp para confirmar horario, disponibilidad, punto de encuentro y cualquier detalle vigente del centro termal.',
+      'Termales El Guayacán es una opción tranquila para bajar el ritmo, descansar y disfrutar aguas termales naturales en Fortuna de Bagaces. Es ideal para viajeros que quieren relajarse entre jardines, piscinas, áreas de descanso, baño de barro volcánico y vistas hacia el entorno del Volcán Miravalles. La experiencia se coordina por WhatsApp para confirmar horario, disponibilidad, punto de encuentro y servicios activos del día.',
     whatToExpect: [
-      'Coordinación previa del acceso y horario recomendado.',
-      'Orientación local para llegar a Termales El Guayacán en Fortuna de Bagaces.',
-      'Tiempo flexible para relajarse en piscinas termales y disfrutar el entorno natural.',
-      'Ambiente familiar con zonas verdes, ranchos, toboganes y baños de arcilla sujetos a disponibilidad del lugar.',
-      'Opción ideal para combinar con la caminata de cataratas cuando el cliente quiere cerrar el día sin prisa.'
+      'Relajación en piscinas de aguas termales naturales alimentadas por la actividad volcánica de Miravalles.',
+      'Uso de servicios sanitarios, duchas y vestidores según disponibilidad del lugar.',
+      'Recorrido suave por jardines, ranchos, puente interno y áreas de descanso.',
+      'Baño de barro volcánico y zonas para observar actividad geotérmica cuando estén habilitadas.',
+      'Mirador con vista al entorno del Volcán Miravalles y espacios tranquilos para descansar sin prisa.'
     ],
     itinerary: [
       { title: 'Coordinación', text: 'Confirmamos hora, punto y recomendaciones por WhatsApp.' },
-      { title: 'Llegada a El Guayacán', text: 'Ingreso al área termal según disponibilidad, horario y condiciones del día.' },
-      { title: 'Relajación', text: 'Tiempo libre para disfrutar las piscinas termales, zonas verdes y ambiente volcánico.' }
+      { title: 'Llegada a El Guayacán', text: 'Ingreso al área termal y orientación básica del lugar.' },
+      { title: 'Piscinas termales', text: 'Tiempo libre para relajarse en las piscinas naturales y descansar en las zonas verdes.' },
+      { title: 'Barro y geotermia', text: 'Visita al área de barro volcánico y puntos de actividad geotérmica cuando estén disponibles.' },
+      { title: 'Mirador', text: 'Cierre tranquilo en el mirador o en las áreas de descanso del lugar.' }
     ],
-    highlights: ['Termales El Guayacán', 'Piscinas termales', 'Ambiente familiar', 'Plan relajado'],
-    includes: commonIncludes,
-    notIncluded: commonNotIncluded,
-    bring: [...commonBring, 'Traje de baño', 'Toalla', 'Sandalias', 'Cambio de ropa'],
-    recommendations: defaultRecommendations,
-    safety: defaultSafety,
-    gallery: [tourImages.hotSprings, tourImages.hotSpringsRelax, tourImages.volcano, tourImages.bromelia],
+    highlights: ['Aguas termales naturales', 'Baño de barro volcánico', 'Mirador', 'Actividad geotérmica'],
+    includes: [
+      'Coordinación previa por WhatsApp',
+      'Acceso a piscinas de aguas termales naturales según paquete confirmado',
+      'Servicios sanitarios, duchas y vestidores según disponibilidad del lugar',
+      'Baño de barro volcánico cuando esté habilitado',
+      'Puente interno, jardines, ranchos y áreas de descanso',
+      'Mirador y zonas para observar actividad geotérmica',
+      'Orientación local para llegar al lugar'
+    ],
+    notIncluded: [
+      'Transporte',
+      'Almuerzo o alimentación adicional',
+      'Toalla',
+      'Gastos personales',
+      'Servicios externos no confirmados en la reserva'
+    ],
+    bring: [
+      'Traje de baño',
+      'Toalla',
+      'Sandalias',
+      'Cambio de ropa',
+      'Bolsa para ropa mojada',
+      'Bloqueador solar',
+      'Repelente contra insectos',
+      'Botella reutilizable'
+    ],
+    recommendations: [
+      'Confirmar horario y disponibilidad antes de salir hacia el lugar.',
+      'Llevar toalla, sandalias y cambio de ropa para disfrutar las piscinas con comodidad.',
+      'Usar el barro volcánico solo en las áreas habilitadas y siguiendo las indicaciones del sitio.'
+    ],
+    safety: [
+      'Caminar con cuidado en zonas húmedas, puentes y bordes de piscina.',
+      'Respetar las áreas señalizadas de actividad geotérmica y barro volcánico.',
+      'Evitar ingresar a piscinas si hay una condición médica que pueda verse afectada por agua caliente; consultar antes si hay dudas.'
+    ],
+    gallery: [
+      tourImages.hotSprings,
+      tourImages.hotSpringsVolcanoPool,
+      tourImages.hotSpringsPool,
+      tourImages.hotSpringsRelax,
+      tourImages.hotSpringsRanchos,
+      tourImages.hotSpringsMudArea,
+      tourImages.hotSpringsViewpoint,
+      tourImages.hotSpringsGardens,
+      tourImages.hotSpringsNightRelax,
+      tourImages.hotSpringsNightPool,
+      tourImages.hotSpringsMudBath,
+      tourImages.hotSpringsSculptures
+    ],
     faqs: [
       {
         question: '¿Dónde queda Termales El Guayacán?',
         answer: 'Se ubica en la zona de Fortuna de Bagaces, Guanacaste. Coordinamos la orientación y detalles por WhatsApp antes de la visita.'
       },
       {
+        question: '¿Qué servicios tiene el lugar?',
+        answer: 'El lugar cuenta con piscinas termales, áreas verdes, ranchos, servicios sanitarios, duchas y vestidores. Confirmamos por WhatsApp qué servicios están habilitados el día de la visita.'
+      },
+      {
+        question: '¿Hay baño de barro volcánico y actividad geotérmica?',
+        answer: 'Sí, el atractivo del área incluye barro volcánico y puntos de actividad geotérmica. Se deben respetar las zonas señalizadas y las indicaciones del lugar.'
+      },
+      {
+        question: '¿Tiene mirador?',
+        answer: 'Sí, hay un mirador con vista al entorno del Volcán Miravalles, ideal para fotos y para cerrar la visita con calma.'
+      },
+      {
         question: '¿Las imágenes de termales son definitivas?',
-        answer: 'De momento usamos estas imágenes temporales para presentar mejor la experiencia. Cuando tengamos más fotos del lugar, las actualizamos en la galería.'
+        answer: 'De momento usamos estas imágenes temporales de apoyo para presentar mejor la experiencia de piscinas, descanso, barro volcánico y mirador. Cuando tengamos más fotos propias del lugar, las actualizamos en la galería.'
       },
       {
         question: '¿El horario y servicios pueden cambiar?',
@@ -602,7 +670,7 @@ export const siteFaqs = [
   {
     question: '¿Dónde son las aguas termales?',
     answer:
-      'Las aguas termales se coordinan en Termales El Guayacán, en la zona de Fortuna de Bagaces. De momento usamos imágenes temporales hasta agregar más fotografías del sitio.'
+      'Las aguas termales se coordinan en Termales El Guayacán, en la zona de Fortuna de Bagaces. Es un plan de descanso con piscinas termales, áreas verdes, ranchos, barro volcánico, mirador y zonas donde se puede observar actividad geotérmica.'
   },
   {
     question: '¿El tour de aves y naturaleza siempre es en Miravalles?',
@@ -631,6 +699,10 @@ export const seoKeywords = [
   'Volcán Miravalles',
   'Termales El Guayacán',
   'aguas termales Bagaces',
+  'aguas termales naturales Guanacaste',
+  'barro volcánico Miravalles',
+  'actividad geotérmica Bagaces',
+  'mirador Volcán Miravalles',
   'birdwatching Guanacaste',
   'Palo Verde birdwatching',
   'fotografía de naturaleza Costa Rica',

@@ -349,7 +349,7 @@ function MediaSection({ tour }) {
     ? tour.videos
     : (tour.video ? [tour.video] : [])
   const mediaNote = tour.id === 'aguas-termales-miravalles'
-    ? 'Material visual temporal para Termales El Guayacán. Cuando sumemos más fotos del lugar, las dejamos en esta sección.'
+    ? 'Material visual temporal de apoyo para Termales El Guayacán: piscinas, áreas de descanso, barro volcánico, mirador y entorno geotérmico.'
     : 'Material visual real de Miravalles. Las fotos y videos muestran la ruta de cataratas, pozas naturales y el entorno volcánico.'
 
   return (
