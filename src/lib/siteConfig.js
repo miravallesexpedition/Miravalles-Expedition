@@ -352,7 +352,7 @@ export const tours = [
     highlights: ['Aguas termales naturales', 'Baño de barro volcánico', 'Mirador', 'Actividad geotérmica'],
     includes: [
       'Coordinación previa por WhatsApp',
-      'Acceso a piscinas de aguas termales naturales según paquete confirmado',
+      'Acceso a piscinas de aguas termales naturales según reserva confirmada',
       'Servicios sanitarios, duchas y vestidores según disponibilidad del lugar',
       'Baño de barro volcánico cuando esté habilitado',
       'Puente interno, jardines, ranchos y áreas de descanso',
@@ -418,8 +418,8 @@ export const tours = [
         answer: 'Sí, hay un mirador con vista al entorno del Volcán Miravalles, ideal para fotos y para cerrar la visita con calma.'
       },
       {
-        question: '¿Las imágenes de termales son definitivas?',
-        answer: 'De momento usamos estas imágenes temporales de apoyo para presentar mejor la experiencia de piscinas, descanso, barro volcánico y mirador. Cuando tengamos más fotos propias del lugar, las actualizamos en la galería.'
+        question: '¿Las imágenes son propias?',
+        answer: 'Sí. Las fotos de esta sección son material propio de Miravalles Expedition y muestran la idea de descanso, piscinas, barro volcánico y mirador del tour de termales.'
       },
       {
         question: '¿El horario y servicios pueden cambiar?',
@@ -427,8 +427,7 @@ export const tours = [
       }
     ],
     pricing: {
-      general: '$15',
-      private: '$95 para 1-2 personas'
+      general: '$15'
     }
   },
   {

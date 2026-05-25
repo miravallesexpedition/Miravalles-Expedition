@@ -131,7 +131,7 @@ INSERT INTO tours (
   '/images/termales-guayacan-atardecer.jpg',
   'Fortuna de Bagaces, Guanacaste',
   ARRAY['es', 'en'],
-  ARRAY['Coordinación previa por WhatsApp', 'Piscinas termales según paquete confirmado', 'Servicios sanitarios, duchas y vestidores según disponibilidad', 'Baño de barro volcánico cuando esté habilitado', 'Mirador y áreas de descanso'],
+  ARRAY['Coordinación previa por WhatsApp', 'Piscinas termales según reserva confirmada', 'Servicios sanitarios, duchas y vestidores según disponibilidad', 'Baño de barro volcánico cuando esté habilitado', 'Mirador y áreas de descanso'],
   ARRAY['Transporte', 'Almuerzo o alimentación adicional', 'Toalla', 'Gastos personales', 'Servicios externos no confirmados'],
   ARRAY['Traje de baño', 'Toalla', 'Sandalias', 'Cambio de ropa', 'Bolsa para ropa mojada', 'Bloqueador solar', 'Repelente'],
   'Todo el año'
