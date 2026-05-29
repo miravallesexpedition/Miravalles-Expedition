@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { bookingService, tourService } from '@/lib/services'
 import { buildMailtoUrl, buildWhatsAppUrl, contact } from '@/lib/siteConfig'
 import { isPayPalConfigured } from '@/lib/paypal'
@@ -65,12 +64,11 @@ export default async function PayBookingPage({ params }) {
             <p className="mt-2 text-xs font-semibold text-blue-800">
               Miravalles Expedition no guarda datos de tarjeta. Revisá que la página de pago pertenezca a PayPal antes de finalizar.
             </p>
-            <Link
-              href={`/api/payments/paypal/create/${booking.id}`}
-              className="mt-4 inline-flex w-full justify-center rounded-full bg-blue-600 px-5 py-3 font-black text-white hover:bg-blue-700"
-            >
-              Continuar con PayPal
-            </Link>
+            <form action={`/api/payments/paypal/create/${booking.id}`} method="post">
+              <button className="mt-4 inline-flex w-full justify-center rounded-full bg-blue-600 px-5 py-3 font-black text-white hover:bg-blue-700">
+                Continuar con PayPal
+              </button>
+            </form>
           </div>
         ) : (
           <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">

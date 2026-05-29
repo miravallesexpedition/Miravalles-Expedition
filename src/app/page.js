@@ -1,25 +1,28 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import { track } from '@vercel/analytics'
 import AboutSection from '@/components/sections/AboutSection'
-import ContactForm from '@/components/sections/ContactForm'
-import DatePicker from '@/components/sections/DatePicker'
-import FAQSection from '@/components/sections/FAQSection'
 import FloatingWhatsApp from '@/components/sections/FloatingWhatsApp'
-import GallerySection from '@/components/sections/GallerySection'
-import GuidesSection from '@/components/sections/GuidesSection'
 import HeroSection from '@/components/sections/HeroSection'
-import MapSection from '@/components/sections/MapSection'
-import PaymentSection from '@/components/sections/PaymentSection'
-import PricingSection from '@/components/sections/PricingSection'
-import SecurePaymentSection from '@/components/sections/SecurePaymentSection'
-import ShoppingCart from '@/components/sections/ShoppingCart'
 import SiteHeader from '@/components/sections/SiteHeader'
-import TestimonialsSection from '@/components/sections/TestimonialsSection'
-import TourInfoSection from '@/components/sections/TourInfoSection'
 import ToursSection from '@/components/sections/ToursSection'
 import { buildMailtoUrl, buildWhatsAppUrl, contact, tours as fallbackTours } from '@/lib/siteConfig'
+
+const ContactForm = dynamic(() => import('@/components/sections/ContactForm'), { ssr: false, loading: () => null })
+const DatePicker = dynamic(() => import('@/components/sections/DatePicker'), { ssr: false, loading: () => null })
+const FAQSection = dynamic(() => import('@/components/sections/FAQSection'), { loading: () => null })
+const GallerySection = dynamic(() => import('@/components/sections/GallerySection'), { loading: () => null })
+const GuidesSection = dynamic(() => import('@/components/sections/GuidesSection'), { loading: () => null })
+const MapSection = dynamic(() => import('@/components/sections/MapSection'), { loading: () => null })
+const PaymentSection = dynamic(() => import('@/components/sections/PaymentSection'), { ssr: false, loading: () => null })
+const PricingSection = dynamic(() => import('@/components/sections/PricingSection'), { loading: () => null })
+const SecurePaymentSection = dynamic(() => import('@/components/sections/SecurePaymentSection'), { loading: () => null })
+const ShoppingCart = dynamic(() => import('@/components/sections/ShoppingCart'), { ssr: false, loading: () => null })
+const SocialSection = dynamic(() => import('@/components/sections/SocialSection'), { loading: () => null })
+const TestimonialsSection = dynamic(() => import('@/components/sections/TestimonialsSection'), { loading: () => null })
+const TourInfoSection = dynamic(() => import('@/components/sections/TourInfoSection'), { loading: () => null })
 
 export default function Home() {
   const [selectedTour, setSelectedTour] = useState(null)
@@ -107,7 +110,8 @@ export default function Home() {
       <TourInfoSection />
       <PricingSection />
       <GuidesSection />
-      <GallerySection />
+      <GallerySection variant="preview" />
+      <SocialSection />
       <TestimonialsSection />
 
       <section id="book" className="bg-[#f8f4ea] px-4 py-20 text-center sm:px-6 lg:px-10">
@@ -144,7 +148,7 @@ export default function Home() {
           ¿Listo para descubrir el lado escondido de Guanacaste?
         </h2>
         <p className="mx-auto mt-5 max-w-2xl text-white/70">
-          Reservá una caminata, ruta de aves y naturaleza, plan de aguas termales o experiencia privada con guía local.
+          Reservá una caminata, ruta de aves y naturaleza, plan de aguas termales o una consulta especial con guía local.
         </p>
         <button
           onClick={() => setShowContactForm(true)}
@@ -157,6 +161,13 @@ export default function Home() {
       <footer className="bg-[#020806] p-8 text-center text-sm text-white/70">
         <p className="font-bold text-white">© 2026 Miravalles Expedition</p>
         <p className="mt-2">{contact.phoneDisplay} | {contact.email}</p>
+        <div className="mt-4 flex flex-wrap justify-center gap-3">
+          {['Instagram', 'Facebook', 'TikTok', 'WhatsApp'].map((label) => (
+            <a key={label} href="#redes" className="rounded-full border border-white/10 px-4 py-2 font-bold text-white/80 hover:bg-white/10">
+              {label}
+            </a>
+          ))}
+        </div>
       </footer>
 
       <FloatingWhatsApp onReserve={() => setShowContactForm(true)} />

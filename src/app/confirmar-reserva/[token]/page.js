@@ -24,6 +24,10 @@ export default async function ConfirmBookingPage({ params }) {
     return <Message title="No pudimos confirmar" body="La reserva existe, pero el tour asociado no fue encontrado." />
   }
 
+  if (result.status === 'expired') {
+    return <Message title="Enlace vencido" body="Este enlace de confirmación ya expiró. Por favor solicitá una nueva reserva o escribinos por WhatsApp para revisar disponibilidad." />
+  }
+
   const alreadyConfirmed = result.status === 'already-confirmed'
   const currency = result.booking.currency || 'USD'
   const totalLabel = formatMoney(result.booking.total_price, currency)

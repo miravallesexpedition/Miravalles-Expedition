@@ -1,5 +1,5 @@
 import { parseMoney } from '@/lib/pricing'
-import { business, contact, seoKeywords, tourImages, tours } from '@/lib/siteConfig'
+import { business, contact, seoKeywords, socialLinks, tourImages, tours } from '@/lib/siteConfig'
 
 const baseUrl = 'https://miravallesexpedition.com'
 
@@ -48,7 +48,7 @@ export default function StructuredData() {
           'Palo Verde'
         ],
         knowsAbout: seoKeywords,
-        sameAs: [business.mapsUrl],
+        sameAs: [business.mapsUrl, ...socialLinks.map((social) => social.url)],
         hasOfferCatalog: {
           '@type': 'OfferCatalog',
           name: 'Tours de aventura en Miravalles',

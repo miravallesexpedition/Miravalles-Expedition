@@ -6,6 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "vitest run",
+    "check:deploy": "node scripts/check-deploy-env.mjs",
+    "predeploy": "npm run test && npm run lint && npm audit --omit=dev && npm run check:deploy && npm run build",
     "lint": "eslint . --ext .js,.jsx",
     "optimize:images": "node scripts/optimize-images.mjs"
   },
@@ -19,8 +22,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.48.0",
     "react-leaflet": "^4.2.1",
-    "resend": "^6.12.2",
-    "stripe": "^14.0.0"
+    "resend": "^6.12.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.16",
@@ -28,7 +30,8 @@
     "eslint-config-next": "^14.0.0",
     "postcss": "8.5.10",
     "sharp": "^0.34.5",
-    "tailwindcss": "^3.3.0"
+    "tailwindcss": "^3.3.0",
+    "vitest": "^4.1.7"
   },
   "overrides": {
     "glob": "13.0.6",

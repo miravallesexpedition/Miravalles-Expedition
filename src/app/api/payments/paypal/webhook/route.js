@@ -39,13 +39,17 @@ export async function POST(request) {
         })
       }
 
-      const capture = await paymentService.capturePayment(paypalOrderId)
+      const capture = await paymentService.capturePayment(paypalOrderId, {
+        requestId: `capture-order-${paypalOrderId}`
+      })
       const captureId = getCaptureId(capture) || paypalOrderId
-      const updatedBooking = await bookingService.markPaymentCompleted(booking.id, captureId, {
+      const paymentUpdate = await bookingService.markPaymentCompletedOnce(booking.id, captureId, {
         paypalOrderId
       })
 
-      await sendPaymentEmail(updatedBooking)
+      if (paymentUpdate.booking && !paymentUpdate.wasAlreadyCompleted) {
+        await sendPaymentEmail(paymentUpdate.booking)
+      }
 
       return Response.json({
         received: true,
@@ -64,13 +68,12 @@ export async function POST(request) {
         return Response.json({ received: true, ignored: 'booking-not-found', paypalOrderId })
       }
 
-      const wasAlreadyPaid = booking.payment_status === 'completed'
-      const updatedBooking = await bookingService.markPaymentCompleted(booking.id, captureId, {
+      const paymentUpdate = await bookingService.markPaymentCompletedOnce(booking.id, captureId, {
         paypalOrderId
       })
 
-      if (!wasAlreadyPaid) {
-        await sendPaymentEmail(updatedBooking)
+      if (paymentUpdate.booking && !paymentUpdate.wasAlreadyCompleted) {
+        await sendPaymentEmail(paymentUpdate.booking)
       }
 
       return Response.json({

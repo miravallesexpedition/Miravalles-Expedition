@@ -63,6 +63,16 @@ PAYPAL_ENV=live
 ```
 
 La web permite PayPal solo para reservas en USD. Las reservas nacionales en CRC se coordinan por WhatsApp, deposito o efectivo.
+La orden de PayPal se crea con `POST` desde la pagina de pago y usa idempotencia para que los reintentos no generen capturas duplicadas.
+
+Variables operativas recomendadas:
+
+```env
+ADMIN_ACCESS_TOKEN=
+MAX_PARTICIPANTS_PER_TOUR=10
+MAX_PARTICIPANTS_HOT_SPRINGS=30
+BOOKING_CONFIRMATION_EXPIRES_HOURS=24
+```
 
 ## 4. Prueba final
 
@@ -74,3 +84,4 @@ Despues de Supabase y Resend:
 4. Crear orden PayPal.
 5. Crear reserva nacional.
 6. Confirmar que se guarda en Supabase y no intenta cobrar CRC por PayPal.
+7. Confirmar que `/admin/reservas` pide clave y luego mantiene la sesion sin usar `?token=`.

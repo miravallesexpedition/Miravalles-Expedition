@@ -12,6 +12,12 @@ export default function sitemap() {
       changeFrequency: 'weekly',
       priority: 1
     },
+    {
+      url: `${baseUrl}/galeria`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.8
+    },
     ...tours.map((tour) => ({
       url: `${baseUrl}/tours/${tour.id}`,
       lastModified,

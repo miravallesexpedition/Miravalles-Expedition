@@ -26,7 +26,8 @@ export function getTourQuote(tour, customerType = CUSTOMER_TYPES.foreign) {
   }
 
   const rawForeignPrice = tour?.pricing?.foreignAdult || rawGeneralPrice || tour?.priceLabel || `$${tour?.price || 0}`
-  const unitPrice = parseMoney(rawForeignPrice) ?? Number(tour?.price || 0)
+  const parsedPrice = parseMoney(rawForeignPrice)
+  const unitPrice = parsedPrice ?? (rawForeignPrice ? null : Number(tour?.price || 0))
   const currency = tour?.pricing?.foreignCurrency || getCurrencyFromPrice(rawForeignPrice, 'USD')
 
   return {
@@ -57,7 +58,8 @@ export function getTourChildQuote(tour, customerType = CUSTOMER_TYPES.foreign) {
   }
 
   const rawChildPrice = tour?.pricing?.foreignChild || tour?.pricing?.foreignAdult || rawGeneralPrice || tour?.priceLabel || `$${tour?.price || 0}`
-  const unitPrice = parseMoney(rawChildPrice) ?? Number(tour?.price || 0)
+  const parsedPrice = parseMoney(rawChildPrice)
+  const unitPrice = parsedPrice ?? (rawChildPrice ? null : Number(tour?.price || 0))
   const currency = tour?.pricing?.foreignCurrency || getCurrencyFromPrice(rawChildPrice, 'USD')
 
   return {
@@ -129,7 +131,7 @@ export function parseMoney(value) {
 function getCurrencyFromPrice(value, fallback = 'USD') {
   const text = String(value || '')
   if (text.includes('$')) return 'USD'
-  if (text.includes('₡') || text.includes('â‚¡')) return 'CRC'
+  if (text.includes('₡')) return 'CRC'
   if (/\d{1,3}(?:\.\d{3})+/.test(text)) return 'CRC'
   return fallback
 }

@@ -70,6 +70,7 @@ export default function TourMediaGallery({ images = [], videos = [], title, note
               poster={gallery[0]}
               controls
               playsInline
+              preload="metadata"
             />
           ))}
         </div>
@@ -92,6 +93,7 @@ export default function TourMediaGallery({ images = [], videos = [], title, note
                 alt={`${title} - foto ${index + 1}`}
                 fill
                 sizes={index < 2 ? '(min-width: 1024px) 50vw, 100vw' : '(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw'}
+                quality={76}
                 className="object-cover transition duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/5 to-transparent opacity-80 transition group-hover:opacity-95" />
@@ -132,7 +134,7 @@ export default function TourMediaGallery({ images = [], videos = [], title, note
                 onClick={() => setZoomed((value) => !value)}
                 className="rounded-full border border-white/20 px-4 py-2 text-sm font-black hover:bg-white/10"
               >
-                {zoomed ? 'Ajustar' : 'Zoom'}
+                {zoomed ? 'Ajustar' : 'Acercar'}
               </button>
               <button
                 type="button"
@@ -153,6 +155,7 @@ export default function TourMediaGallery({ images = [], videos = [], title, note
               width={zoomed ? 1900 : undefined}
               height={zoomed ? 1300 : undefined}
               sizes="100vw"
+              quality={88}
               className={zoomed ? 'mx-auto h-auto min-h-full w-[150vw] max-w-none object-contain sm:w-[120vw]' : 'object-contain'}
               onDoubleClick={() => setZoomed((value) => !value)}
             />

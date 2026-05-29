@@ -1,17 +1,45 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { galleryImages } from '@/lib/siteConfig'
 
-export default function GallerySection() {
+const PREVIEW_COUNT = 5
+
+export default function GallerySection({ variant = 'preview' }) {
   const [activeIndex, setActiveIndex] = useState(null)
   const [zoomed, setZoomed] = useState(false)
-  const activeImage = activeIndex === null ? null : galleryImages[activeIndex]
+  const isFull = variant === 'full'
+  const displayImages = isFull
+    ? galleryImages
+    : galleryImages.filter((image) => image.featured).slice(0, PREVIEW_COUNT)
+  const activeImage = activeIndex === null ? null : displayImages[activeIndex]
+
+  const open = useCallback((index) => {
+    setActiveIndex(index)
+    setZoomed(false)
+  }, [])
+
+  const close = useCallback(() => {
+    setActiveIndex(null)
+    setZoomed(false)
+  }, [])
+
+  const goNext = useCallback(() => {
+    setActiveIndex((index) => (index === null ? 0 : (index + 1) % displayImages.length))
+    setZoomed(false)
+  }, [displayImages.length])
+
+  const goPrev = useCallback(() => {
+    setActiveIndex((index) => (index === null ? 0 : (index - 1 + displayImages.length) % displayImages.length))
+    setZoomed(false)
+  }, [displayImages.length])
 
   useEffect(() => {
+    if (activeIndex === null) return undefined
+
     const handleKey = (event) => {
-      if (activeIndex === null) return
       if (event.key === 'Escape') close()
       if (event.key === 'ArrowRight') goNext()
       if (event.key === 'ArrowLeft') goPrev()
@@ -19,7 +47,7 @@ export default function GallerySection() {
 
     window.addEventListener('keydown', handleKey)
     return () => window.removeEventListener('keydown', handleKey)
-  })
+  }, [activeIndex, close, goNext, goPrev])
 
   useEffect(() => {
     if (activeIndex === null) return undefined
@@ -30,70 +58,40 @@ export default function GallerySection() {
     }
   }, [activeIndex])
 
-  const open = (index) => {
-    setActiveIndex(index)
-    setZoomed(false)
-  }
-
-  const close = () => {
-    setActiveIndex(null)
-    setZoomed(false)
-  }
-
-  const goNext = () => {
-    setActiveIndex((index) => (index === null ? 0 : (index + 1) % galleryImages.length))
-    setZoomed(false)
-  }
-
-  const goPrev = () => {
-    setActiveIndex((index) => (index === null ? 0 : (index - 1 + galleryImages.length) % galleryImages.length))
-    setZoomed(false)
-  }
-
   return (
-    <section id="gallery" className="bg-[#071d14] px-4 py-20 text-white sm:px-6 lg:px-10">
+    <section id={isFull ? undefined : 'gallery'} className={`bg-[#071d14] px-4 text-white sm:px-6 lg:px-10 ${isFull ? 'py-16' : 'py-14'}`}>
       <div className="mx-auto max-w-6xl">
         <div className="mb-10 grid gap-6 lg:grid-cols-[1fr_420px] lg:items-end">
           <div>
             <p className="text-sm font-black uppercase tracking-[0.22em] text-amber-200">
-              Galería premium
+              {isFull ? 'Galería completa' : 'Galería'}
             </p>
             <h2 className="mt-4 text-balance text-4xl font-black leading-tight sm:text-5xl">
-              Miravalles real, con una mirada de expedición.
+              {isFull ? 'Todo el material visual en un solo lugar.' : 'Una muestra breve para abrir el apetito.'}
             </h2>
           </div>
-          <p className="text-lg leading-8 text-white/70">
-            Abrí cualquier imagen, navegá en pantalla completa y acercate a los detalles. Todo el material visual es propio de Miravalles Expedition.
-          </p>
+          <div className="space-y-5">
+            <p className="text-lg leading-8 text-white/70">
+              {isFull
+                ? 'Abrí cualquier imagen, navegá en pantalla completa y acercate a los detalles. Todo el material visual es propio de Miravalles Expedition.'
+                : 'Una selección rápida de escenas reales: cataratas, termales, aves y volcán. La colección completa está lista para verla con calma en la galería dedicada.'}
+            </p>
+            {!isFull && (
+              <Link
+                href="/galeria"
+                className="inline-flex rounded-full bg-amber-300 px-6 py-3 font-black text-[#071d14] transition hover:bg-amber-200"
+              >
+                Ver galería completa
+              </Link>
+            )}
+          </div>
         </div>
 
-        <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
-          {galleryImages.map((img, index) => (
-            <button
-              key={img.url}
-              onClick={() => open(index)}
-              className={`group relative mb-4 block w-full overflow-hidden rounded-[1.5rem] bg-white/5 text-left shadow-2xl ${
-                img.featured ? 'h-[420px]' : 'h-[300px]'
-              }`}
-              aria-label={`Abrir ${img.alt}`}
-            >
-              <Image
-                src={img.url}
-                alt={img.alt}
-                fill
-                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                className="object-cover transition duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80 transition group-hover:opacity-95" />
-              <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
-                <p className="font-black text-white">{img.caption}</p>
-                <span className="rounded-full bg-white/90 px-3 py-1 text-xs font-black uppercase tracking-[0.12em] text-[#071d14]">
-                  Abrir
-                </span>
-              </div>
-            </button>
-          ))}
-        </div>
+        {isFull ? (
+          <FullGalleryGrid images={displayImages} onOpen={open} />
+        ) : (
+          <PreviewGalleryGrid images={displayImages} onOpen={open} />
+        )}
       </div>
 
       {activeImage && (
@@ -106,7 +104,7 @@ export default function GallerySection() {
           <div className="mb-3 flex items-center justify-between gap-3">
             <div>
               <p className="text-xs font-black uppercase tracking-[0.2em] text-amber-200">
-                {activeIndex + 1} / {galleryImages.length}
+                {activeIndex + 1} / {displayImages.length}
               </p>
               <h3 className="text-lg font-black sm:text-2xl">{activeImage.caption}</h3>
             </div>
@@ -115,7 +113,7 @@ export default function GallerySection() {
                 onClick={() => setZoomed((value) => !value)}
                 className="rounded-full border border-white/20 px-4 py-2 text-sm font-black hover:bg-white/10"
               >
-                {zoomed ? 'Ajustar' : 'Zoom'}
+                {zoomed ? 'Ajustar' : 'Acercar'}
               </button>
               <button
                 onClick={close}
@@ -135,6 +133,7 @@ export default function GallerySection() {
               width={zoomed ? 1800 : undefined}
               height={zoomed ? 1200 : undefined}
               sizes="100vw"
+              quality={88}
               className={zoomed ? 'mx-auto h-auto min-h-full w-[150vw] max-w-none object-contain sm:w-[120vw]' : 'object-contain'}
               onDoubleClick={() => setZoomed((value) => !value)}
             />
@@ -156,5 +155,66 @@ export default function GallerySection() {
         </div>
       )}
     </section>
+  )
+}
+
+function PreviewGalleryGrid({ images, onOpen }) {
+  return (
+    <div className="grid gap-4 md:auto-rows-[220px] md:grid-cols-4">
+      {images.map((img, index) => (
+        <GalleryButton
+          key={`${img.url}-${index}`}
+          image={img}
+          index={index}
+          onOpen={onOpen}
+          className={index === 0 ? 'h-[340px] md:col-span-2 md:row-span-2 md:h-auto' : 'h-[220px] md:h-auto'}
+          sizes={index === 0 ? '(min-width: 768px) 50vw, 100vw' : '(min-width: 768px) 25vw, 100vw'}
+        />
+      ))}
+    </div>
+  )
+}
+
+function FullGalleryGrid({ images, onOpen }) {
+  return (
+    <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
+      {images.map((img, index) => (
+        <GalleryButton
+          key={`${img.url}-${index}`}
+          image={img}
+          index={index}
+          onOpen={onOpen}
+          className={`mb-4 block w-full ${img.featured ? 'h-[420px]' : 'h-[300px]'}`}
+          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+        />
+      ))}
+    </div>
+  )
+}
+
+function GalleryButton({ image, index, onOpen, className, sizes }) {
+  return (
+    <button
+      type="button"
+      onClick={() => onOpen(index)}
+      className={`group relative overflow-hidden rounded-[1.5rem] bg-white/5 text-left shadow-2xl ${className}`}
+      aria-label={`Abrir ${image.alt}`}
+    >
+      <Image
+        src={image.url}
+        alt={image.alt}
+        fill
+        sizes={sizes}
+        quality={76}
+        className="object-cover transition duration-700 group-hover:scale-105"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80 transition group-hover:opacity-95" />
+      <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
+        <p className="font-black text-white">{image.caption}</p>
+        <span className="rounded-full bg-white/90 px-3 py-1 text-xs font-black uppercase tracking-[0.12em] text-[#071d14]">
+          Abrir
+        </span>
+      </div>
+    </button>
   )
 }

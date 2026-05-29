@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { emailService } from '@/lib/emails'
 import { bookingService, tourService } from '@/lib/services'
 import { paymentService } from '@/lib/paypal'
+import { getAppUrl } from '@/lib/appUrl'
 
 export const dynamic = 'force-dynamic'
 
@@ -9,7 +10,7 @@ export async function GET(request) {
   const { searchParams } = new URL(request.url)
   const bookingId = searchParams.get('bookingId')
   const orderId = searchParams.get('token')
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+  const appUrl = getAppUrl(request.url)
 
   if (!bookingId || !orderId) {
     return NextResponse.redirect(`${appUrl}/pago-cancelado`)
@@ -26,14 +27,16 @@ export async function GET(request) {
       return NextResponse.redirect(`${appUrl}/pago-exitoso?bookingId=${bookingId}`)
     }
 
-    const capture = await paymentService.capturePayment(orderId)
+    const capture = await paymentService.capturePayment(orderId, {
+      requestId: `capture-order-${orderId}`
+    })
     const captureId = getCaptureId(capture) || orderId
-    const updatedBooking = await bookingService.markPaymentCompleted(bookingId, captureId, {
+    const paymentUpdate = await bookingService.markPaymentCompletedOnce(bookingId, captureId, {
       paypalOrderId: orderId
     })
 
-    if (booking?.payment_status !== 'completed') {
-      await sendPaymentEmail(updatedBooking)
+    if (paymentUpdate.booking && !paymentUpdate.wasAlreadyCompleted) {
+      await sendPaymentEmail(paymentUpdate.booking)
     }
 
     return NextResponse.redirect(`${appUrl}/pago-exitoso?bookingId=${bookingId}`)

@@ -1,3 +1,5 @@
+import { getAppUrl } from '@/lib/appUrl'
+
 export const isPayPalConfigured = Boolean(
   process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID && process.env.PAYPAL_SECRET_KEY
 )
@@ -16,6 +18,12 @@ function ensurePayPalEnabled() {
   }
 }
 
+function buildRequestId(value) {
+  return String(value || '')
+    .replace(/[^a-zA-Z0-9_-]/g, '-')
+    .slice(0, 108)
+}
+
 export const paymentService = {
   // Crear orden de pago en PayPal
   async createPaymentOrder(booking, options = {}) {
@@ -28,7 +36,8 @@ export const paymentService = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`
+          'Authorization': `Bearer ${accessToken}`,
+          ...(options.requestId ? { 'PayPal-Request-Id': buildRequestId(options.requestId) } : {})
         },
         body: JSON.stringify({
           intent: 'CAPTURE',
@@ -52,7 +61,7 @@ export const paymentService = {
                     currency_code: 'USD',
                     value: (Number(booking.total_price) / Number(booking.participants_count)).toFixed(2)
                   },
-                  description: `Tour date: ${booking.tour_date}`
+                  description: `Fecha del tour: ${booking.tour_date}`
                 }
               ],
               reference_id: booking.id,
@@ -64,8 +73,8 @@ export const paymentService = {
             brand_name: 'Miravalles Expedition',
             user_action: 'PAY_NOW',
             shipping_preference: 'NO_SHIPPING',
-            return_url: options.returnUrl || `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/pago-exitoso`,
-            cancel_url: options.cancelUrl || `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/pago-cancelado`
+            return_url: options.returnUrl || `${getAppUrl()}/pago-exitoso`,
+            cancel_url: options.cancelUrl || `${getAppUrl()}/pago-cancelado`
           }
         })
       })
@@ -85,7 +94,7 @@ export const paymentService = {
   },
 
   // Capturar orden de pago
-  async capturePayment(orderId) {
+  async capturePayment(orderId, options = {}) {
     try {
       ensurePayPalEnabled()
 
@@ -97,7 +106,8 @@ export const paymentService = {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${accessToken}`
+            'Authorization': `Bearer ${accessToken}`,
+            'PayPal-Request-Id': buildRequestId(options.requestId || `capture-order-${orderId}`)
           }
         }
       )

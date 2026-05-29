@@ -1,5 +1,6 @@
 import { tours as fallbackTours } from './siteConfig'
 import { isSupabaseConfigured, supabase } from './supabase'
+import { isConfirmationExpired } from './bookingRules'
 
 const fallbackBookings = []
 const retiredTourIds = new Set(['fotografia-naturaleza-miravalles'])
@@ -154,19 +155,20 @@ export const bookingService = {
     if (isSupabaseConfigured) {
       const { data, error } = await supabase
         .from('bookings')
-        .select('id,tour_id,tour_date,preferred_time,status,participants_count,payment_status')
+        .select('id,tour_id,tour_date,preferred_time,status,participants_count,payment_status,confirmation_expires_at')
         .eq('tour_id', tourId)
         .eq('tour_date', tourDate)
         .in('status', ['pending', 'confirmed'])
 
       if (error) throw new Error(error.message)
-      return data || []
+      return (data || []).filter((item) => !isConfirmationExpired(item))
     }
 
     return fallbackBookings.filter((item) => (
       String(item.tour_id) === String(tourId) &&
       String(item.tour_date) === String(tourDate) &&
-      ['pending', 'confirmed'].includes(item.status)
+      ['pending', 'confirmed'].includes(item.status) &&
+      !isConfirmationExpired(item)
     ))
   },
 
@@ -258,6 +260,11 @@ export const bookingService = {
   },
 
   async markPaymentCompleted(bookingId, paymentId, metadata = {}) {
+    const result = await this.markPaymentCompletedOnce(bookingId, paymentId, metadata)
+    return result.booking
+  },
+
+  async markPaymentCompletedOnce(bookingId, paymentId, metadata = {}) {
     const completedAt = new Date().toISOString()
     const updatePayload = {
       payment_status: 'completed',
@@ -276,22 +283,37 @@ export const bookingService = {
         .from('bookings')
         .update(updatePayload)
         .eq('id', bookingId)
+        .neq('payment_status', 'completed')
         .select('*')
-        .single()
+        .maybeSingle()
 
       if (error) throw new Error(error.message)
-      return data
+
+      if (data) {
+        return { booking: data, wasAlreadyCompleted: false }
+      }
+
+      const existingBooking = await this.getBookingById(bookingId)
+      return {
+        booking: existingBooking,
+        wasAlreadyCompleted: existingBooking?.payment_status === 'completed'
+      }
     }
 
     const booking = fallbackBookings.find((item) => String(item.id) === String(bookingId))
-    if (!booking) return null
+    if (!booking) return { booking: null, wasAlreadyCompleted: false }
+
+    if (booking.payment_status === 'completed') {
+      return { booking, wasAlreadyCompleted: true }
+    }
+
     booking.payment_status = 'completed'
     booking.payment_method = 'paypal'
     booking.payment_id = paymentId
     booking.paypal_capture_id = paymentId
     booking.paypal_order_id = metadata.paypalOrderId || booking.paypal_order_id
     booking.payment_completed_at = completedAt
-    return booking
+    return { booking, wasAlreadyCompleted: false }
   },
 
   async markPaymentFailed(bookingId, reason = 'PayPal rechazó o reversó el pago') {

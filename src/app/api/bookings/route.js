@@ -4,6 +4,8 @@ import { buildMailtoUrl, buildWhatsAppUrl, contact } from '@/lib/siteConfig'
 import { emailService } from '@/lib/emails'
 import { formatMoney, getTourChildQuote, getTourQuote, normalizeCustomerType } from '@/lib/pricing'
 import { formatBookingTime, isValidBookingTime } from '@/lib/timeSlots'
+import { createConfirmationExpiryDate, getSlotAvailability } from '@/lib/bookingRules'
+import { getAppUrl } from '@/lib/appUrl'
 
 export const dynamic = 'force-dynamic'
 
@@ -80,7 +82,22 @@ export async function POST(request) {
       )
     }
 
+    const slotAvailability = await getSlotAvailability(bookingService, tourId, cleanTourDate, cleanPreferredTime)
+
+    if (participantsCount > slotAvailability.remaining) {
+      return Response.json(
+        {
+          error: slotAvailability.remaining > 0
+            ? `Solo quedan ${slotAvailability.remaining} espacios disponibles para esa hora`
+            : 'Ese horario ya no tiene espacios disponibles',
+          remaining: slotAvailability.remaining
+        },
+        { status: 409 }
+      )
+    }
+
     const confirmationToken = crypto.randomBytes(32).toString('hex')
+    const confirmationExpiresAt = createConfirmationExpiryDate().toISOString()
     const quote = getTourQuote(tour, customerType)
     const childQuote = getTourChildQuote(tour, customerType)
     const adultCount = Math.max(0, participantsCount - childrenCount)
@@ -113,6 +130,7 @@ export async function POST(request) {
       tour_date: cleanTourDate,
       status: 'pending',
       confirmation_token: confirmationToken,
+      confirmation_expires_at: confirmationExpiresAt,
       customer_type: customerType,
       currency: quote.currency,
       unit_price: quote.unitPrice,
@@ -142,7 +160,7 @@ export async function POST(request) {
       'Transporte: no incluido'
     ].join('\n')
 
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+    const appUrl = getAppUrl(request.url)
     const confirmationUrl = `${appUrl}/confirmar-reserva/${confirmationToken}`
     const whatsappUrl = buildWhatsAppUrl(summary)
     const mailtoUrl = buildMailtoUrl('Nueva solicitud de reserva', summary)

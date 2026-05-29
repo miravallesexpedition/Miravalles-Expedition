@@ -85,7 +85,7 @@ export default function ToursSection({ tours, onSelectTour, filters, onFilterCha
           </div>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid gap-6 lg:grid-cols-2">
           {filteredTours.map((tour) => (
             <article key={tour.id || tour.name} className="group overflow-hidden rounded-[1.75rem] border border-black/5 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-2xl">
               <div className="relative h-80 overflow-hidden">
@@ -93,8 +93,10 @@ export default function ToursSection({ tours, onSelectTour, filters, onFilterCha
                   src={tour.image}
                   alt={tour.name}
                   fill
-                  sizes="(min-width: 1024px) 33vw, 100vw"
-                  className="object-cover transition duration-700 group-hover:scale-105"
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  quality={82}
+                  className="object-contain transition duration-700 sm:object-cover sm:group-hover:scale-105"
+                  style={{ objectPosition: tour.coverPosition || 'center center' }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
                 <div className="absolute left-4 top-4 rounded-full bg-white/90 px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-[#071d14]">
@@ -103,6 +105,9 @@ export default function ToursSection({ tours, onSelectTour, filters, onFilterCha
                 <div className="absolute bottom-4 left-4 right-4 text-white">
                   <p className="text-xs font-black uppercase tracking-[0.18em] text-amber-200">{tour.location}</p>
                   <h3 className="mt-2 text-2xl font-black leading-tight">{tour.name}</h3>
+                  {tour.cardSubtitle && (
+                    <p className="mt-2 text-sm font-bold leading-snug text-white/80">{tour.cardSubtitle}</p>
+                  )}
                 </div>
               </div>
 

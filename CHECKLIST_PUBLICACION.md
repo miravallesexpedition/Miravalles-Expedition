@@ -1,146 +1,49 @@
-# ✅ CHECKLIST ANTES DE PUBLICAR
+# Checklist antes de publicar
 
-## 1️⃣ CONFIGURACIÓN TÉCNICA
+Guia completa y actualizada: `DEPLOY_READY.md`.
 
-### Backend
-- [ ] Supabase cuenta creada
-- [ ] Supabase URL en `.env.local`
-- [ ] Supabase API Key en `.env.local`
-- [ ] Tablas creadas (ejecuté schema.sql)
-- [ ] Tours de ejemplo insertados
+## 1. Predeploy local
 
-### Emails
-- [ ] Resend cuenta creada
-- [ ] Resend API Key en `.env.local`
-- [ ] Email verificado (para produción: dominio verificado)
-
-### Pagos
-- [ ] PayPal Developer cuenta creada
-- [ ] Sandbox Client ID en `.env.local`
-- [ ] Sandbox Secret Key en `.env.local`
-- [ ] Cuenta de prueba Personal creada
-- [ ] Cuenta de prueba Business creada
-
-### Local
-- [ ] `npm run dev` funciona sin errores
-- [ ] Consola del navegador sin errors
-- [ ] Puedo crear una reserva
-- [ ] Email de confirmación llega
-
----
-
-## 2️⃣ GIT & GITHUB
-
-- [ ] Proyecto es un repositorio Git
-- [ ] Archivos importantes en `.gitignore`:
-  - [ ] `.env.local` (NO subir!)
-  - [ ] `node_modules/`
-  - [ ] `.next/`
-  - [ ] `*.log`
-- [ ] Último commit hecho
-- [ ] `git push` completado
-
----
-
-## 3️⃣ VERCEL
-
-- [ ] Cuenta en Vercel.com
-- [ ] Conectado con GitHub
-- [ ] Proyecto importado
-- [ ] Variables de entorno agregadas:
-  - [ ] NEXT_PUBLIC_SUPABASE_URL
-  - [ ] NEXT_PUBLIC_SUPABASE_ANON_KEY
-  - [ ] RESEND_API_KEY
-  - [ ] NEXT_PUBLIC_PAYPAL_CLIENT_ID
-  - [ ] PAYPAL_SECRET_KEY
-  - [ ] NEXT_PUBLIC_APP_URL (llenar después de deploy)
-- [ ] Deploy iniciado
-- [ ] Deploy completado ✅
-
----
-
-## 4️⃣ PRUEBAS EN PRODUCCIÓN
-
-- [ ] Sitio carga correctamente
-- [ ] No hay errores en consola
-- [ ] Puedo hacer una reserva
-- [ ] Email de confirmación llega
-- [ ] Link de confirmación funciona
-- [ ] Link de pago carga (PayPal)
-- [ ] Puedo "simular" un pago
-
----
-
-## 5️⃣ DOMINIO PERSONALIZADO (Opcional)
-
-Si quieres `miravallles.cr`:
-
-- [ ] Dominio registrado (godaddy, namecheap, etc)
-- [ ] Registros DNS configurados
-- [ ] Dominio agregado en Vercel
-- [ ] SSL automático configurado
-- [ ] NEXT_PUBLIC_APP_URL actualizado
-- [ ] Nuevo deploy hecho
-
----
-
-## 6️⃣ PRODUCCIÓN FINAL
-
-Cuando estés 100% seguro:
-
-### Cambiar a PayPal Production
-
-- [ ] Obtuve credenciales de LIVE en PayPal
-- [ ] Cambié Client ID y Secret en Vercel
-- [ ] Cambié URLs de `sandbox` a `live` en código
-- [ ] Nuevo deploy hecho
-
-### Verificar emails
-
-- [ ] Resend dominio verificado
-- [ ] Email "from" cambió a `info@miravallles.cr`
-- [ ] Prueba enviando email de confirmación
-
-### Seguridad
-
-- [ ] No tengo credenciales en el código
-- [ ] Todas las claves en variables de Vercel
-- [ ] `.env.local` está en `.gitignore`
-- [ ] HTTPS configurado (automático en Vercel)
-
----
-
-## 🎯 RESUMEN
-
-```
-✅ Desarrollo local listo
-   ↓
-✅ Git & GitHub configurado
-   ↓
-✅ Vercel conectado
-   ↓
-✅ Variables de entorno en Vercel
-   ↓
-✅ Deploy automático
-   ↓
-✅ Sitio en vivo 🎉
-   ↓
-✅ Dominio personalizado (opcional)
-   ↓
-✅ PayPal Production (cuando estés listo)
+```bash
+npm run predeploy
 ```
 
----
+Debe pasar:
 
-## 📞 SOPORTE
+- Tests
+- Lint
+- Auditoria de dependencias
+- Revision de variables criticas
+- Build de Next.js
 
-¿Algo no funciona?
+## 2. Variables en Vercel
 
-1. Revisa los **Logs** en Vercel Dashboard
-2. Verifica las **Environment Variables**
-3. Abre la consola del navegador (F12)
-4. Busca errores en Supabase Dashboard
+- `NEXT_PUBLIC_APP_URL=https://miravallesexpedition.com`
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` o `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SECRET_KEY` o `SUPABASE_SERVICE_ROLE_KEY`
+- `RESEND_API_KEY`
+- `RESEND_FROM_EMAIL`
+- `ADMIN_ACCESS_TOKEN`
+- `NEXT_PUBLIC_PAYPAL_CLIENT_ID`
+- `PAYPAL_SECRET_KEY`
+- `PAYPAL_ENV=live`
+- `PAYPAL_WEBHOOK_ID`
+- `NEXT_PUBLIC_CONTACT_EMAIL`
+- `NEXT_PUBLIC_WHATSAPP_NUMBER`
 
----
+## 3. Base de datos
 
-**¡Estás a 30 minutos de tener tu sitio en línea!** 🚀
+- Ejecutar `src/db/schema.sql` si la base es nueva.
+- Si la base ya existia, confirmar que `bookings.confirmation_expires_at` existe.
+
+## 4. Despues del deploy
+
+- Abrir la home.
+- Revisar `/favicon.ico`.
+- Entrar a `/admin/reservas`.
+- Crear reserva de prueba.
+- Confirmar email.
+- Probar pago USD con PayPal.
+- Confirmar que pago CRC queda por coordinacion manual.
+- Revisar logs en Vercel.

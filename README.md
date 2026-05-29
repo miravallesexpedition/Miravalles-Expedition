@@ -12,7 +12,7 @@ Sitio web completo para reserva de tours en el Volcán Miravalles con todas las 
 ✅ **Carrito de Compras** - Agrega múltiples tours
 ✅ **Filtros de Búsqueda** - Por nivel de dificultad y precio
 ✅ **FAQ** - Preguntas frecuentes expandibles
-✅ **Sistema de Pago** - Interfaz de pago (integración Stripe lista)
+✅ **Sistema de Pago** - Flujo de confirmación y pago PayPal para reservas en USD
 ✅ **Diseño Responsivo** - Adaptado para móvil, tablet y desktop
 
 ## 📋 Requisitos
@@ -89,16 +89,16 @@ Reemplaza el número en [src/components/sections/ContactForm.js](src/components/
 
 ## 🔌 Integración de Pagos
 
-Para integrar Stripe:
+El flujo actual usa PayPal para reservas en USD. Las reservas en colones se coordinan por WhatsApp, depósito o efectivo.
 
-1. Crea una cuenta en https://stripe.com
-2. Obtén tus claves API
-3. Instala el cliente de Stripe:
-```bash
-npm install @stripe/react-stripe-js @stripe/js
+Variables principales:
+
+```env
+NEXT_PUBLIC_PAYPAL_CLIENT_ID=
+PAYPAL_SECRET_KEY=
+PAYPAL_ENV=sandbox
+PAYPAL_WEBHOOK_ID=
 ```
-
-4. Reemplaza la lógica en [src/components/sections/PaymentSection.js](src/components/sections/PaymentSection.js)
 
 ## 📱 Comandos
 

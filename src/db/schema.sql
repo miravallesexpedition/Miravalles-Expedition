@@ -33,6 +33,7 @@ CREATE TABLE bookings (
   preferred_time TEXT,
   status TEXT CHECK (status IN ('pending', 'confirmed', 'cancelled', 'completed')) DEFAULT 'pending',
   confirmation_token TEXT UNIQUE,
+  confirmation_expires_at TIMESTAMP WITH TIME ZONE,
   customer_type TEXT CHECK (customer_type IN ('foreign', 'national')) DEFAULT 'foreign',
   currency TEXT CHECK (currency IN ('USD', 'CRC')) DEFAULT 'USD',
   unit_price DECIMAL(10, 2),
@@ -154,7 +155,7 @@ INSERT INTO tours (
 ),
 (
   'tour-aves-vida-silvestre',
-  'Tour de Aves, Vida Silvestre y Fotografía de Naturaleza',
+  'Tour de Aves y Naturaleza',
   'Salida tranquila de observación de aves, vida silvestre, flora y fotografía de naturaleza, ideal temprano en la mañana.',
   45.00,
   'easy',

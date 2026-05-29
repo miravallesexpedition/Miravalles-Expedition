@@ -17,6 +17,41 @@ export const contact = {
   email: 'reservas.miravallesexpedition@gmail.com'
 }
 
+export const socialLinks = [
+  {
+    id: 'instagram',
+    label: 'Instagram',
+    handle: '@miravalles.expedition',
+    url: process.env.NEXT_PUBLIC_INSTAGRAM_URL || 'https://www.instagram.com/miravalles.expedition/',
+    accent: 'from-[#f58529] via-[#dd2a7b] to-[#515bd4]',
+    summary: 'Reels, fotos de cataratas, aves y salidas recientes.'
+  },
+  {
+    id: 'facebook',
+    label: 'Facebook',
+    handle: 'Miravalles Expedition',
+    url: process.env.NEXT_PUBLIC_FACEBOOK_URL || 'https://www.facebook.com/profile.php?id=61589218435914&locale=es_LA',
+    accent: 'from-[#1877f2] to-[#0b3d91]',
+    summary: 'Actualizaciones, mensajes y contenido para viajeros.'
+  },
+  {
+    id: 'tiktok',
+    label: 'TikTok',
+    handle: '@miravalles.expedi',
+    url: process.env.NEXT_PUBLIC_TIKTOK_URL || 'https://www.tiktok.com/@miravalles.expedi',
+    accent: 'from-[#00f2ea] via-[#111111] to-[#ff0050]',
+    summary: 'Videos cortos de aventura, senderos y vida silvestre.'
+  },
+  {
+    id: 'whatsapp',
+    label: 'WhatsApp',
+    handle: contact.phoneDisplay,
+    url: `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent('Hola, vi las redes de Miravalles Expedition y quiero consultar disponibilidad.')}`,
+    accent: 'from-[#25d366] to-[#128c4a]',
+    summary: 'Reservas, dudas rápidas y coordinación directa.'
+  }
+]
+
 export const tourImages = {
   logo: '/images/miravalles-expedition-logo.jpg',
   hero: '/images/hero-waterfall.jpg',
@@ -32,6 +67,8 @@ export const tourImages = {
   butterfly: '/images/butterfly.jpg',
   bird: '/images/bird.jpg',
   duck: '/images/duck.jpg',
+  tigerHeron: '/images/garza-tigre-humedal-miravalles.jpg',
+  northernJacana: '/images/jacana-nortena-humedal-miravalles.jpg',
   orchids: '/images/orchids.jpg',
   trailSign: '/images/trail-sign.jpg',
   forestTrail: '/images/forest-trail.jpg',
@@ -187,6 +224,18 @@ export const galleryImages = [
     caption: 'Observación de aves'
   },
   {
+    url: tourImages.tigerHeron,
+    alt: 'Garza tigre caminando entre pasto y vegetación de humedal',
+    caption: 'Garza tigre en humedal',
+    featured: true
+  },
+  {
+    url: tourImages.northernJacana,
+    alt: 'Jacana norteña entre plantas acuáticas del humedal',
+    caption: 'Jacana norteña',
+    featured: true
+  },
+  {
     url: tourImages.duck,
     alt: 'Ave acuática entre vegetación tropical',
     caption: 'Vida silvestre'
@@ -225,9 +274,9 @@ export const pricingGuidelines = [
     detail: 'Tarifa para extranjeros. Una salida semanal, solo para personas con experiencia y excelente condición.'
   },
   {
-    label: 'Privado',
-    value: 'Desde $160',
-    detail: 'Ideal para parejas o viajeros que quieren ritmo personalizado.'
+    label: 'Grupos grandes',
+    value: 'Consultar',
+    detail: 'Se revisa por WhatsApp según cantidad de personas, ruta, guías y seguridad.'
   },
   {
     label: 'Aves especializado',
@@ -264,6 +313,7 @@ export const tours = [
     duration: '4 horas',
     distance: '10 km ida y vuelta',
     image: tourImages.morphoBlancaWaterfall,
+    coverPosition: 'center top',
     video: tourImages.morphoCabroVideo,
     videos: [tourImages.morphoCabroVideo, tourImages.morphoBlancaClip],
     location: 'Fortuna, Guanacaste',
@@ -330,6 +380,7 @@ export const tours = [
     duration: 'Flexible, horario sujeto a disponibilidad',
     distance: 'Baja exigencia / acceso local',
     image: tourImages.hotSprings,
+    coverPosition: 'center center',
     location: 'Fortuna de Bagaces, Guanacaste',
     description:
       'Plan de descanso en Termales El Guayacán para relajarse en aguas termales naturales, jardines, piscinas, barro volcánico, mirador y entorno geotérmico cerca del Volcán Miravalles.',
@@ -440,6 +491,7 @@ export const tours = [
     duration: '6 a 7 horas / 1 salida semanal',
     distance: '10-11 km ida y vuelta aprox.',
     image: tourImages.volcano,
+    coverPosition: 'center center',
     location: 'Volcán Miravalles',
     description:
       'Expedición extrema al Volcán Miravalles para personas con experiencia en montaña, excelente condición física y disposición para una ruta fuerte, técnica y limitada a una salida semanal.',
@@ -509,17 +561,19 @@ export const tours = [
   },
   {
     id: 'tour-aves-vida-silvestre',
-    name: 'Tour de Aves, Vida Silvestre y Fotografía de Naturaleza',
+    name: 'Tour de Aves y Naturaleza',
     shortName: 'Aves y Naturaleza',
+    cardSubtitle: 'Vida silvestre · fotografía · rutas según objetivo',
     price: 45,
     priceLabel: '$45',
     level: 'Fácil',
     duration: '3 horas base / medio día bajo solicitud',
     distance: 'Ruta suave o desplazamiento según hábitat',
-    image: tourImages.bird,
-    location: 'Miravalles, Palo Verde y rutas según objetivo',
+    image: tourImages.tigerHeron,
+    coverPosition: 'right center',
+    location: 'Miravalles y Palo Verde',
     description:
-      'Salida personalizada para observar aves, vida silvestre, flora tropical y detalles fotográficos de la naturaleza según el interés del cliente: bosque, humedales, zonas abiertas, playas, Miravalles, Palo Verde y alrededores.',
+      'Salida personalizada para observar aves, vida silvestre y detalles de naturaleza en Miravalles, Palo Verde o rutas definidas según especie objetivo: bosque, humedales, zonas abiertas o playas.',
     overview:
       'Un recorrido pausado y flexible para observar aves, flores, árboles, mariposas y vida silvestre con acompañamiento local. También funciona como experiencia de fotografía de naturaleza: nos movemos con calma, esperamos buena luz y ajustamos la ruta según las especies, el clima, la temporada y el hábitat.',
     whatToExpect: [
@@ -534,7 +588,7 @@ export const tours = [
       { title: 'Observación y fotos', text: 'Recorrido tranquilo con pausas para escuchar, mirar, fotografiar y disfrutar sin prisa.' },
       { title: 'Cierre', text: 'Regreso con recomendaciones de naturaleza y próximos puntos de interés.' }
     ],
-    highlights: ['Aves de bosque', 'Vida silvestre', 'Fotografía de naturaleza', 'Ruta personalizada'],
+    highlights: ['Aves de bosque', 'Vida silvestre', 'Fotografía', 'Ruta según objetivo'],
     includes: commonIncludes,
     notIncluded: [
       ...commonNotIncluded,
@@ -543,7 +597,14 @@ export const tours = [
     bring: [...commonBring, 'Sombrero o gorra', 'Lista de aves o especies objetivo si tenés una', 'Batería extra si querés tomar muchas fotos'],
     recommendations: defaultRecommendations,
     safety: defaultSafety,
-    gallery: [tourImages.bird, tourImages.duck, tourImages.butterfly, tourImages.orchids],
+    gallery: [
+      tourImages.tigerHeron,
+      tourImages.northernJacana,
+      tourImages.bird,
+      tourImages.duck,
+      tourImages.butterfly,
+      tourImages.orchids
+    ],
     faqs: [
       {
         question: '¿Cuál es la mejor hora?',
@@ -575,14 +636,7 @@ export const packages = [
     bestFor: 'Aventura completa'
   },
   {
-    name: 'Privado Premium',
-    price: 'Desde $160',
-    detail:
-      'Tour privado para 1-2 personas con ritmo personalizado, más tiempo para fotos y coordinación directa con guía local.',
-    bestFor: 'Parejas'
-  },
-  {
-    name: 'Aves, Vida Silvestre y Fotografía',
+    name: 'Aves y Naturaleza',
     price: 'Desde $45 p.p. / especial desde $95',
     detail:
       'Salida de 3 horas en Miravalles o ruta especializada hacia Palo Verde, humedales o playas según aves, flora, vida silvestre o fotografía de naturaleza que busque el cliente.',
@@ -609,7 +663,7 @@ export const experienceDetails = [
       'Piedras Rojas + Morpho Blanca + Cabro Muco: media',
       'Camino al cráter: extrema, solo para personas con experiencia y excelente condición física',
       'Aguas termales: fácil',
-      'Tour de aves, vida silvestre y fotografía: fácil'
+      'Tour de aves y naturaleza: fácil'
     ]
   },
   {
@@ -617,7 +671,7 @@ export const experienceDetails = [
     items: [
       'Piedras Rojas + Morpho Blanca + Cabro Muco: 4 horas',
       'Termales El Guayacán: horario flexible, sujeto a disponibilidad del lugar',
-      'Tour de aves, vida silvestre y fotografía: 3 horas base; rutas especiales según objetivo',
+      'Tour de aves y naturaleza: 3 horas base; rutas especiales según objetivo',
       'Camino al cráter: 6 a 7 horas, una salida semanal'
     ]
   },
@@ -627,7 +681,7 @@ export const experienceDetails = [
       'Piedras Rojas + Morpho Blanca + Cabro Muco: 10 km ida y vuelta',
       'Camino al cráter: 10-11 km ida y vuelta aprox., según ruta y clima',
       'Termales El Guayacán: baja exigencia',
-      'Tour de aves, vida silvestre y fotografía: caminata suave o ruta ajustable según hábitat'
+      'Tour de aves y naturaleza: caminata suave o ruta ajustable según hábitat'
     ]
   },
   {

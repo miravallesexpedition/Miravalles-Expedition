@@ -1,5 +1,7 @@
 import { bookingService, tourService } from '@/lib/services'
 import { emailService } from '@/lib/emails'
+import { isConfirmationExpired } from '@/lib/bookingRules'
+import { getAppUrl } from '@/lib/appUrl'
 
 export async function confirmBookingByToken(token) {
   const booking = await bookingService.getBookingByToken(token)
@@ -20,6 +22,14 @@ export async function confirmBookingByToken(token) {
       booking,
       tour,
       paymentUrl: getPaymentUrl(booking.id)
+    }
+  }
+
+  if (isConfirmationExpired(booking)) {
+    return {
+      status: 'expired',
+      booking,
+      tour
     }
   }
 
@@ -50,6 +60,5 @@ export async function confirmBookingByToken(token) {
 }
 
 function getPaymentUrl(bookingId) {
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
-  return `${appUrl}/pagar/${bookingId}`
+  return `${getAppUrl()}/pagar/${bookingId}`
 }

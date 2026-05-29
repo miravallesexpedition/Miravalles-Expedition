@@ -18,6 +18,13 @@ Ese script crea:
 
 Los tours usan IDs tipo texto, por ejemplo `crater-volcan-miravalles`, para coincidir con la web.
 
+Si la base ya existia antes de la columna `confirmation_expires_at`, ejecuta tambien:
+
+```sql
+ALTER TABLE bookings
+  ADD COLUMN IF NOT EXISTS confirmation_expires_at TIMESTAMP WITH TIME ZONE;
+```
+
 ## Variables necesarias
 
 En Vercel agrega:

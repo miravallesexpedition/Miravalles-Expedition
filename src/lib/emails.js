@@ -2,6 +2,7 @@ import { Resend } from 'resend'
 import { contact } from './siteConfig'
 import { formatMoney } from './pricing'
 import { formatBookingTime } from './timeSlots'
+import { getConfirmationExpiryHours } from './bookingRules'
 
 export const isResendConfigured = Boolean(process.env.RESEND_API_KEY)
 const resend = isResendConfigured ? new Resend(process.env.RESEND_API_KEY) : null
@@ -74,7 +75,7 @@ export const emailService = {
             <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
               ${bookingRows(booking)}
               <p><strong>Cliente:</strong> ${escapeHtml(booking.first_name)} ${escapeHtml(booking.last_name)}</p>
-              <p><strong>Email:</strong> ${escapeHtml(booking.email)}</p>
+              <p><strong>Correo:</strong> ${escapeHtml(booking.email)}</p>
               <p><strong>Teléfono:</strong> ${escapeHtml(booking.phone || 'No indicado')}</p>
               <p><strong>Notas:</strong> ${escapeHtml(booking.special_requests || 'Ninguna')}</p>
             </div>
@@ -105,7 +106,7 @@ export const emailService = {
             </div>
             <p><strong>Importante:</strong> el transporte no está incluido. Coordinaremos el punto de encuentro por WhatsApp.</p>
             ${preparationBlock()}
-            <p style="color: #ef4444;"><strong>Confirmá tu reserva dentro de 24 horas desde este enlace:</strong></p>
+            <p style="color: #ef4444;"><strong>Confirmá tu reserva dentro de ${escapeHtml(getConfirmationExpiryHours())} horas desde este enlace:</strong></p>
             <div style="text-align: center; margin: 30px 0;">
               <a href="${escapeHtml(confirmationUrl)}" style="background: #166534; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">
                 Confirmar reserva

@@ -16,7 +16,7 @@ export default function FloatingWhatsApp({ onReserve }) {
   }
 
   return (
-    <div className="fixed inset-x-4 bottom-4 z-50 grid grid-cols-2 gap-2 rounded-full border border-white/25 bg-[#061b13]/92 p-2 shadow-2xl shadow-black/30 backdrop-blur-xl sm:inset-x-auto sm:right-6 sm:bottom-6 sm:w-auto sm:min-w-[320px]">
+    <div className="fixed inset-x-4 bottom-4 z-50 grid grid-cols-2 gap-2 rounded-full border border-white/25 bg-[#061b13]/92 p-2 shadow-2xl shadow-black/30 backdrop-blur-xl sm:inset-x-auto sm:right-6 sm:bottom-6 sm:w-auto sm:min-w-[320px] lg:hidden">
       <button
         type="button"
         onClick={handleReserveClick}

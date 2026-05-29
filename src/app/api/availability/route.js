@@ -1,12 +1,8 @@
 import { bookingService } from '@/lib/services'
 import { bookingTimeSlots } from '@/lib/timeSlots'
+import { getCapacityForTour } from '@/lib/bookingRules'
 
 export const dynamic = 'force-dynamic'
-
-const defaultCapacityPerSlot = Number(process.env.MAX_PARTICIPANTS_PER_TOUR || process.env.MAX_PARTICIPANTS_PER_SLOT || 10)
-const tourCapacityById = {
-  'aguas-termales-miravalles': Number(process.env.MAX_PARTICIPANTS_HOT_SPRINGS || 30)
-}
 
 export async function GET(request) {
   try {
@@ -21,7 +17,7 @@ export async function GET(request) {
       )
     }
 
-    const capacityPerSlot = tourCapacityById[tourId] || defaultCapacityPerSlot
+    const capacityPerSlot = getCapacityForTour(tourId)
     const bookings = await bookingService.getBookingsForDate(tourId, date)
     const bookedByTime = bookings.reduce((acc, booking) => {
       const time = booking.preferred_time || '07:00'
